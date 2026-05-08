@@ -1,0 +1,315 @@
+---
+title: "Cómo Integrar un Catálogo de Productos en WhatsApp con E-SMART360"
+description: "Guía completa para crear, configurar y sincronizar tu catálogo de productos en WhatsApp Business API. Aprende a mostrar tu inventario, automatizar ventas y aumentar conversiones directamente desde el chat."
+---
+
+import { Callout, Steps, Step, Expandable, Columns, Card, Tabs, Tab, CodeGroup, CodeGroupItem, Update } from '/src/components';
+
+<Update title="Actualización" date="2026-05-01">
+  Esta guía ha sido actualizada con los últimos cambios en WhatsApp Cloud API y las nuevas herramientas de sincronización de catálogos de E-SMART360.
+</Update>
+
+## ¿Qué es un Catálogo de Productos en WhatsApp?
+
+Un **catálogo de productos en WhatsApp** es una funcionalidad integrada en la API de WhatsApp Business que permite a las empresas mostrar sus productos o servicios directamente dentro de la aplicación de mensajería. En lugar de enviar largas descripciones de texto, puedes presentar tus artículos con imágenes, nombres, precios y detalles completos, facilitando que los clientes exploren y elijan lo que desean comprar sin salir de la conversación.
+
+E-SMART360 potencia esta funcionalidad al integrar el catálogo con chatbots inteligentes, automatización de ventas y flujos de conversación que convierten visitantes en compradores.
+
+<Callout type="info">
+  El Catálogo de WhatsApp es parte integral de WhatsApp Business API. Para utilizarlo necesitas una cuenta de negocio verificada en Meta y un número de teléfono registrado en WhatsApp Cloud API. E-SMART360 simplifica todo este proceso de configuración.
+</Callout>
+
+## Beneficios de Integrar tu Catálogo en WhatsApp
+
+Integrar tu catálogo en WhatsApp transforma la forma en que vendes:
+
+- **Experiencia de compra sin fricciones**: los clientes navegan productos sin salir del chat
+- **Automatización de ventas**: los chatbots de E-SMART360 pueden recomendar productos basados en las preguntas del cliente
+- **Disponibilidad 24/7**: tu catálogo está siempre visible, incluso fuera del horario laboral
+- **Mayor tasa de conversión**: al reducir los pasos entre el interés y la compra, más clientes completan la transacción
+- **Escalabilidad**: atiendes a múltiples clientes simultáneamente con respuestas automatizadas
+- **Personalización**: puedes segmentar ofertas según el comportamiento del usuario
+
+<Columns cols="2">
+  <Card title="📈 Aumento de Ventas">
+    Los negocios que integran su catálogo en WhatsApp reportan hasta un 40% más de consultas sobre productos y un incremento significativo en pedidos directos desde el chat.
+  </Card>
+  <Card title="🤖 Automatización Inteligente">
+    Con E-SMART360, tu chatbot puede guiar al cliente a través del catálogo, responder preguntas frecuentes sobre cada producto y facilitar el proceso de pago, todo de forma automatizada.
+  </Card>
+</Columns>
+
+## Requisitos Previos
+
+Antes de comenzar, asegúrate de contar con lo siguiente:
+
+1. Una **cuenta de negocio en Meta** (Facebook Business Manager)
+2. Un **número de teléfono registrado** en WhatsApp Cloud API
+3. Una **cuenta activa en E-SMART360**
+4. Acceso al **Commerce Manager** de Meta (business.facebook.com)
+5. Los **productos listos** con imágenes, descripciones y precios
+
+<Callout type="warning">
+  Si aún no has configurado tu número de WhatsApp Business API, consulta la guía de configuración inicial antes de continuar con la integración del catálogo.
+</Callout>
+
+## Paso 1: Crear el Catálogo en Facebook Commerce Manager
+
+El primer paso es crear tu catálogo de productos en el Commerce Manager de Meta. Este catálogo será la fuente central de todos tus productos.
+
+<Steps>
+  <Step title="Accede al Commerce Manager">
+    Ingresa a [business.facebook.com](https://business.facebook.com/) con tu cuenta de negocio de Meta. En el menú de herramientas, selecciona la opción **"Commerce"** (Comercio).
+  </Step>
+
+  <Step title="Selecciona tu cuenta de negocio">
+    En la esquina superior derecha, haz clic en tu **perfil** y selecciona la cuenta de negocio correspondiente. Luego presiona el botón **"Get Started"** para comenzar.
+  </Step>
+
+  <Step title="Elige el tipo de catálogo">
+    En la siguiente pantalla, selecciona la opción para **crear un catálogo**. Haz clic nuevamente en "Get Started". Luego elige **"E-commerce"** (Comercio Electrónico) y selecciona si tus productos son **en línea** o **locales**. Presiona "Next" para continuar.
+  </Step>
+
+  <Step title="Selecciona el método de carga">
+    Ahora debes elegir entre dos métodos de carga de productos:
+    - **Manual**: ideal si tienes pocos productos o quieres control total sobre cada ficha
+    - **Conexión con plataformas**: compatible con **Shopify** y **BigCommerce** para sincronización automática
+
+    Luego selecciona el **propietario del catálogo** (tu cuenta de negocio de Meta), el **uso del catálogo** y asígnale un **nombre descriptivo**.
+  </Step>
+
+  <Step title="Agrega productos manualmente">
+    Una vez creado el catálogo, haz clic en **"View Catalog"**. Luego presiona **"Add Items"** y selecciona **"Manual"** para agregar productos uno por uno. Aquí deberás incluir:
+    - **Imagen del producto** (alta calidad, preferiblemente fondo blanco)
+    - **Título** (claro y descriptivo)
+    - **Descripción** (destaca los beneficios principales)
+    - **Precio** y **moneda**
+    - **Enlace** al producto en tu tienda web (opcional)
+    - **SKU** o identificador único
+
+    Finalmente presiona **"Upload Items"**. Puedes agregar tantos productos como necesites.
+  </Step>
+</Steps>
+
+<Callout type="tip">
+  **Límite de productos**: WhatsApp permite hasta **500 productos por catálogo**. Si necesitas más, considera crear catálogos adicionales o segmentar tu inventario por categorías.
+</Callout>
+
+## Paso 2: Vincular el Catálogo con WhatsApp Cloud API
+
+Una vez que el catálogo está creado en Commerce Manager, debes conectarlo con tu cuenta de WhatsApp Business API.
+
+<Steps>
+  <Step title="Abre WhatsApp Manager">
+    Desde el menú "All Tools" de Facebook Business Manager, selecciona **"WhatsApp Manager"**.
+  </Step>
+
+  <Step title="Configura el catálogo">
+    Dentro de WhatsApp Manager, navega hasta la sección **"Account Tools"** y selecciona **"Catalog"**. Haz clic en el botón **"Choose Catalog"**.
+  </Step>
+
+  <Step title="Conecta el catálogo">
+    Selecciona el catálogo que creaste en el paso anterior desde el menú desplegable. Luego presiona el botón **"Connect Catalog"**. ¡Listo! Tu catálogo ahora está vinculado a WhatsApp.
+  </Step>
+</Steps>
+
+## Paso 3: Importar el Catálogo en E-SMART360
+
+Con el catálogo conectado a tu WhatsApp Business Manager, ahora debes sincronizarlo en E-SMART360 para que puedas mostrarlo y gestionarlo desde la plataforma.
+
+<Steps>
+  <Step title="Ve a la sección de WhatsApp">
+    Dentro del panel de E-SMART360, accede a la sección de **WhatsApp** y luego a **"Connect Account"**.
+  </Step>
+
+  <Step title="Sincroniza tu número">
+    Localiza tu número de WhatsApp y haz clic en el botón **"Sync"** para sincronizar los datos con la API de WhatsApp.
+  </Step>
+
+  <Step title="Accede al Catálogo de E-Commerce">
+    Una vez sincronizado, navega al menú **"eCommerce Catalog"**. Aquí encontrarás tu catálogo conectado, listo para ser gestionado.
+  </Step>
+
+  <Step title="Verifica los productos">
+    Revisa que todos los productos aparezcan correctamente. Si agregaste productos desde Commerce Manager, deberían reflejarse automáticamente en esta sección.
+  </Step>
+</Steps>
+
+<Callout type="success">
+  Una vez importado el catálogo, todos los cambios que realices en Commerce Manager se reflejarán automáticamente en E-SMART360 y en WhatsApp. No necesitas volver a sincronizar manualmente cada vez.
+</Callout>
+
+## Cómo se Muestra el Catálogo en WhatsApp
+
+Cuando el catálogo está correctamente integrado, los usuarios pueden verlo directamente desde el chat de WhatsApp. El catálogo aparece como una galería de productos con imágenes en miniatura. Al tocar un producto, se despliegan los detalles completos: descripción, precio y opciones de contacto.
+
+Puedes compartir enlaces de tu catálogo con los usuarios. Cuando abren el enlace desde su teléfono móvil, son dirigidos directamente al catálogo dentro de WhatsApp, lo que facilita la navegación y la compra.
+
+<Tabs>
+  <Tab title="📱 Enlace directo">
+    Comparte un enlace directo al catálogo para que los usuarios lo abran en WhatsApp.
+  </Tab>
+  <Tab title="🤖 Bot automatizado">
+    Configura tu chatbot para que muestre el catálogo automáticamente cuando un usuario pregunte por productos o precios.
+  </Tab>
+  <Tab title="🛒 Desde menú">
+    Agrega una opción de "Ver Catálogo" en el menú de tu chatbot para que los usuarios puedan explorar productos en cualquier momento.
+  </Tab>
+</Tabs>
+
+## Automatización de Ventas con el Catálogo
+
+E-SMART360 va más allá de simplemente mostrar productos. Puedes crear flujos de venta automatizados que guíen al cliente desde que ve un producto hasta que completa la compra.
+
+### Flujo de Venta Recomendado
+
+1. **Saludo y bienvenida**: el chatbot saluda al cliente y le pregunta si quiere ver el catálogo
+2. **Navegación**: el cliente explora los productos directamente en WhatsApp
+3. **Recomendación inteligente**: basado en las respuestas del cliente, el bot sugiere productos relevantes
+4. **Consulta de detalles**: el cliente pregunta características específicas y el bot responde con información precisa
+5. **Proceso de compra**: se guía al cliente a través del pedido, ya sea con pago integrado, link de pago o confirmación de pedido
+6. **Seguimiento**: después de la compra, se envía un mensaje de agradecimiento y seguimiento
+
+<Callout type="success">
+  Para maximizar las conversiones, configura tu chatbot para que envíe recomendaciones personalizadas basadas en el historial de navegación del cliente. E-SMART360 permite conectar datos de Google Sheets, WooCommerce y Shopify para una personalización más profunda.
+</Callout>
+
+## Configuración del Chatbot para Ventas
+
+Para que tu chatbot pueda interactuar con el catálogo de forma inteligente:
+
+1. **Crea un flujo de bienvenida** que presente el catálogo como opción principal
+2. **Configura respuestas por palabras clave**: cuando el cliente escriba "precio", "producto", "catálogo" o "comprar", el bot debe mostrar las opciones relevantes
+3. **Agrega botones de acción rápida** que lleven directamente al catálogo
+4. **Configura respuestas automáticas** para preguntas frecuentes sobre productos (tallas, colores, disponibilidad, envío)
+5. **Implementa un carrito de compras** dentro del chatbot que permita al cliente agregar productos mientras conversa
+
+<CodeGroup>
+  <CodeGroupItem title="Ejemplo de flujo">
+  ```
+  Usuario: "Hola, ¿qué venden?"
+  Bot: "¡Hola! 👋 Somos [Tu Empresa]. Tenemos una gran variedad de productos.
+       ¿Te gustaría ver nuestro catálogo?"
+  [Botón: "Ver Catálogo" → abre catálogo de WhatsApp]
+
+  Usuario: "Sí, muéstrame"
+  Bot: [Comparte enlace del catálogo]
+       "Aquí tienes todos nuestros productos. ¿Hay alguno que te interese?"
+
+  Usuario: "¿Cuánto cuesta el producto X?"
+  Bot: "El producto X tiene un precio de $YYY. 
+       ¿Te gustaría agregarlo a tu pedido?"
+  [Botón: "Agregar al pedido" | "Ver más productos"]
+  ```
+  </CodeGroupItem>
+</CodeGroup>
+
+## Sincronización con Plataformas de E-Commerce
+
+Si utilizas **Shopify** o **WooCommerce**, puedes sincronizar tu inventario automáticamente con el catálogo de WhatsApp.
+
+<Columns cols="2">
+  <Card title="🛍️ Shopify">
+    **Ventajas de la integración:**
+    - Los productos se sincronizan automáticamente desde tu tienda Shopify
+    - Los cambios de precio e inventario se reflejan en tiempo real
+    - Las notificaciones de pedidos llegan a WhatsApp automáticamente
+    - Recuperación de carritos abandonados desde Shopify a WhatsApp
+    
+    [Guía de integración Shopify →](/recursos/integrar-shopify-automatizacion-whatsapp)
+  </Card>
+  <Card title="🛒 WooCommerce">
+    **Ventajas de la integración:**
+    - Catálogo sincronizado con tu tienda WooCommerce
+    - Notificaciones automáticas de cambios de estado de pedidos
+    - Verificación de pedidos contra entrega (COD) por WhatsApp
+    - Recuperación de carritos abandonados
+    
+    [Guía de integración WooCommerce →](/recursos/integrar-woocommerce-automatizacion-whatsapp)
+  </Card>
+</Columns>
+
+## Mejores Prácticas para tu Catálogo en WhatsApp
+
+<Callout type="tip">
+  Sigue estas recomendaciones para maximizar el rendimiento de tu catálogo:
+</Callout>
+
+- **Usa imágenes de alta calidad**: las fotos de producto deben ser nítidas, bien iluminadas y con fondo neutro
+- **Escribe descripciones concisas**: destaca los 3-4 beneficios principales en lugar de largos párrafos
+- **Mantén los precios actualizados**: un precio incorrecto genera desconfianza y pérdida de ventas
+- **Segmenta tu catálogo**: si tienes muchos productos, considera crear varios catálogos por categoría
+- **Actualiza el stock regularmente**: evita mostrar productos agotados que frustren a los clientes
+- **Incluye llamadas a la acción claras**: cada producto debe tener un botón o instrucción para continuar con la compra
+- **Prueba desde móvil**: asegúrate de que la experiencia de navegación sea óptima en dispositivos móviles, donde se usa WhatsApp
+
+## Ejemplos Prácticos de Uso
+
+<Columns cols="2">
+  <Card title="🛍️ Tienda de Ropa">
+    **Escenario**: Una tienda de ropa integra su catálogo de 200 productos en WhatsApp.
+    
+    **Resultado**: Los clientes pueden ver prendas por categoría (camisas, pantalones, accesorios), consultar tallas disponibles y realizar pedidos directamente desde el chat. El chatbot recomienda conjuntos basados en compras anteriores.
+    
+    **Configuración**: Catálogo segmentado en 4 subcategorías + chatbot con flujo de recomendaciones + botones de compra rápida.
+  </Card>
+  <Card title="🍽️ Restaurante con Delivery">
+    **Escenario**: Un restaurante utiliza el catálogo de WhatsApp para mostrar su menú completo.
+    
+    **Resultado**: Los clientes pueden ver el menú con fotos de cada plato, precios y descripciones. Pueden hacer pedidos directamente desde WhatsApp, especificando cantidad y modificaciones.
+    
+    **Configuración**: Catálogo por categorías (entradas, platos fuertes, postres, bebidas) + chatbot que toma pedidos + confirmación automática.
+  </Card>
+</Columns>
+
+## Preguntas Frecuentes
+
+<Expandable title="¿Qué es un catálogo de productos en WhatsApp?">
+  Un catálogo de productos en WhatsApp es una función que permite a las empresas mostrar sus productos o servicios directamente dentro de la aplicación. Los clientes pueden ver imágenes, nombres, precios y descripciones, y contactar al negocio para realizar compras, todo sin salir del chat.
+</Expandable>
+
+<Expandable title="¿Por qué debería integrar un catálogo de productos en WhatsApp?">
+  Integrar un catálogo mejora la experiencia del cliente al permitirle ver productos sin salir de la conversación. Esto reduce la fricción en el proceso de compra, aumenta el compromiso del cliente y puede incrementar significativamente las ventas al facilitar el acceso a la información del producto.
+</Expandable>
+
+<Expandable title="¿Cómo creo un catálogo de productos en WhatsApp?">
+  Necesitas una cuenta de WhatsApp Business. Desde la configuración de la aplicación o desde Facebook Commerce Manager, puedes acceder a la función de catálogo, agregar imágenes, descripciones, precios y enlaces de productos, y publicar el catálogo para que los clientes lo vean.
+</Expandable>
+
+<Expandable title="¿Puedo actualizar mi catálogo después de crearlo?">
+  Sí, puedes actualizar tu catálogo en cualquier momento. Puedes agregar nuevos productos, editar los existentes (cambiar precios, descripciones, imágenes) o eliminar productos que ya no estén disponibles. Los cambios se reflejan en tiempo real en WhatsApp.
+</Expandable>
+
+<Expandable title="¿Hay un límite de productos en el catálogo?">
+  Sí, WhatsApp tiene un límite de **500 productos por catálogo**. Si necesitas más, puedes crear catálogos adicionales o categorizar tu inventario de manera estratégica.
+</Expandable>
+
+<Expandable title="¿Necesito conocimientos técnicos para usar E-SMART360 con el catálogo?">
+  No, E-SMART360 está diseñado para ser intuitivo y fácil de usar. La plataforma proporciona guías paso a paso, integraciones con las principales plataformas de e-commerce y soporte técnico para ayudarte durante todo el proceso de configuración.
+</Expandable>
+
+<Expandable title="¿Puedo vender directamente desde el catálogo de WhatsApp?">
+  Sí, cuando integras el catálogo con E-SMART360, puedes configurar flujos de compra completos: los clientes seleccionan productos, reciben información detallada, confirman su pedido y completan el pago, todo sin salir de WhatsApp.
+</Expandable>
+
+<Expandable title="¿Qué tipos de productos puedo incluir en mi catálogo?">
+  Puedes incluir una amplia variedad de productos, desde bienes físicos hasta servicios digitales. Asegúrate de proporcionar descripciones claras e imágenes de alta calidad para cada artículo, lo que aumentará el interés de los clientes.
+</Expandable>
+
+## Conclusión
+
+Integrar tu catálogo de productos en WhatsApp con E-SMART360 puede transformar la comunicación de tu negocio. La API de Catálogo de WhatsApp permite a las empresas mostrar sus productos de manera fluida dentro de la aplicación de mensajería, brindando una experiencia de compra cómoda y directa.
+
+Al seguir los pasos descritos en esta guía —crear el catálogo en Commerce Manager, vincularlo con WhatsApp Cloud API, importarlo en E-SMART360 y configurar la automatización de ventas— estarás listo para ofrecer a tus clientes una experiencia de compra moderna, ágil y completamente integrada en WhatsApp.
+
+<Callout type="success">
+  El siguiente paso es ponerlo en marcha. Configura tu catálogo hoy y comienza a vender directamente desde WhatsApp con la potencia de E-SMART360.
+</Callout>
+
+## Recursos Relacionados
+
+- [Guía completa de chatbots para e-commerce](/recursos/chatbots-para-comercio-electronico)
+- [Cómo configurar tu número en WhatsApp Cloud API](/recursos/configurar-perfil-empresarial-whatsapp-cloud-api)
+- [Integración con WooCommerce para WhatsApp](/recursos/integrar-woocommerce-automatizacion-whatsapp)
+- [Recuperación de carritos abandonados con Shopify](/recursos/recuperar-carritos-abandonados-shopify-whatsapp)
+- [Notificaciones de pedidos a WhatsApp mediante webhooks](/recursos/flujo-webhook-whatsapp-automatizacion-notificaciones-pedidos)

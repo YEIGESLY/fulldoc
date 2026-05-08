@@ -1,0 +1,839 @@
+---
+title: "Cómo Enviar Mensajes de WhatsApp Masivos desde Google Sheets (2026)"
+description: "Guía completa para enviar campañas de WhatsApp en lotes desde Google Sheets. Importa contactos, usa plantillas aprobadas, programa mensajes y monitorea resultados sin necesidad de programación."
+---
+
+import { Callout, Steps, Step, Expandable, Columns, Card, Tabs, Tab, Update } from '/src/components';
+
+# Cómo Enviar Mensajes de WhatsApp Masivos desde Google Sheets
+
+<Update title="Actualización 2026" date="23 Febrero 2026">
+  Esta guía cubre las últimas funcionalidades de integración con Google Sheets, incluyendo mapeo automático de datos, etiquetas inteligentes y programación de campañas. Los mensajes de marketing requieren plantillas aprobadas por WhatsApp.
+</Update>
+
+Enviar mensajes de WhatsApp en lotes no tiene por qué ser complicado. Con **E-SMART360 + Google Sheets**, puedes importar tu lista de contactos, mapear datos automáticamente y enviar campañas dirigidas a miles de personas en cuestión de minutos. Sin cargas manuales de CSV, sin programación — solo automatización inteligente diseñada para especialistas en marketing, negocios y agencias.
+
+<Callout type="info">
+  **¿Sabías que…?** Los mensajes de WhatsApp tienen una tasa de apertura promedio del **98%**, cuatro veces superior al correo electrónico. Esto hace que WhatsApp sea el canal más efectivo para comunicación masiva con clientes.
+</Callout>
+
+---
+
+## 📡 ¿Qué es la Difusión (Broadcasting)?
+
+En marketing digital, la **difusión o envío masivo de mensajes** se refiere al envío de un mismo mensaje a un gran número de personas de forma simultánea — similar a cómo una estación de radio transmite una señal a todos sus oyentes al mismo tiempo.
+
+A diferencia de la mensajería uno a uno donde se esperan respuestas y los mensajes se personalizan individualmente, la difusión está diseñada para **alcance masivo** con un mensaje unificado — como por ejemplo:
+
+<Columns cols="2">
+  <Card title="Promociones">
+    Ofertas especiales, descuentos por tiempo limitado y lanzamientos de productos.
+  </Card>
+  <Card title="Anuncios">
+    Cambios en políticas, nuevas sucursales, actualizaciones de servicio.
+  </Card>
+  <Card title="Recordatorios">
+    Citas próximas, fechas de pago, eventos programados, renovaciones.
+  </Card>
+  <Card title="Alertas">
+    Notificaciones de seguridad, confirmaciones de pedidos, actualizaciones de estado.
+  </Card>
+</Columns>
+
+Es una herramienta vital para cualquier negocio que quiera:
+
+- Mantener informados a sus clientes
+- Re-enganchar a usuarios inactivos
+- Promover ofertas sensibles al tiempo
+- Escalar las comunicaciones con el mínimo esfuerzo
+
+<Callout type="tip">
+  La difusión no se trata solo de volumen — se trata de **relevancia, personalización y sincronización**. Y ahí es donde WhatsApp marca la diferencia.
+</Callout>
+
+---
+
+## 💬 Por Qué la Difusión en WhatsApp es Importante
+
+En los últimos años, la comunicación con los clientes se ha desplazado de los canales tradicionales como el correo electrónico y SMS a **aplicaciones de mensajería instantánea** — con WhatsApp a la cabeza.
+
+### Tasas de Apertura Extremadamente Altas
+Los mensajes de WhatsApp tienen una **tasa de apertura promedio del 98%**, que es 4 veces mayor que la del correo electrónico. Tu mensaje está casi garantizado de ser visto — al instante.
+
+### Participación Más Rápida
+Los mensajes de WhatsApp se leen en **cuestión de segundos**, no de horas. Esto es crucial cuando ejecutas ventas flash, envías actualizaciones urgentes o recuerdas a los clientes sobre ofertas que expiran.
+
+### Personalizado Pero Escalable
+Usando herramientas como E-SMART360, puedes difundir mensajes que incluyan **campos personalizados** (nombre, ID de pedido, ubicación), haciendo que cada usuario sienta que fue escrito especialmente para él.
+
+<Callout type="success">
+  **Beneficio clave:** La combinación de personalización + escalabilidad te permite enviar mensajes únicos a miles de contactos sin perder el toque personal.
+</Callout>
+
+### Cifrado de Extremo a Extremo
+WhatsApp garantiza un canal de comunicación seguro y resistente al spam. Genera confianza en los clientes en comparación con dominios de SMS o correo electrónico desconocidos.
+
+### Soporte de API para Empresas
+La API oficial de WhatsApp Business admite mensajes estructurados, plantillas, botones y automatizaciones — todo diseñado para ayudar a las empresas a crecer.
+
+### Reorientación por Comportamiento
+Cuando se usa con E-SMART360, puedes rastrear las respuestas de los usuarios, segmentar tu lista y **re-difundir** solo a usuarios comprometidos o no comprometidos. Esto ayuda a optimizar el costo y el rendimiento.
+
+---
+
+## ✅ Por Qué Usar WhatsApp + Google Sheets para Difusión
+
+<Callout type="info" title="Ventajas de la integración">
+  Las hojas de cálculo de Google son fáciles de mantener y actualizar. Puedes sincronizar contactos en tiempo real y eliminar las cargas manuales de CSV. Es ideal para especialistas en marketing, atención al cliente y campañas promocionales.
+</Callout>
+
+- Las **Google Sheets** son fáciles de mantener y actualizar
+- Puedes sincronizar contactos en **tiempo real**
+- Elimina las cargas manuales de **CSV**
+- Es ideal para **marketing**, **atención al cliente** y **campañas promocionales**
+
+WhatsApp ya no es solo para chats personales — es una herramienta directa y poderosa para las empresas. Con E-SMART360, puedes subir contactos a través de una Google Sheet, mapear datos de suscriptores y enviar difusiones personalizadas usando plantillas de mensajes aprobadas por WhatsApp.
+
+Esta guía te mostrará:
+
+- Cómo importar suscriptores desde Google Sheets
+- Crear plantillas de mensajes
+- Configurar y enviar una difusión de WhatsApp
+- Rastrear el rendimiento con informes de campaña
+
+---
+
+## Guía Paso a Paso: Enviar Difusión de WhatsApp vía Google Sheets
+
+### Paso 1: Importar Suscriptores desde Google Sheets
+
+<Steps>
+  <Step title="Accede al Gestor de Suscriptores">
+    Ve al **Gestor de Suscriptores (Subscriber Manager)** desde tu panel de control de E-SMART360.
+  </Step>
+  <Step title="Selecciona WhatsApp Subscriber">
+    Elige **WhatsApp Subscriber** del menú.
+  </Step>
+  <Step title="Abre las Opciones de Importación">
+    Haz clic en el menú desplegable **Options** y selecciona **Import Subscribers**.
+  </Step>
+  <Step title="Configura la Importación">
+    - Selecciona la **etiqueta (Label)** que hayas creado
+    - Sube un archivo CSV o importa desde **Google Sheets** o **Contactos**
+    - Selecciona la cuenta
+    - **Mapea los datos** de Google Sheet
+    - Elige los encabezados de archivo que coincidan con los nombres de columna de tu hoja
+    - Confirma la importación
+  </Step>
+</Steps>
+
+<Callout type="tip">
+  **Antes de importar**, crea una etiqueta para organizar tus contactos. Ve a **Manage Labels** y crea una como "Suscriptores Julio Promo" o "Clientes VIP".
+</Callout>
+
+#### Cómo Conectar tu Google Account con E-SMART360
+
+<Steps>
+  <Step title="Inicia sesión en E-SMART360">
+    Ingresa a tu cuenta y navega a **Configuración (Settings)** en la sección de Administración.
+  </Step>
+  <Step title="Accede a la Integración">
+    Haz clic en **Google Sheets Integration**.
+  </Step>
+  <Step title="Conecta tu Cuenta de Google">
+    Presiona **Connect Google Account** y selecciona la cuenta de Google donde están tus hojas de cálculo. Otorga los permisos necesarios.
+  </Step>
+  <Step title="Crea o usa una hoja existente">
+    Puedes crear una nueva hoja desde E-SMART360 o añadir una hoja existente. Las columnas deben incluir al menos: **phone_number** y **name**.
+  </Step>
+</Steps>
+
+<Callout type="info">
+  **Opcional:** Puedes conectar múltiples cuentas de Google. Esto es útil si gestionas campañas para diferentes clientes o marcas.
+</Callout>
+
+#### Mapeo de Datos
+
+Cuando importes tu archivo, es crucial **mapear los datos** para alinear las columnas correctamente:
+
+| Columna en Google Sheets | Campo en E-SMART360    |
+|--------------------------|------------------------|
+| Número de Teléfono       | Phone Number           |
+| Nombre                   | Subscriber Name        |
+| Empresa                  | Custom Field: Company  |
+| Ciudad                   | Custom Field: City     |
+| Fecha de Registro        | Custom Field: Date     |
+
+<Callout type="success">
+  **Tip profesional:** Crea campos personalizados (Custom Fields) antes de importar para capturar toda la información relevante de tus contactos. Sigue la guía de [Gestión de Campos Personalizados y Etiquetas](/recursos/campos-personalizados-etiquetas).
+</Callout>
+
+---
+
+### Paso 2: Crear una Campaña de Difusión de WhatsApp
+
+1. Dirígete a **Broadcasting → WhatsApp Broadcast**
+2. Selecciona la **cuenta bot** que deseas usar
+3. Haz clic en **Create Campaign**
+
+<Callout type="info">
+  Cada campaña requiere una cuenta bot activa y conectada a WhatsApp Business API. Si aún no tienes una, primero completa el proceso de conexión en el panel de configuración.
+</Callout>
+
+---
+
+### Paso 3: Configurar los Detalles de la Campaña
+
+1. **Nombra tu campaña** (ej. "Promo Julio 2026" o "Recordatorio Carrito Abandonado")
+2. **Elige el horario:** entre **24 Hours** (solo usuarios activos) o **Anytime** (alcanza a todos los suscriptores)
+3. **Selecciona una plantilla de WhatsApp pre-aprobada**
+
+<Callout type="warning">
+  **Importante:** Debes usar una **Plantilla de Mensaje (Message Template)** si estás enviando mensajes fuera de la ventana de 24 horas. Las plantillas deben estar aprobadas por WhatsApp antes de su uso.
+</Callout>
+
+#### Cómo Crear una Plantilla de Mensaje
+
+<Steps>
+  <Step title="Ve a Gestor de Chatbots">
+    Navega a **Chatbot Manager → Message Template** desde el panel de control.
+  </Step>
+  <Step title="Crea una nueva plantilla">
+    Presiona el botón para crear una nueva plantilla. Asígnale un título, selecciona el idioma y elige la categoría.
+  </Step>
+  <Step title="Define el contenido">
+    Proporciona un texto de cuerpo de muestra relevante al asunto. Las plantillas pueden incluir **variables dinámicas** como `{{name}}`, `{{order_id}}`, `{{amount}}`, `{{date}}`, etc.
+  </Step>
+  <Step title="Envía a aprobación">
+    Las plantillas de marketing deben ser aprobadas por Meta. El proceso puede tomar de 24 a 48 horas. Las plantillas de utilidad/transaccionales suelen aprobarse más rápido.
+  </Step>
+</Steps>
+
+<Tabs>
+  <Tab title="Plantilla de Marketing">
+```
+Hola {{name}} 👋
+
+Tenemos una oferta especial para ti: 
+{{discount}}% de descuento en tu próxima compra.
+
+Válido hasta {{expiry_date}}.
+
+Usa el código: {{coupon_code}}
+
+¡No esperes más!
+```
+  </Tab>
+  <Tab title="Plantilla de Utilidad">
+```
+Hola {{name}},
+
+Tu pedido #{{order_id}} ha sido enviado.
+
+📦 Número de seguimiento: {{tracking_number}}
+📅 Fecha estimada: {{delivery_date}}
+
+Gracias por confiar en nosotros.
+```
+  </Tab>
+  <Tab title="Plantilla de Autenticación">
+```
+Tu código de verificación es: {{otp_code}}
+
+Este código expira en 5 minutos.
+
+Si no solicitaste este código, ignora este mensaje.
+```
+  </Tab>
+</Tabs>
+
+<Expandable title="¿Qué tipos de plantillas existen?">
+  Hay **dos categorías principales** de plantillas de mensaje en E-SMART360:
+
+  - **Plantillas transaccionales (Utilidad, Auth/OTP):** Se usan para enviar mensajes relacionados con una transacción específica, como confirmación de envío o recibo de pago. Suelen aprobarse rápidamente.
+  
+  - **Plantillas de marketing:** Se usan para enviar mensajes que promocionan tus productos o servicios. Requieren una revisión más exhaustiva por parte de Meta.
+
+  También existe la categoría **Service/Post-venta** para mensajes de soporte al cliente.
+</Expandable>
+
+---
+
+### Paso 4: Seleccionar Destinatarios
+
+Puedes segmentar tu audiencia de las siguientes formas:
+
+<Columns cols="2">
+  <Card title="Por Etiqueta (Label ID)">
+    Selecciona una etiqueta específica (ej. "Suscriptores Julio Promo"). Solo los contactos con esa etiqueta recibirán el mensaje.
+  </Card>
+  <Card title="Exclusión por Etiquetas">
+    Excluye etiquetas específicas. Útil para evitar enviar mensajes duplicados o a contactos que ya recibieron una oferta similar.
+  </Card>
+  <Card title="Por País">
+    Filtra por país para campañas localizadas o regionales.
+  </Card>
+  <Card title="Por Campos Personalizados">
+    Usa valores de campos personalizados para segmentación avanzada (ej. "clientes con compras > $50").
+  </Card>
+  <Card title="Asignar Etiqueta Post-Difusión">
+    Asigna automáticamente una etiqueta después del envío para rastrear quién recibió la campaña.
+  </Card>
+</Columns>
+
+---
+
+### Paso 5: Programar o Enviar de Inmediato
+
+- Para **enviar inmediatamente**, solo haz clic en **Save & Start**
+- Para **programar**:
+  - Activa la opción **Send Later**
+  - Elige una **fecha y hora**
+  - Presiona **Save**
+
+<Callout type="tip">
+  **Consejo:** Programa tus campañas en los horarios de mayor actividad de tu audiencia. Según estudios, los mejores horarios para WhatsApp son entre las 10:00 y 12:00, y entre las 16:00 y 19:00 en el huso horario local de tus clientes.
+</Callout>
+
+---
+
+### Paso 6: Finalizar el Flujo del Bot
+
+1. Asigna un **Nombre de Bot** si deseas ejecutar un flujo automatizado después del mensaje
+2. Haz clic en **Save** para confirmar
+
+<Callout type="info">
+  Si no seleccionaste **Send Later**, la difusión comenzará inmediatamente después de guardar. Verifica que tu plantilla esté aprobada y que tu lista de contactos sea correcta antes de confirmar.
+</Callout>
+
+---
+
+### Paso 7: Monitorear el Rendimiento de la Campaña
+
+Después de enviar tu difusión, puedes revisar las métricas de rendimiento:
+
+1. Ve a la sección **Campaign Report**
+2. Navega a **Broadcasting > WhatsApp Broadcast**
+3. Selecciona una cuenta y haz clic en el **ícono de vista**
+
+#### Métricas Disponibles
+
+<Columns cols="3">
+  <Card title="📬 Enviados">
+    Total de mensajes que salieron exitosamente al servidor de WhatsApp.
+  </Card>
+  <Card title="✅ Entregados">
+    Mensajes que llegaron correctamente al dispositivo del destinatario.
+  </Card>
+  <Card title="👁️ Abiertos">
+    Mensajes que fueron abiertos/leídos por el destinatario.
+  </Card>
+  <Card title="❌ Fallidos">
+    Mensajes que no pudieron ser entregados (número inválido, bloqueado, etc.).
+  </Card>
+  <Card title="⏳ Pendientes">
+    Mensajes aún en proceso de entrega.
+  </Card>
+  <Card title="📊 Tasa de Apertura">
+    Porcentaje de mensajes abiertos vs entregados. Idealmente superior al 70%.
+  </Card>
+</Columns>
+
+Por ejemplo, si se enviaron 9 mensajes y todos fueron abiertos, verás una **tasa de apertura del 100%**.
+
+<Callout type="success">
+  **Métrica clave:** La tasa de apertura es el indicador más importante para campañas de marketing. Una tasa superior al 80% indica que tu contenido y segmentación son efectivos.
+</Callout>
+
+---
+
+## 📣 Por Qué las Empresas Aman Esta Configuración
+
+El verdadero poder de esta integración reside en su **escalabilidad** y **rentabilidad**:
+
+- ✅ **Sin middleware**: No necesitas herramientas como Zapier o Make
+- ✅ **Listas reutilizables**: Solo actualiza tu Google Sheet — no necesitas reimportar
+- ✅ **Altamente segmentado**: Envía mensajes personalizados con campos personalizados
+- ✅ **Perfecto para agencias**: Gestiona múltiples campañas para múltiples clientes fácilmente
+
+<Expandable title="¿Puedo usar la misma hoja para varias campañas?">
+  Sí. Una vez que conectas tu Google Sheet, puedes usarla para todas tus campañas. Solo actualiza los datos cuando sea necesario. Los contactos nuevos se importarán automáticamente y los existentes se actualizarán. Esto elimina la necesidad de subir archivos CSV repetidamente.
+</Expandable>
+
+---
+
+## Entendiendo los Límites de Difusión de WhatsApp
+
+WhatsApp asigna a las empresas diferentes **niveles de mensajería (tiers)** basados en el uso y la calidad:
+
+### Estructura de Niveles de Mensajería
+
+| Nivel    | Límite de Usuarios Únicos por Día |
+|----------|-----------------------------------|
+| Trial    | Hasta 250 usuarios                |
+| Tier 1   | Hasta 1,000 usuarios              |
+| Tier 2   | Hasta 10,000 usuarios             |
+| Tier 3   | Hasta 100,000 usuarios            |
+| Tier 4   | Ilimitado                         |
+
+### Requisitos para Subir de Nivel
+
+Para avanzar a un nivel superior, debes:
+
+- Mantener una **calificación de calidad alta** (Medium o High)
+- Enviar mensajes al menos al **50% del límite de tu nivel actual**
+- Interactuar con los usuarios de forma consistente
+- Evitar contenido tipo spam
+
+### Camino de Actualización Explicado
+
+**Pasar de Trial a Tier 1:**
+- Envía mensajes a al menos **1,000 usuarios únicos**
+- Mantén una **calificación verde**
+- Completa esto dentro de **30 días**
+
+**Pasar de Tier 1 a Tier 2:** Envía mensajes a al menos **500 usuarios únicos**
+**Pasar de Tier 2 a Tier 3:** Envía mensajes a al menos **5,000 usuarios únicos**
+
+<Callout type="warning">
+  **¿Qué pasa si excedes tu límite?** Si intentas enviar mensajes más allá de tu nivel permitido, verás un error que dice "Audience size exceeding remaining quota". Algunos mensajes pueden fallar al entregarse. Deberás reducir el tamaño de tu audiencia para mantenerte dentro de tu límite actual.
+</Callout>
+
+### Consejos para una Progresión Fluida
+
+- **Enfócate en la calidad del mensaje** – Evita contenido tipo spam
+- **Interactúa consistentemente** – Mantén a los usuarios interesados con mensajes relevantes
+- **Monitorea las interacciones** – Rastrea respuestas y ajusta estrategias
+- **Evita mensajes masivos excesivos** – Mantén una reputación saludable como remitente
+
+<Expandable title="¿Qué tan rápido puedo subir de nivel?">
+  Normalmente dentro de **7 días** de cumplir con los criterios requeridos. La calidad del mensaje, la interacción del usuario y la comunicación consistente son los factores que más impactan en la progresión. No puedes solicitar una actualización manualmente — WhatsApp actualiza los niveles automáticamente según el rendimiento de tu cuenta.
+</Expandable>
+
+---
+
+## 🚀 Estrategias Avanzadas de Marketing con WhatsApp + Google Sheets
+
+### 1. Segmenta tus Leads
+
+Usa etiquetas y campos personalizados de forma inteligente. Puedes segmentar basándote en:
+
+- **Historial de compras:** Clientes nuevos, recurrentes, VIP
+- **Ubicación:** Por ciudad, región o país
+- **Preferencias de producto:** Categorías de interés
+- **Puntaje de engagement:** Basado en apertura y clics anteriores
+
+<Callout type="tip">
+  **Tip avanzado:** Crea una segmentación en capas. Por ejemplo: "Clientes VIP que NO abrieron la última promoción" — este segmento merece un mensaje diferente al de los que sí abrieron.
+</Callout>
+
+### 2. Usa Contenido Personalizado con Variables
+
+```
+Ejemplo de plantilla personalizada:
+"Hola {{name}} 👋
+
+Sabemos que te encanta {{product_category}}.
+Por eso tenemos un descuento especial del {{discount}}% 
+válido hasta {{expiry_date}} en tu próxima compra.
+
+💰 Precio especial: ${{special_price}}
+⏳ Solo quedan {{stock_left}} unidades
+
+¡Corre, que vuelan! 🚀"
+```
+
+### 3. Crea Escasez y Urgencia
+
+Las plantillas con frases como "stock limitado", "expira hoy" u "solo quedan 10" tienden a tener tasas de apertura y conversión más altas.
+
+<Callout type="warning">
+  **Precaución:** Usa la urgencia con moderación. Si cada mensaje dice "última oportunidad", los clientes dejarán de creerte. Sé honesto y estratégico.
+</Callout>
+
+### 4. Fomenta las Respuestas
+
+Diseña tus campañas para invitar a respuestas. Esto reabre la **ventana de 24 horas** para mensajería gratuita y aumenta las señales de engagement.
+
+**Ejemplo:** "Responde **SÍ** para reclamar tu regalo gratis 🎁"
+**Ejemplo:** "¿Qué opinas de nuestra nueva colección? ¡Cuéntanos! 💬"
+
+### 5. Haz Pruebas A/B
+
+Clona tu campaña y prueba dos variaciones con diferentes redacciones o CTAs. Rastrea las tasas de apertura y clics, y refina las campañas futuras.
+
+<Tabs>
+  <Tab title="Variante A (Directa)">
+    "Hola {{name}}! 30% OFF en toda la tienda hoy. Usa el código: AHORRO30. Válido solo por 24h ⏰"
+  </Tab>
+  <Tab title="Variante B (Beneficio)">
+    "Hola {{name}}! Ahorra hasta $50 en tu compra de hoy. Reclama tu descuento exclusivo antes de que se acabe 🎉"
+  </Tab>
+</Tabs>
+
+---
+
+## 🧑‍💼 Caso de Éxito: Tienda Boutique Local
+
+**La Boutique de Rina** en la Ciudad de México utilizó E-SMART360 para ejecutar una venta flash de 3 días para la colección de Primavera. El proceso fue:
+
+1. Crearon una etiqueta "Clientes Primavera"
+2. Importaron los números desde una Google Sheet
+3. Enviaron una difusión usando una plantilla festiva
+4. Programaron mensajes de seguimiento solo para quienes no abrieron el primero
+
+**Resultados:**
+
+- **92% de tasa de apertura**
+- **35% de aumento en pedidos repetidos**
+- **21% de respuestas** fueron consultas sobre nueva disponibilidad de stock
+- **Tiempo total de configuración:** menos de 30 minutos — sin equipo técnico
+
+<Callout type="success">
+  **Lección clave:** La segmentación posterior al envío (re-envío solo a no abridores) fue el factor que más contribuyó al éxito. Duplicó efectivamente el alcance sin aumentar el costo.
+</Callout>
+
+---
+
+## Reglas de Difusión de WhatsApp que Debes Conocer
+
+<Columns cols="2">
+  <Card title="✅ Consentimiento del usuario">
+    Solo puedes enviar mensajes a usuarios que hayan **optado voluntariamente**. No compres listas de números ni agregues contactos sin permiso.
+  </Card>
+  <Card title="✅ Ventana de 24 horas">
+    Puedes enviar mensajes gratuitos dentro de las 24 horas posteriores a un mensaje entrante del usuario. Fuera de esta ventana, debes usar plantillas aprobadas.
+  </Card>
+  <Card title="✅ Calidad del mensaje">
+    Mantén una **calificación de calidad alta**. Meta monitorea los reportes de spam, bloqueos y tasas de apertura.
+  </Card>
+  <Card title="✅ Límite de frecuencia">
+    No envíes mensajes excesivos al mismo usuario. Meta impone un **límite de frecuencia** para evitar saturación.
+  </Card>
+</Columns>
+
+<Expandable title="¿Qué es la regla de las 24 horas de WhatsApp?">
+  La **regla de 24 horas** de WhatsApp establece que las empresas pueden enviar mensajes a un usuario sin costo adicional (mensajes dentro de sesión) durante las 24 horas posteriores al último mensaje entrante del usuario. Después de ese período, cualquier mensaje saliente debe ser una **plantilla de mensaje aprobada** (fuera de sesión), y se cobrará según la tarifa de WhatsApp.
+
+  **Cómo mantener la ventana abierta:**
+  - Diseña mensajes que fomenten respuestas
+  - Usa botones de llamada a la acción (CTA)
+  - Incluye preguntas abiertas al final de tus mensajes
+
+  **Ejemplo:** "¿Te gustó esta oferta? Responde ✅ para recibir más promociones como esta"
+</Expandable>
+
+---
+
+## Preguntas Frecuentes
+
+<Expandable title="¿Puedo enviar mensajes de WhatsApp a personas que no tienen mi número guardado?">
+  Sí. Usando la API oficial de WhatsApp Business a través de E-SMART360, puedes enviar "Mensajes de Plantilla" a tu lista de suscriptores, incluso si no te tienen en sus contactos, siempre y cuando hayan **optado voluntariamente** (consentimiento).
+</Expandable>
+
+<Expandable title="¿Cuántos mensajes puedo enviar por día desde Google Sheets?">
+  En 2026, las empresas que usan un Meta Business Portfolio verificado pueden enviar hasta **100,000 mensajes diarios** (Tier 3) o incluso **mensajes ilimitados** (Tier 4). Tu límite específico depende de tu nivel de mensajería, el cual puedes ver en el panel de "Calidad de Mensajería" de E-SMART360.
+</Expandable>
+
+<Expandable title="¿E-SMART360 cobra extra por la integración con Google Sheets?">
+  No. E-SMART360 ofrece sincronización nativa con Google Sheets, lo que te permite evitar los costos de suscripción de herramientas puente de terceros como Zapier o Make. La integración está incluida en todas las suscripciones.
+</Expandable>
+
+<Expandable title="¿Qué hago si mi plantilla de mensaje es rechazada?">
+  Las plantillas son rechazadas por varias razones: contenido promocional excesivo, falta de un caso de uso claro, lenguaje engañoso, o problemas de formato. Revisa las **directrices de Meta para plantillas**, corrige los problemas señalados y vuelve a enviar. Las plantillas de utilidad (confirmaciones, notificaciones) tienen aprobación casi inmediata.
+</Expandable>
+
+<Expandable title="¿Puedo hacer seguimiento automático a quienes no abren mi primer mensaje?">
+  Sí. Usando las funcionalidades de etiquetado y segmentación de E-SMART360, puedes crear una campaña de seguimiento dirigida exclusivamente a los contactos que **no abrieron** tu primer mensaje. Esta estrategia incrementa significativamente la tasa de efectividad general de tu campaña.
+</Expandable>
+
+<Expandable title="¿Cómo manejo el límite de la ventana de 24 horas?">
+  La ventana de 24 horas se abre cuando un usuario te envía un mensaje. Para mantenerla abierta, diseña mensajes que inviten a respuestas. Si la ventana se cierra, usa plantillas aprobadas para los mensajes de marketing. Planifica tus campañas en lotes para maximizar la ventana de comunicación gratuita.
+</Expandable>
+
+---
+
+## En Resumen
+
+1. **Prepara una Google Sheet** con al menos 1 columna: `phone_number` y opcionalmente `name`
+2. **Conecta tu cuenta** en E-SMART360 y configura la integración
+3. **Importa suscriptores** mapeando correctamente los campos
+4. **Crea o usa** una plantilla de WhatsApp aprobada
+5. **Configura tu campaña** seleccionando destinatarios y horario
+6. **Monitorea resultados** y optimiza para la siguiente campaña
+
+<Callout type="tip">
+  **Comienza hoy mismo.** Te sorprenderá lo rápido que llegan las respuestas. WhatsApp no es el futuro de la comunicación — es el **ahora**. Configura tu primera campaña en menos de 15 minutos.
+</Callout>
+
+### Reflexiones Finales
+
+Ya sea que estés promocionando productos, enviando recordatorios o simplemente manteniéndote en contacto — las difusiones de WhatsApp impulsadas por Google Sheets pueden llevar tu comunicación al siguiente nivel.
+
+Sin código. Sin trabajo manual. Solo resultados confiables y fluidos.
+
+## Reglas de Difusión de WhatsApp que Debes Conocer
+
+Para mantener tu cuenta en buen estado y evitar bloqueos, es fundamental seguir estas reglas establecidas por Meta:
+
+### Consentimiento del Usuario
+
+Solo puedes enviar mensajes a usuarios que hayan **optado voluntariamente** por recibir comunicaciones. No compres listas de números ni agregues contactos sin su permiso explícito. El consentimiento debe ser demostrable.
+
+### Ventana de 24 Horas
+
+Puedes enviar mensajes gratuitos (sin usar plantillas) dentro de las 24 horas posteriores a un mensaje entrante del usuario. Fuera de esta ventana, debes usar **plantillas aprobadas** para cualquier comunicación saliente.
+
+### Calidad del Mensaje
+
+Mantén una **calificación de calidad alta (High)**. Meta monitorea constantemente:
+- Reportes de spam de los usuarios
+- Bloqueos y denuncias
+- Tasas de apertura y respuesta
+- Frecuencia de mensajes por contacto
+
+### Límite de Frecuencia
+
+No envíes mensajes excesivos al mismo usuario. Meta impone un **límite de frecuencia** para evitar saturación. La recomendación general es no más de 2-3 mensajes de marketing por semana por contacto.
+
+### Bloqueo de Spam
+
+E-SMART360 cuenta con herramientas integradas para detectar y bloquear comportamientos de spam. Si un usuario reporta tus mensajes como spam repetidamente, tu calificación de calidad se verá afectada y podrías ser suspendido temporalmente.
+
+<Callout type="warning">
+  **Consecuencias de ignorar las reglas:** El incumplimiento de las políticas de WhatsApp puede resultar en la suspensión temporal o permanente de tu número de teléfono. Una vez suspendido, recuperar el acceso puede ser un proceso largo y complicado.
+</Callout>
+
+<Expandable title="¿Qué es la regla de las 24 horas de WhatsApp?">
+  La **regla de 24 horas** de WhatsApp establece que las empresas pueden enviar mensajes a un usuario sin costo adicional (mensajes dentro de sesión) durante las 24 horas posteriores al último mensaje entrante del usuario. Después de ese período, cualquier mensaje saliente debe ser una **plantilla de mensaje aprobada** (fuera de sesión), y se cobrará según la tarifa de WhatsApp.
+
+  **Cómo mantener la ventana abierta:**
+  - Diseña mensajes que fomenten respuestas de los usuarios
+  - Usa botones de llamada a la acción (CTA) interactivos
+  - Incluye preguntas abiertas al final de tus mensajes
+  - Ofrece recompensas por responder (descuentos, contenido exclusivo)
+
+  **Ejemplo práctico:** "¿Te gustó esta oferta? Responde ✅ para recibir más promociones como esta" — Esta simple pregunta puede reabrir la ventana de 24 horas y mantener la conversación activa.
+</Expandable>
+
+<Expandable title="¿Qué es la calificación de calidad de WhatsApp?">
+  La **calificación de calidad** es una métrica que WhatsApp asigna a cada número de teléfono empresarial basándose en:
+  
+  - **Proporción de bloqueos:** Porcentaje de usuarios que bloquean tu número después de recibir un mensaje
+  - **Reportes de spam:** Usuarios que marcan tus mensajes como spam
+  - **Tasa de apertura:** Porcentaje de mensajes abiertos vs entregados
+  
+  Los estados posibles son:
+  - **High (Verde):** Excelente — Sin restricciones
+  - **Medium (Amarillo):** Aceptable — Puede afectar la velocidad de subida de nivel
+  - **Low (Rojo):** Riesgo de limitación o suspensión
+</Expandable>
+
+---
+
+## 🚀 Estrategias Avanzadas de Marketing con WhatsApp + Google Sheets
+
+### 1. Segmenta tus Leads
+
+Usa etiquetas y campos personalizados de forma inteligente. Puedes segmentar basándote en:
+
+- **Historial de compras:** Clientes nuevos, recurrentes, VIP, inactivos (>90 días)
+- **Ubicación:** Por ciudad, región o país para ofertas localizadas
+- **Preferencias de producto:** Categorías de interés (ropa, electrónicos, hogar)
+- **Puntaje de engagement:** Basado en apertura y clics de campañas anteriores
+
+<Callout type="tip">
+  **Tip avanzado:** Crea una segmentación en capas. Por ejemplo: "Clientes VIP que NO abrieron la última promoción" — este segmento merece un mensaje diferente al de los que sí abrieron. Una segunda oportunidad con un enfoque distinto puede recuperar hasta un 30% de no-abridores.
+</Callout>
+
+### 2. Usa Contenido Personalizado con Variables
+
+<CodeGroup>
+  <CodeGroupItem title="Plantilla con Variables">
+```
+Hola {{1}} 👋
+
+Sabemos que te encanta {{6}}.
+Por eso tenemos un descuento especial del {{2}}% 
+válido hasta {{3}} en tu próxima compra.
+
+💰 Precio especial: ${{4}}
+⏳ Solo quedan {{5}} unidades
+
+¡Corre, que vuelan! 🚀
+```
+  </CodeGroupItem>
+</CodeGroup>
+
+### 3. Crea Escasez y Urgencia
+
+Las plantillas con frases como "stock limitado", "expira hoy" u "solo quedan 10" tienden a tener tasas de apertura y conversión más altas. La psicología de la escasez es un disparador probado de acción.
+
+<Callout type="warning">
+  **Precaución:** Usa la urgencia con moderación y honestidad. Si cada mensaje dice "última oportunidad" o "oferta exclusiva", los clientes dejarán de creerte. Sé estratégico y veraz en tus afirmaciones.
+</Callout>
+
+### 4. Fomenta las Respuestas
+
+Diseña tus campañas para invitar a respuestas. Esto reabre la **ventana de 24 horas** para mensajería gratuita y aumenta las señales de engagement positivas para tu calificación.
+
+- "Responde **SÍ** para reclamar tu regalo gratis 🎁"
+- "¿Qué opinas de nuestra nueva colección? ¡Cuéntanos! 💬"
+- "Responde con el número de tu producto favorito (1, 2 o 3)"
+
+### 5. Haz Pruebas A/B
+
+Clona tu campaña y prueba dos variaciones con diferentes redacciones o CTAs. Rastrea las tasas de apertura y clics, y refina las campañas futuras basándote en datos reales.
+
+<Tabs>
+  <Tab title="Variante A (Directa)">
+    "Hola {{1}}! 30% OFF en toda la tienda hoy. Usa el código: AHORRO30. Válido solo por 24h ⏰"
+  </Tab>
+  <Tab title="Variante B (Basada en Beneficio)">
+    "Hola {{1}}! Ahorra hasta $50 USD en tu compra de hoy. Reclama tu descuento exclusivo antes de que se acabe 🎉"
+  </Tab>
+</Tabs>
+
+### 6. Campañas Post-Venta Automatizadas
+
+Configura flujos automáticos que se activen después de una compra:
+
+| Tiempo después de la compra | Mensaje                                |
+|-----------------------------|----------------------------------------|
+| Inmediato                   | Confirmación de pedido 📋              |
+| 24 horas                    | Número de seguimiento 📦               |
+| 3 días                      | ¿Todo bien con tu compra? 😊           |
+| 7 días                      | Deja tu reseña y gana descuento ⭐     |
+| 30 días                     | Vuelve pronto, tenemos novedades 🆕    |
+
+### 7. Re-enganche de Clientes Inactivos
+
+Identifica clientes que no han comprado en más de 90 días y envíales una campaña especial de reactivación:
+
+- "Te extrañamos {{1}}! Aquí tienes un 20% de descuento en tu próxima compra"
+- "Han pasado {{days_since_last_purchase}} días desde tu última visita..."
+- "Novedades que te encantarán: {{new_products_category}}"
+
+---
+
+## 🧑‍💼 Caso de Éxito: Tienda Boutique Local
+
+**La Boutique de Rina** en la Ciudad de México utilizó E-SMART360 para ejecutar una venta flash de 3 días para la colección de Primavera 2026. El proceso fue:
+
+1. Crearon una etiqueta "Clientes Primavera 2026" a partir de su Google Sheet
+2. Importaron los números desde una hoja de cálculo que contenía 2,500 contactos
+3. Enviaron una difusión usando una plantilla festiva con campos personalizados
+4. Programaron mensajes de seguimiento solo para quienes no abrieron el primero
+5. Asignaron etiquetas post-difusión para rastrear resultados
+
+**Resultados:**
+
+| Métrica                | Valor  |
+|------------------------|--------|
+| Tasa de apertura       | 92%    |
+| Aumento en pedidos     | 35%    |
+| Respuestas recibidas   | 21%    |
+| Tiempo de configuración| 30 min |
+| Equipo técnico requerido| No    |
+
+<Callout type="success">
+  **Lección clave:** La segmentación posterior al envío (re-envío solo a no-abridores) fue el factor que más contribuyó al éxito. Duplicó efectivamente el alcance sin aumentar el costo por mensaje.
+</Callout>
+
+---
+
+## Preguntas Frecuentes
+
+<Expandable title="¿Puedo enviar mensajes de WhatsApp a personas que no tienen mi número guardado?">
+  Sí. Usando la API oficial de WhatsApp Business a través de E-SMART360, puedes enviar "Mensajes de Plantilla" a tu lista de suscriptores, incluso si no te tienen en sus contactos, siempre y cuando hayan **optado voluntariamente** (consentimiento explícito). No es necesario que te tengan agregados en su agenda.
+</Expandable>
+
+<Expandable title="¿Cuántos mensajes puedo enviar por día desde Google Sheets?">
+  En 2026, las empresas que usan un Meta Business Portfolio verificado pueden enviar hasta **100,000 mensajes diarios** (Tier 3) o incluso **mensajes ilimitados** (Tier 4). Tu límite específico depende de tu nivel de mensajería actual, el cual puedes consultar en el panel de "Calidad de Mensajería" de E-SMART360. El nivel se actualiza automáticamente según tu rendimiento.
+</Expandable>
+
+<Expandable title="¿E-SMART360 cobra extra por la integración con Google Sheets?">
+  No. E-SMART360 ofrece sincronización nativa con Google Sheets, lo que te permite evitar los costos de suscripción de herramientas puente de terceros como Zapier o Make. La integración está incluida en todas las suscripciones sin costo adicional.
+</Expandable>
+
+<Expandable title="¿Qué hago si mi plantilla de mensaje es rechazada?">
+  Las plantillas son rechazadas por varias razones comunes:
+  - Contenido promocional excesivo sin valor informativo
+  - Falta de un caso de uso claro y específico
+  - Lenguaje engañoso o ambiguo
+  - Problemas de formato (caracteres no soportados)
+  - Incluir URLs acortadas o sospechosas
+  - No incluir opción de cancelación de suscripción (para marketing)
+
+  Revisa las **directrices oficiales de Meta para plantillas**, corrige los problemas señalados en el mensaje de rechazo y vuelve a enviar. Las plantillas de utilidad (confirmaciones, notificaciones) tienen aprobación casi inmediata.
+</Expandable>
+
+<Expandable title="¿Puedo hacer seguimiento automático a quienes no abren mi primer mensaje?">
+  Sí. Usando las funcionalidades de etiquetado y segmentación de E-SMART360, puedes crear una campaña de seguimiento dirigida exclusivamente a los contactos que **no abrieron** tu primer mensaje. Esta estrategia puede incrementar la tasa de efectividad general de tu campaña hasta en un 40%. Simplemente asigna una etiqueta post-difusión como "Abrió Promo Julio" o "No Abrió Promo Julio" y luego crea una campaña dirigida a la etiqueta de no-abridores.
+</Expandable>
+
+<Expandable title="¿Cómo manejo el límite de la ventana de 24 horas?">
+  La ventana de 24 horas se abre cada vez que un usuario te envía un mensaje. Para mantenerla abierta estratégicamente:
+  1. Diseña mensajes que inviten a **respuestas** (preguntas, botones CTA)
+  2. Programa recordatorios de seguimiento dentro de las 24 horas
+  3. Si la ventana se cierra, usa **plantillas aprobadas** para los mensajes de marketing
+  4. Planifica tus campañas en lotes para maximizar la comunicación gratuita
+  5. Usa chatbots para responder automáticamente y mantener la conversación activa
+</Expandable>
+
+<Expandable title="¿Puedo usar WhatsApp para enviar mensajes a múltiples países?">
+  Sí, siempre que tengas contactos con números internacionales en tu Google Sheet. Asegúrate de que los números tengan el **formato internacional correcto** (código de país + número). E-SMART360 respeta las regulaciones locales de cada país y las políticas de WhatsApp para cada región.
+</Expandable>
+
+<Expandable title="¿Qué debo hacer si un contacto reporta mis mensajes como spam?">
+  Si un usuario reporta tus mensajes como spam:
+  1. **No** le vuelvas a enviar mensajes — elimínalo de tu lista inmediatamente
+  2. Revisa por qué pudo haber considerado tu mensaje como no deseado
+  3. Ajusta tu estrategia de segmentación para ser más relevante
+  4. Monitorea tu calificación de calidad en el panel de control
+  5. Si recibes múltiples reportes, considera pausar tus campañas y revisar tu enfoque
+</Expandable>
+
+---
+
+## En Resumen
+
+1. **Prepara una Google Sheet** con al menos 1 columna: `phone_number` (formato internacional) y opcionalmente `name` y otros campos personalizados
+2. **Conecta tu cuenta de Google** en E-SMART360 y configura la integración desde Settings
+3. **Importa tus suscriptores** mapeando correctamente los campos de tu hoja a los campos del sistema
+4. **Crea o usa** una plantilla de WhatsApp aprobada por Meta según la categoría de tu mensaje
+5. **Configura tu campaña** seleccionando destinatarios, horario y opciones de segmentación
+6. **Programa o envía inmediatamente** verificando que todo esté correcto
+7. **Monitorea los resultados** en el panel de reportes y optimiza para la siguiente campaña
+
+<Callout type="tip">
+  **Comienza hoy mismo.** Te sorprenderá lo rápido que llegan las respuestas. Configura tu primera campaña en menos de 15 minutos y descubre el poder de la comunicación masiva personalizada. WhatsApp no es el futuro de la comunicación — es el **ahora**.
+</Callout>
+
+### Reflexiones Finales
+
+Ya sea que estés promocionando productos, enviando recordatorios de citas, confirmando pedidos o simplemente manteniéndote en contacto con tus clientes — las difusiones de WhatsApp impulsadas por Google Sheets pueden llevar tu comunicación al siguiente nivel.
+
+Sin código. Sin trabajo manual. Sin herramientas complejas. Solo resultados confiables, medibles y fluidos que transformarán la forma en que te comunicas con tus clientes.
+
+---
+
+## Próximos Pasos Recomendados
+
+- Aprende sobre las [Funciones Avanzadas de WhatsApp](/recursos/funciones-avanzadas-whatsapp)
+- Descubre la [Integración con Autoresponder](/recursos/integracion-autoresponder)
+- Explora la [Automatización de Comentarios](/recursos/automatizacion-comentarios)
+- Consulta la guía de [Obtención de Datos desde Google Sheets](/recursos/obtencion-datos-google-sheets)
+- Revisa las [Guías de Calidad de Mensajería](/recursos/calidad-mensajeria-whatsapp)
+
+<Columns cols="3">
+  <Card title="📚 Crear Campañas">
+    Aprende a crear campañas de difusión desde cero con nuestra guía paso a paso. Incluye ejemplos prácticos y plantillas descargables.
+  </Card>
+  <Card title="📊 Analítica y Reportes">
+    Domina los informes de rendimiento para optimizar tus campañas de WhatsApp. Aprende a interpretar cada métrica y tomar decisiones basadas en datos.
+  </Card>
+  <Card title="🤖 Automatización con Bots">
+    Combina difusiones con chatbots para una experiencia de cliente 360°. Automatiza respuestas, califica leads y cierra ventas sin intervención manual.
+  </Card>
+</Columns>
