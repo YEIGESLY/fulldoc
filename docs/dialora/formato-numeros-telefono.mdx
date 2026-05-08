@@ -1,0 +1,144 @@
+---
+title: Formato de Números de Teléfono
+description: Guía completa sobre el formato correcto de números telefónicos para garantizar llamadas exitosas con los agentes de voz de E-SMART360.
+---
+
+<Callout kind="info">
+El formato correcto de los números de teléfono es fundamental para el éxito de las llamadas. Un número mal formateado puede causar fallos en la conexión, errores de enrutamiento o que la llamada nunca se complete.
+</Callout>
+
+## Formato Recomendado
+
+El estándar internacional **E.164** es el formato aceptado por E-SMART360 para todas las llamadas. Este formato elimina cualquier ambigüedad y garantiza el enrutamiento correcto a nivel global.
+
+```
++[código de país][código de área][número telefónico]
+```
+
+### Componentes del Formato
+
+| Elemento | Descripción | Ejemplo |
+|----------|-------------|---------|
+| `+` | Prefijo internacional obligatorio | `+` |
+| Código de país | 1-3 dígitos según el país | `1` (EE. UU.), `44` (RU), `52` (MX) |
+| Código de área | Variable según región | `234` (Ohio), `55` (CDMX) |
+| Número telefónico | 6-10 dígitos según el país | `5678901` |
+
+## Ejemplos por País
+
+<Tabs>
+  <Tab title="México" icon="globe">
+    <CodeGroup tabs="Formato Correcto,Formato Incorrecto">
+    ```text
+    +525512345678
+    ```
+
+    ```text
+    55 1234 5678
+    (55) 1234-5678
+    +52 (55) 1234 5678
+    ```
+    </CodeGroup>
+  </Tab>
+  <Tab title="Estados Unidos" icon="globe">
+    <CodeGroup tabs="Formato Correcto,Formato Incorrecto">
+    ```text
+    +12345678901
+    ```
+
+    ```text
+    (234) 567-8901
+    234-567-8901
+    1-234-567-8901
+    ```
+    </CodeGroup>
+  </Tab>
+  <Tab title="Reino Unido" icon="globe">
+    <CodeGroup tabs="Formato Correcto,Formato Incorrecto">
+    ```text
+    +447123456789
+    ```
+
+    ```text
+    07123 456789
+    +44 (0)7123 456789
+    0712-345-6789
+    ```
+    </CodeGroup>
+  </Tab>
+  <Tab title="Australia" icon="globe">
+    <CodeGroup tabs="Formato Correcto,Formato Incorrecto">
+    ```text
+    +61412345678
+    ```
+
+    ```text
+    0412 345 678
+    +61 (0)412 345 678
+    0412-345-678
+    ```
+    </CodeGroup>
+  </Tab>
+  <Tab title="España" icon="globe">
+    <CodeGroup tabs="Formato Correcto,Formato Incorrecto">
+    ```text
+    +34612345678
+    ```
+
+    ```text
+    612 345 678
+    +34 (6)12 345 678
+    612-345-678
+    ```
+    </CodeGroup>
+  </Tab>
+</Tabs>
+
+## Formatos Inválidos que Debes Evitar
+
+<Callout kind="alert">
+Los siguientes formatos **NO funcionan** con E-SMART360 y causarán errores al intentar realizar llamadas.
+</Callout>
+
+| Formato | Problema |
+|---------|----------|
+| `(123) 456-7890` | Paréntesis y guiones no estándar |
+| `123-456-7890` | Guiones sin prefijo internacional |
+| `1-234-567-8901` | Guiones y formato no compatible |
+| `+1 (234) 567-8901` | Mezcla de paréntesis con prefijo |
+| `+52 55 1234 5678` | Espacios dentro del número |
+| `07123 456789` | Cero inicial sin prefijo internacional |
+
+## Buenas Prácticas
+
+<Steps>
+  <Step title="Normaliza antes de almacenar" icon="database">
+    Almacena siempre los números en formato E.164 (`+525512345678`). Nunca guardes números con espacios, guiones o paréntesis.
+  </Step>
+  <Step title="Valida al momento de captura" icon="check-circle">
+    Implementa validación en tus formularios para asegurar que el usuario ingrese el número en el formato correcto. Acepta solo dígitos y el prefijo `+`.
+  </Step>
+  <Step title="Usa listas de bloqueo" icon="shield">
+    Considera mantener una lista de prefijos o números restringidos según la regulación local (como el Registro REPEP en México o el DNC en EE. UU.).
+  </Step>
+  <Step title="Prueba antes de campañas masivas" icon="flask">
+    Realiza pruebas con una muestra de números en diferentes formatos para verificar que la normalización funciona correctamente antes de lanzar una campaña.
+  </Step>
+</Steps>
+
+## Solución de Problemas
+
+<ExpandableGroup>
+  <Expandable title="Mis llamadas fallan con números internacionales" default-open="true">
+    Verifica que el número incluya el prefijo `+` seguido del código de país sin espacios. Por ejemplo, para un número en Reino Unido usa `+447123456789`, no `+44 7123 456789`.
+  </Expandable>
+  <Expandable title="¿E-SMART360 normaliza automáticamente los números?" default-open="false">
+    Sí, la plataforma intenta normalizar números en formatos comunes, pero **siempre es mejor** proporcionar el número en formato E.164 completo para evitar errores.
+  </Expandable>
+  <Expandable title="¿Qué hago con números que tienen extensión?" default-open="false">
+    Las extensiones no son compatibles con el formato E.164. En estos casos, configura el agente para que solicite la extensión durante la llamada mediante preguntas de recolección de información.
+  </Expandable>
+  <Expandable title="Error: 'Invalid phone number format'" default-open="false">
+    Este error aparece cuando el número contiene caracteres no válidos (espacios, guiones, paréntesis) o cuando falta el prefijo `+`. Revisa el formato y asegúrate de que cumpla con el estándar E.164.
+  </Expandable>
+</ExpandableGroup>

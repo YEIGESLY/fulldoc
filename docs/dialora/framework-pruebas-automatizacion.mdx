@@ -1,0 +1,195 @@
+---
+title: Framework de Pruebas para Automatización
+description: Framework completo para probar y validar integraciones de webhooks, automatizaciones y payloads de agentes de voz con E-SMART360.
+---
+
+<Callout kind="info">
+Este framework de pruebas te permite validar tus integraciones con E-SMART360 antes de ponerlas en producción. Incluye generadores de payloads de prueba, scripts de validación y una checklist de verificación.
+</Callout>
+
+## Generador de Payloads de Prueba
+
+Utiliza el siguiente script JavaScript para generar payloads de prueba según el tipo de acción que quieras validar:
+
+<CodeGroup tabs="JavaScript,Node.js">
+```javascript show-lines="true" focus="3-20"
+const generateTestPayload = (actionType) => {
+  const testPayloads = {
+    calendar: {
+      action: "book_calendar",
+      caller_name: "Usuario Prueba",
+      caller_email: "test@esmart360.com",
+      requested_date: "próximo martes",
+      requested_time: "2:00 pm",
+      duration: 30
+    },
+    email: {
+      action: "send_email",
+      recipient: "test@esmart360.com",
+      template: "follow_up",
+      call_summary: "Se discutieron precios y características"
+    },
+    sms: {
+      action: "send_sms",
+      phone: "+525512345678",
+      message: "Gracias por tu llamada",
+      consent: true
+    }
+  };
+
+  return testPayloads[actionType];
+};
+
+// Ejemplo de uso
+console.log(generateTestPayload("calendar"));
+```
+
+```javascript show-lines="true"
+// Usando módulo ES
+import { generateTestPayload } from './test-framework.js';
+
+// Generar payload de calendario
+const payload = generateTestPayload("calendar");
+
+// Enviar a tu webhook de prueba
+const response = await fetch("https://tu-dominio.com/webhook-test", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "X-Test-Mode": "true"
+  },
+  body: JSON.stringify(payload)
+});
+
+const result = await response.json();
+console.log("Resultado:", result);
+```
+</CodeGroup>
+
+## Tipos de Payloads Soportados
+
+<Tabs>
+  <Tab title="Calendario" icon="calendar">
+    ```json
+    {
+      "action": "book_calendar",
+      "caller_name": "Usuario Prueba",
+      "caller_email": "test@esmart360.com",
+      "requested_date": "próximo martes",
+      "requested_time": "2:00 pm",
+      "duration": 30
+    }
+    ```
+  </Tab>
+  <Tab title="Correo Electrónico" icon="mail">
+    ```json
+    {
+      "action": "send_email",
+      "recipient": "test@esmart360.com",
+      "template": "follow_up",
+      "call_summary": "Se discutieron precios y características"
+    }
+    ```
+  </Tab>
+  <Tab title="SMS" icon="message-square">
+    ```json
+    {
+      "action": "send_sms",
+      "phone": "+525512345678",
+      "message": "Gracias por tu llamada, te contactaremos pronto.",
+      "consent": true
+    }
+    ```
+  </Tab>
+  <Tab title="CRM" icon="users">
+    ```json
+    {
+      "action": "update_crm",
+      "lead_id": "lead-123",
+      "call_outcome": "interested",
+      "notes": "Cliente interesado en plan premium",
+      "follow_up_date": "2025-02-20"
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Checklist de Verificación
+
+<Steps>
+  <Step title="Validación de formato" icon="check-circle">
+    Verifica que los payloads JSON sean válidos. Usa `JSON.parse()` para asegurarte de que no hay errores de sintaxis.
+  </Step>
+  <Step title="Prueba de conectividad" icon="link">
+    Confirma que tu webhook o endpoint esté accesible desde la plataforma. Un código de respuesta `200` o `201` indica éxito.
+  </Step>
+  <Step title="Prueba de campos requeridos" icon="list">
+    Envía payloads con campos faltantes para verificar que tu sistema maneja correctamente los errores de validación.
+  </Step>
+  <Step title="Prueba de límites" icon="zap">
+    Prueba con valores extremos: cadenas muy largas, números negativos, caracteres especiales y emojis en los campos de texto.
+  </Step>
+  <Step title="Prueba de idempotencia" icon="refresh-cw">
+    Envía el mismo payload dos veces y verifica que no se creen registros duplicados en tu sistema.
+  </Step>
+  <Step title="Prueba de rendimiento" icon="clock">
+    Mide el tiempo de respuesta de tu endpoint. El objetivo es < 2 segundos para mantener una experiencia de llamada fluida.
+  </Step>
+</Steps>
+
+## Script de Validación Rápida
+
+```javascript show-lines="true" wrap="true"
+const testEndpoint = async (url, payload) => {
+  const start = Date.now();
+  
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        "X-Source": "esmart360-test"
+      },
+      body: JSON.stringify(payload)
+    });
+    
+    const duration = Date.now() - start;
+    const data = await response.text();
+    
+    return {
+      status: response.status,
+      duration: `${duration}ms`,
+      success: response.ok,
+      response: data.substring(0, 200) // Truncado para legibilidad
+    };
+  } catch (error) {
+    return {
+      status: 0,
+      duration: `${Date.now() - start}ms`,
+      success: false,
+      error: error.message
+    };
+  }
+};
+
+// Prueba rápida
+const testPayload = generateTestPayload("calendar");
+const result = await testEndpoint("https://tu-webhook.com/endpoint", testPayload);
+console.table(result);
+```
+
+<Callout kind="tip">
+Guarda este script como `test-harness.js` en tu proyecto para usarlo cada vez que necesites validar una nueva integración o después de hacer cambios en tu webhook.
+</Callout>
+
+## Interpretación de Resultados
+
+| Código | Significado | Acción |
+|--------|-------------|--------|
+| `200` | Éxito - Procesado correctamente | ✅ Listo para producción |
+| `201` | Éxito - Recurso creado | ✅ Listo para producción |
+| `400` | Error de sintaxis o validación | Revisa el formato del payload |
+| `401` | No autorizado | Verifica token o API key |
+| `404` | Endpoint no encontrado | Confirma la URL del webhook |
+| `429` | Demasiadas solicitudes | Implementa rate limiting |
+| `500` | Error interno del servidor | Revisa los logs de tu servidor |
