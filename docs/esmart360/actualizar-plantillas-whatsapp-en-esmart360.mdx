@@ -1,0 +1,665 @@
+---
+title: "Actualiza Plantillas de WhatsApp sin Esfuerzo en E-SMART360"
+description: "Mantén tus plantillas de WhatsApp actualizadas para una comunicación eficaz con tus clientes. Aprende a sincronizar, desvincular y mapear plantillas desde el Administrador de Plantillas de WhatsApp directamente en E-SMART360, con pasos detallados, ejemplos prácticos y resolución de problemas comunes."
+---
+
+# Actualiza Plantillas de WhatsApp sin Esfuerzo en E-SMART360
+
+Mantener tus plantillas de WhatsApp actualizadas es fundamental para conservar una comunicación efectiva con tu audiencia. Con E-SMART360, puedes sincronizar y actualizar fácilmente las plantillas creadas en el Administrador de Plantillas de WhatsApp. En esta guía completa, te llevaremos paso a paso por el proceso de actualización de tus plantillas de WhatsApp en E-SMART360 de manera fluida y sin complicaciones.
+
+<Callout type="info">
+**¿Qué son las plantillas de WhatsApp?**  
+Las plantillas de mensajes de WhatsApp permiten a las empresas enviar mensajes a sus clientes incluso después de que hayan transcurrido las 24 horas de la ventana de servicio al cliente. Son ideales para enviar notificaciones, confirmaciones, recordatorios y mucho más.
+
+### ¿Cómo Funciona el Ciclo de Vida de una Plantilla?
+
+1. **Creación**: Diseñas el contenido en el Administrador de WhatsApp o directamente en E-SMART360.
+2. **Envío para aprobación**: La plantilla se envía a WhatsApp para su revisión.
+3. **Revisión**: WhatsApp verifica que el contenido cumpla con sus políticas comerciales y directrices.
+4. **Aprobación/Rechazo**: La plantilla es aprobada (generalmente en minutos u horas) o rechazada con una razón específica.
+5. **Sincronización**: Una vez aprobada, se sincroniza con E-SMART360.
+6. **Uso**: La plantilla está lista para ser utilizada en campañas de broadcast, live chat o flujos automatizados.
+7. **Actualización**: Cuando necesitas modificar el contenido, repites el proceso desde el paso 1.
+
+<Callout type="tip">
+**Tip:** Las plantillas aprobadas no caducan, pero WhatsApp puede desactivarlas si no se usan durante un período prolongado (generalmente 30 días sin actividad). Para mantenerlas activas, envía al menos un mensaje de prueba cada cierto tiempo.
+</Callout>
+</Callout>
+
+## ¿Por Qué es Importante Actualizar tus Plantillas?
+
+Las plantillas de WhatsApp son mensajes predefinidos que pasan por un proceso de revisión y aprobación por parte de WhatsApp. Una vez aprobadas, puedes utilizarlas para iniciar conversaciones con tus clientes en cualquier momento. Sin embargo, las necesidades de tu negocio evolucionan, y tus plantillas deben reflejar esa evolución.
+
+### Tipos de Plantillas que Puedes Gestionar
+
+E-SMART360 te permite trabajar con los siguientes tipos de plantillas de WhatsApp:
+
+<Columns cols="3">
+
+<Card title="Marketing">
+Utilizadas para promociones, ofertas especiales, mensajes de bienvenida, invitaciones a eventos y cualquier contenido que no esté relacionado con una transacción específica. Estas plantillas ofrecen mayor flexibilidad creativa pero requieren que el usuario haya dado su consentimiento para recibir comunicaciones promocionales.
+</Card>
+
+<Card title="Utilidad">
+Diseñadas para comunicaciones transaccionales como confirmaciones de pedido, actualizaciones de envío, recordatorios de citas, notificaciones de facturación y cambios en el estado de una suscripción. Deben ser funcionales y no promocionales.
+</Card>
+
+<Card title="Autenticación">
+Exclusivas para códigos de verificación y contraseñas de un solo uso (OTP). Estas plantillas tienen un tratamiento especial por parte de WhatsApp y pueden enviarse en cualquier momento, incluso fuera de la ventana de servicio de 24 horas, sin costo de conversación.
+</Card>
+
+</Columns>
+
+<Callout type="info">
+**Clasificación automática:** Si una plantilla contiene tanto contenido de utilidad como de marketing, WhatsApp la clasificará automáticamente como plantilla de marketing. Por eso es importante definir claramente el propósito de cada plantilla desde el inicio.
+</Callout>
+
+<Callout type="success">
+**Dato clave:** Las plantillas actualizadas mejoran la tasa de entrega y la experiencia del cliente. Una plantilla desactualizada puede generar confusión, disminuir la efectividad de tus campañas e incluso afectar tu calificación de calidad en WhatsApp.
+</Callout>
+
+## Requisitos Previos
+
+Antes de comenzar con el proceso de actualización, asegúrate de contar con lo siguiente:
+
+- Una cuenta activa en E-SMART360 con acceso al módulo de plantillas.
+- Acceso al **Administrador de WhatsApp** (WhatsApp Manager) a través de tu cuenta de negocio en Meta Business Platform.
+- Permisos adecuados en ambas plataformas para gestionar plantillas.
+- Conexión activa de la API de WhatsApp Cloud en E-SMART360.
+- Tener claridad sobre el contenido del mensaje, incluyendo las variables, botones y pie de página que necesitas.
+
+<Callout type="tip">
+**Tip:** Si aún no has conectado tu número de teléfono con la API de WhatsApp Cloud en E-SMART360, revisa nuestra guía de configuración inicial antes de continuar.
+</Callout>
+
+---
+
+## Pasos para Actualizar Plantillas de WhatsApp en E-SMART360
+
+Sigue estos pasos detallados para mantener tus plantillas al día:
+
+<Steps>
+
+<Step title="Accede al Administrador de Plantillas de WhatsApp">
+
+El primer paso para actualizar tus plantillas comienza fuera de E-SMART360, directamente en el Administrador de WhatsApp de Meta.
+
+1. Inicia sesión en [business.facebook.com](https://business.facebook.com) con tu cuenta de negocio.
+2. Selecciona tu cuenta de negocio si tienes varias.
+3. Haz clic en **"Todas las herramientas"** y luego en **"WhatsApp Manager"**.
+4. Dentro del WhatsApp Manager, haz clic en el menú de tres puntos y selecciona **"Gestionar plantillas de mensajes"**.
+
+Aquí podrás ver todas tus plantillas existentes, su estado de aprobación y las opciones para editarlas.
+
+<Callout type="warning">
+**Importante:** Los cambios que realices en el Administrador de WhatsApp no se reflejarán automáticamente en E-SMART360. Deberás seguir los pasos de sincronización que describimos más adelante.
+</Callout>
+
+</Step>
+
+<Step title="Crea o Edita tus Plantillas en WhatsApp Manager">
+
+Una vez dentro del gestor de plantillas:
+
+- Para **crear una plantilla nueva**, haz clic en **"Crear plantilla"** y selecciona la categoría adecuada:
+  - **Marketing**: Para promociones, ofertas, mensajes de bienvenida y contenido no transaccional.
+  - **Utilidad**: Para confirmaciones de pedidos, facturas, actualizaciones de envío y notificaciones transaccionales.
+  - **Autenticación**: Para códigos de verificación y contraseñas de un solo uso (OTP).
+- Para **editar una existente**, localiza la plantilla, haz clic en los tres puntos y selecciona **"Editar"**.
+- Realiza los cambios necesarios en el contenido del mensaje, asegurándote de:
+  - Mantener las variables en el formato correcto: `{{1}}`, `{{2}}`, `{{3}}`, etc.
+  - Proporcionar texto de contexto alrededor de las variables (nunca uses variables solas).
+  - No exceder los límites de caracteres permitidos.
+  - Usar un solo idioma por plantilla.
+
+### Configuración de Elementos de la Plantilla
+
+Al crear o editar una plantilla, puedes incluir los siguientes elementos:
+
+- **Encabezado (Header)**: Puede ser texto (máx. 60 caracteres), imagen, video o documento. Si usas medios, debes proporcionar un archivo de muestra.
+- **Cuerpo (Body)**: El contenido principal del mensaje. Aquí es donde usarás las variables `{{1}}`, `{{2}}`, etc.
+- **Pie de página (Footer)**: Texto opcional al final del mensaje (máx. 60 caracteres). Ideal para información legal o de contacto.
+- **Botones**:
+  - **Respuesta rápida**: Botones predefinidos que el usuario puede tocar para responder rápidamente (máx. 20 caracteres cada uno).
+  - **Llamada a la acción (CTA)**: Botones que llevan al usuario a una URL o inician una llamada telefónica.
+
+<Tabs>
+<Tab title="Límites de Caracteres">
+
+| Elemento | Límite |
+|----------|--------|
+| Encabezado (texto) | 60 caracteres |
+| Encabezado (subtítulo para medios) | 256 caracteres |
+| Cuerpo (plantillas con medios) | 1024 caracteres |
+| Cuerpo (plantillas estándar) | 4096 caracteres |
+| Pie de página | 60 caracteres |
+| Texto de botón | 20 caracteres |
+| Payload de respuesta rápida | 256 caracteres |
+
+**Nota:** Cuando envías una plantilla para aprobación, el cuerpo está restringido a 1024 caracteres de forma temporal. `{{1}}` cuenta como 1 carácter, no como el valor real que ocupará.
+
+</Tab>
+<Tab title="Ejemplos por Categoría">
+
+**Utilidad:**
+- "Tu pedido #{{1}} ha sido confirmado. Recibirás una actualización de seguimiento pronto."
+- "Tu pago de ${{1}} se ha procesado correctamente. Gracias por tu compra."
+- "Recordatorio: Tu cita con {{1}} está programada para el {{2}} a las {{3}}. Responde CONFIRMAR para asistir."
+
+**Marketing:**
+- "¡Oferta exclusiva! Obtén un {{1}}% de descuento en tu próxima compra. Usa el código {{2}}."
+- "Te extrañamos! Disfruta de envío gratis en tu próximo pedido. Toca abajo para comprar ahora."
+- "Únete a nuestro webinar sobre {{1}} el {{2}}. ¡Regístrate aquí: {{3}}"
+
+</Tab>
+<Tab title="Límites para Medios">
+
+| Tipo de medio | Tamaño máximo | Formato |
+|---------------|---------------|--------|
+| Imagen | 5 MB | JPG, PNG |
+| Video | 16 MB | MP4 |
+| Documento | 100 MB | PDF, DOCX, etc. |
+
+Si tu plantilla incluye medios, debes proporcionar un archivo de muestra al enviarla para aprobación. La falta de este archivo de muestra es una de las causas más comunes de rechazo.
+
+</Tab>
+</Tabs>
+
+</Step>
+
+<Step title="Desvincula la Plantilla en E-SMART360">
+
+Una vez que hayas realizado los cambios en el Administrador de WhatsApp, el siguiente paso es preparar E-SMART360 para recibir la plantilla actualizada.
+
+1. Inicia sesión en tu cuenta de **E-SMART360**.
+2. Navega hasta la sección **"Plantillas"** en el menú principal.
+3. Localiza la plantilla que deseas actualizar en la lista de plantillas sincronizadas.
+4. Haz clic en la opción **"Desvincular"** (Unlink).
+
+<Callout type="info">
+**¿Qué hace exactamente "Desvincular"?**  
+Esta acción elimina la conexión entre la plantilla en E-SMART360 y la plantilla en el Administrador de WhatsApp, pero **no elimina ni modifica la plantilla original** en WhatsApp Manager. Es simplemente un paso preparatorio para poder sincronizar la versión actualizada.
+</Callout>
+
+</Step>
+
+<Step title="Sincroniza las Plantillas en E-SMART360">
+
+Con la plantilla anterior desvinculada, ahora puedes traer la versión actualizada:
+
+1. En la misma sección de **"Plantillas"**, haz clic en el botón **"Sincronizar plantillas"** (Sync Template).
+2. E-SMART360 se conectará con la API de WhatsApp Cloud y obtendrá todas las plantillas del Administrador de WhatsApp que **no estén actualmente vinculadas** en la plataforma.
+3. Espera a que la sincronización se complete. Este proceso suele tomar solo unos segundos.
+
+<Callout type="tip">
+**Tip:** La sincronización solo traerá plantillas que no estén vinculadas actualmente en E-SMART360. Por eso es importante desvincular primero la plantilla antigua antes de sincronizar.
+</Callout>
+
+</Step>
+
+<Step title="Mapea la Plantilla Actualizada">
+
+Una vez que las plantillas se hayan sincronizado, verás la versión actualizada en la lista:
+
+1. Localiza la plantilla actualizada en la lista de plantillas disponibles.
+2. Haz clic en **"Mapear"** (Map) para vincular la plantilla actualizada con E-SMART360.
+3. Revisa y ajusta los campos necesarios:
+   - **Variables de la plantilla**: Asegúrate de que cada variable `{{1}}`, `{{2}}`, etc., tenga un valor de ejemplo o una asignación correcta.
+   - **Botones**: Verifica que los botones de llamada a la acción (CTA) o respuestas rápidas estén configurados correctamente.
+   - **Pie de página**: Confirma que el texto del pie de página, si existe, sea el adecuado.
+4. Guarda los cambios.
+
+<Callout type="success">
+**Variables mapeadas correctamente** = plantilla funcionando sin errores. Un mapeo incorrecto puede causar que la plantilla falle al enviarse, mostrando variables sin reemplazar.
+</Callout>
+
+</Step>
+
+<Step title="Verifica la Actualización">
+
+El último paso, y uno de los más importantes, es verificar que todo funcione correctamente:
+
+1. Envía un **mensaje de prueba** utilizando la plantilla actualizada.
+2. Revisa que:
+   - El contenido del mensaje se muestre correctamente.
+   - Las variables aparezcan reemplazadas con los valores correctos.
+   - Los botones funcionen según lo esperado.
+   - El formato general sea el adecuado (saltos de línea, emojis, etc.).
+3. Si encuentras algún error, repite los pasos anteriores para corregirlo.
+
+<Callout type="warning">
+**Importante:** Siempre realiza pruebas antes de usar la plantilla actualizada en campañas reales. Una plantilla mal actualizada puede afectar la comunicación con tus clientes.
+</Callout>
+
+</Step>
+
+</Steps>
+
+---
+
+## Gestión de Plantillas desde E-SMART360
+
+Además de sincronizar plantillas desde el Administrador de WhatsApp, E-SMART360 te permite crear y gestionar plantillas directamente desde la plataforma. Esta opción es especialmente útil cuando necesitas crear plantillas rápidamente sin salir del entorno de trabajo.
+
+### Cómo Crear una Plantilla Directamente en E-SMART360
+
+<Steps>
+
+<Step title="Accede al Gestor de Plantillas">
+
+Desde el panel principal de E-SMART360, ve a la sección **"Plantillas"** en el menú de navegación. Aquí verás todas tus plantillas sincronizadas y las creadas localmente.
+
+</Step>
+
+<Step title="Configura las Variables (Opcional)">
+
+Antes de crear la plantilla, puedes definir las variables que utilizarás:
+
+1. Desplázate hasta la sección **"Variables de plantilla"**.
+2. Haz clic en **"Crear"**.
+3. Ingresa un nombre para la variable (por ejemplo, `nombre_cliente`, `numero_pedido`).
+4. Haz clic en **"Guardar"**.
+
+Las variables creadas aquí estarán disponibles para usarlas en tus plantillas.
+
+</Step>
+
+<Step title="Crea la Plantilla">
+
+1. Ve a la sección **"Configuración de plantilla de mensaje"**.
+2. Haz clic en **"Crear"** y completa el formulario:
+   - **Nombre de la plantilla**: Elige un nombre descriptivo (ej: `confirmacion_pedido_es`).
+   - **Cuerpo del mensaje**: Escribe tu mensaje e inserta las variables donde sea necesario.
+   - **Texto de pie de página** (opcional): Información adicional al final.
+   - **Respuesta rápida** (opcional): Selecciona si necesitas botones de respuesta rápida.
+   - **Texto del botón**: Agrega el texto para los botones si los necesitas.
+3. Haz clic en **"Guardar"**.
+
+</Step>
+
+<Step title="Espera la Aprobación">
+
+La plantilla se enviará automáticamente a WhatsApp para su revisión. El estado aparecerá como **"Pendiente"**. Una vez aprobada, cambiará a **"Aprobada"** y estará lista para usar.
+
+</Step>
+
+</Steps>
+
+<Callout type="tip">
+**Diferencia clave:** Las plantillas creadas en E-SMART360 pasan por el mismo proceso de aprobación de WhatsApp que las creadas en el Administrador de WhatsApp. La ventaja es que no necesitas cambiar de plataforma.
+</Callout>
+
+### Usos de las Plantillas Aprobadas
+
+Una vez que tu plantilla está aprobada, puedes utilizarla en:
+
+<Columns cols="3">
+
+<Card title="Broadcasting">
+Envía la plantilla a múltiples contactos simultáneamente. Ideal para campañas de marketing masivo, comunicados importantes o recordatorios programados.
+</Card>
+
+<Card title="Live Chat">
+Utiliza la plantilla directamente desde el chat en vivo para responder rápidamente a consultas comunes de clientes, ahorrando tiempo de escritura.
+</Card>
+
+<Card title="Flujos Automatizados">
+Integra la plantilla en tus flujos de chatbot o automatizaciones. Por ejemplo, disparar una plantilla de confirmación automáticamente después de una compra en WooCommerce o Shopify.
+</Card>
+
+</Columns>
+
+---
+
+## Beneficios de Mantener tus Plantillas Actualizadas
+
+Mantener tus plantillas al día no es solo una buena práctica, es una necesidad estratégica. Estos son los principales beneficios:
+
+<Columns cols="2">
+
+<Card title="Comunicación Mejorada">
+Las actualizaciones regulares aseguran que tus mensajes sean relevantes y atractivos para tu audiencia. Una plantilla desactualizada puede parecer irrelevante o confusa, reduciendo la tasa de respuesta y el compromiso del cliente.
+</Card>
+
+<Card title="Consistencia de Marca">
+Mantén una voz y un mensaje de marca coherentes en todas tus comunicaciones. Actualizar tus plantillas te permite alinear los mensajes con campañas actuales, promociones estacionales y cambios en tu tono de comunicación.
+</Card>
+
+<Card title="Cumplimiento Normativo">
+WhatsApp actualiza periódicamente sus políticas y directrices. Mantener tus plantillas al día te ayuda a cumplir con las políticas de WhatsApp, evitando rechazos o bloqueos. Las plantillas que violan las políticas pueden ser rechazadas o incluso resultar en restricciones a tu cuenta.
+</Card>
+
+<Card title="Eficiencia Operativa">
+Ahorra tiempo y recursos reutilizando y modificando plantillas existentes en lugar de crear unas completamente nuevas. La actualización es mucho más rápida que la creación desde cero, ya que las plantillas ya han pasado por el proceso de aprobación de WhatsApp.
+</Card>
+
+</Columns>
+
+<Callout type="info">
+**¿Sabías que...?**  
+Las plantillas de tipo **Utilidad** están pre-aprobadas para comunicaciones transaccionales y no promocionales. Si tu plantilla incluye tanto contenido de utilidad como de marketing, WhatsApp la clasificará automáticamente como plantilla de marketing.
+</Callout>
+
+---
+
+## Razones Comunes por las que las Plantillas son Rechazadas
+
+Entender por qué WhatsApp rechaza las plantillas te ayudará a evitarlo en tus actualizaciones. Estas son las causas más frecuentes:
+
+<Tabs>
+<Tab title="Errores de Formato">
+
+| Problema | Solución |
+|----------|----------|
+| Variables sin contexto | Siempre rodea las variables con texto descriptivo |
+| Nombre de plantilla genérico | Usa nombres descriptivos como `confirmacion_pedido_003` |
+| Texto usado como variable | Usa placeholders numéricos: `{{1}}`, no `{{nombre}}` |
+| Faltan dobles llaves | Siempre usa `{{ }}` para las variables |
+| Numeración incorrecta de variables | Asegura que sean secuenciales: `{{1}}`, `{{2}}`, `{{3}}` |
+
+</Tab>
+<Tab title="Errores de Contenido">
+
+| Problema | Solución |
+|----------|----------|
+| Líneas vacías en el contenido | Usa guiones (`----`) para separar párrafos |
+| Errores ortográficos o jerga | Revisa y corrige todo el contenido antes de enviar |
+| Acortadores de URL (bit.ly, etc.) | Usa URLs completas o agrégalas como botones CTA |
+| Mezcla de idiomas | Usa un solo idioma por plantilla |
+| Emojis en botones de respuesta rápida | Evita emojis en el texto de los botones |
+
+</Tab>
+<Tab title="Errores de Categoría y Política">
+
+| Problema | Solución |
+|----------|----------|
+| Categoría incorrecta | Selecciona la categoría que coincida con la intención del mensaje |
+| Contenido no compliant | Asegúrate de cumplir con las Políticas Comerciales de WhatsApp |
+| Lenguaje abusivo o amenazante | Mantén un tono profesional y respetuoso |
+| Plantillas duplicadas | Modifica ligeramente el contenido y usa un ID de plantilla diferente |
+| Falta de enlace de baja | Incluye una opción para que los usuarios cancelen la suscripción |
+| Solicitar datos sensibles | No pidas números de tarjeta de crédito, contraseñas, etc. |
+
+</Tab>
+</Tabs>
+
+<Callout type="warning">
+**Si tu plantilla es rechazada:** No puedes editar una plantilla rechazada directamente. Debes duplicarla, hacer los cambios necesarios y volver a enviarla para aprobación. Ve a la sección de "Rechazadas", haz clic en los tres puntos y selecciona "Duplicar plantilla".
+</Callout>
+
+---
+
+## Cómo Solucionar Problemas con Plantillas Rechazadas
+
+Si una plantilla es rechazada, es importante actuar rápidamente para minimizar el impacto en tus comunicaciones. Aquí tienes una guía paso a paso para manejar los rechazos:
+
+### Proceso de Corrección de Plantillas Rechazadas
+
+1. **Identifica el motivo del rechazo**: WhatsApp proporciona una razón específica cuando rechaza una plantilla. Revisa el estado en el Administrador de WhatsApp o en E-SMART360.
+2. **No puedes editar una plantilla rechazada directamente**: WhatsApp no permite modificar plantillas rechazadas. Debes crear una copia.
+3. **Duplica la plantilla**: En el Administrador de WhatsApp, ve a la sección de plantillas rechazadas, haz clic en los tres puntos (⋯) y selecciona **"Duplicar plantilla"**.
+4. **Corrige los errores**: Basándote en el motivo del rechazo, ajusta el contenido:
+   - Si el problema son las variables, revísalas una por una.
+   - Si es la categoría, cámbiala antes de reenviar.
+   - Si es el contenido, ajústalo para cumplir con las políticas.
+5. **Reenvía para aprobación**: Una vez corregida, envía la nueva versión para su revisión.
+6. **Sincroniza en E-SMART360**: Cuando la plantilla esté aprobada, repite el proceso de sincronización.
+
+### Tabla Rápida de Problemas y Soluciones
+
+| Problema | Síntoma | Solución Rápida |
+|----------|---------|----------------|
+| Variables sin contexto | La plantilla no explica el propósito | Agrega texto alrededor de `{{1}}` |
+| Categoría incorrecta | Aparece como "Rechazada - Categoría" | Cambia a Marketing, Utilidad o Autenticación según corresponda |
+| Límite de caracteres excedido | La plantilla se trunca | Reduce el contenido del cuerpo o encabezado |
+| Enlace acortado | Contiene bit.ly, tinyurl, etc. | Usa la URL completa en un botón CTA |
+| Mezcla de idiomas | Contiene español e inglés | Estandariza a un solo idioma |
+| Sin archivo de muestra para medios | Plantilla con imagen/video pero sin ejemplo | Adjunta un archivo de muestra |
+| Variables mal numeradas | `{{2}}` antes que `{{1}}` | Reordena secuencialmente |
+| Contenido duplicado | Texto idéntico a otra plantilla existente | Modifica ligeramente el contenido y cambia el nombre |
+| Sin opción de baja | Plantilla de marketing sin unsubscribe | Agrega un enlace para cancelar suscripción |
+
+<Callout type="warning">
+**Políticas importantes:** Nunca incluyas contenido que:
+- Solicite información sensible (números de tarjeta de crédito, contraseñas, documentos de identidad).
+- Promocione productos restringidos (armas, drogas, tabaco, contenido para adultos).
+- Contenga lenguaje abusivo, amenazante o engañoso.
+- Incluya enlaces a sitios no seguros o engañosos.
+
+El incumplimiento de estas políticas puede resultar en la suspensión de tu cuenta de WhatsApp Business.
+</Callout>
+
+---
+
+## Ejemplos Prácticos
+
+### Ejemplo 1: Actualización de una Plantilla de Confirmación de Pedido
+
+Imagina que tienes una plantilla de confirmación de pedido y necesitas agregar un enlace de seguimiento:
+
+**Plantilla anterior:**
+> "¡Gracias por tu compra, {{1}}! Tu pedido #{{2}} está siendo procesado."
+
+**Plantilla actualizada:**
+> "¡Gracias por tu compra, {{1}}! Tu pedido #{{2}} está en camino. Haz clic aquí para rastrearlo: {{3}}"
+
+<Tabs>
+<Tab title="Pasos Realizados">
+
+1. Accediste al Administrador de WhatsApp y editaste la plantilla.
+2. Agregaste la variable `{{3}}` para el enlace de seguimiento.
+3. Desvinculaste la plantilla antigua en E-SMART360.
+4. Sincronizaste las plantillas.
+5. Mapeaste la nueva variable `{{3}}` al campo correspondiente.
+6. Enviaste un mensaje de prueba y verificaste que todo funcionara.
+
+</Tab>
+<Tab title="Resultado">
+
+✓ La plantilla actualizada se envía correctamente.  
+✓ El enlace de seguimiento aparece correctamente reemplazado.  
+✓ Los clientes pueden rastrear sus pedidos directamente desde WhatsApp.
+
+</Tab>
+</Tabs>
+
+### Ejemplo 2: Migración de Plantilla de Marketing a Utilidad
+
+Tienes una plantilla de marketing con ofertas que ahora quieres convertir en una plantilla de utilidad para notificaciones de facturación:
+
+<Columns cols="2">
+
+<Card title="❌ Plantilla de Marketing Original">
+"¡Ofertas increíbles esta semana! Obtén un 30% de descuento en todos nuestros productos. Usa el código FELIZ30. ¡Compra ahora!"
+</Card>
+
+<Card title="✅ Plantilla de Utilidad Actualizada">
+"Recordatorio: Tu factura #{{1}} por ${{2}} está próxima a vencer el {{3}}. Realiza tu pago aquí: {{4}}"
+</Card>
+
+</Columns>
+
+<Callout type="info">
+**¿Por qué es importante esta distinción?**  
+Las plantillas de marketing tienen restricciones diferentes a las de utilidad. Por ejemplo, las plantillas de marketing requieren que el usuario haya optado por recibir comunicaciones promocionales, mientras que las de utilidad pueden enviarse para transacciones sin opt-in adicional.
+</Callout>
+
+### Ejemplo 3: Actualización de una Plantilla con Imagen de Producto
+
+Tienes una plantilla de marketing que muestra un producto con imagen, y necesitas cambiar el producto destacado para una nueva temporada.
+
+**Plantilla anterior (temporada de verano):**
+> Encabezado: [Imagen de playa]
+> Cuerpo: "¡Prepárate para el verano, {{1}}! Nuestra colección de trajes de baño ya está disponible. Usa el código VERANO{{2}} para un 15% de descuento."
+> Botón: "Ver colección"
+
+**Plantilla actualizada (temporada de invierno):**
+> Encabezado: [Imagen de montaña nevada]
+> Cuerpo: "El invierno llegó, {{1}}! Descubre nuestra nueva colección de abrigos y accesorios. Usa el código INVIERNO{{2}} y obtén un 20% de descuento en tu primera compra."
+> Botón: "Comprar ahora"
+
+<Steps>
+
+<Step title="Cambia la imagen en el Administrador de WhatsApp">
+Edita la plantilla existente y reemplaza la imagen del encabezado con la nueva imagen de la temporada de invierno. Asegúrate de adjuntar la nueva imagen como archivo de muestra.
+</Step>
+
+<Step title="Actualiza el texto y las variables">
+Modifica el cuerpo del mensaje para reflejar la nueva temporada. Cambia el código de descuento y actualiza el texto del botón. Verifica que las variables `{{1}}` y `{{2}}` sigan siendo correctas.
+</Step>
+
+<Step title="Desvincula, sincroniza y mapea en E-SMART360">
+Sigue los pasos 3, 4 y 5 de la guía principal. Al mapear la plantilla actualizada, asegúrate de que las variables apunten a los campos correctos en tu base de datos.
+</Step>
+
+</Steps>
+
+<Callout type="success">
+**Resultado:** Tu plantilla de temporada está actualizada con la nueva imagen y contenido. Los clientes recibirán el mensaje correcto para la temporada activa, mejorando la relevancia y la tasa de conversión.
+</Callout>
+
+---
+
+## Buenas Prácticas para la Gestión de Plantillas
+
+<Columns cols="2">
+
+<Card title="Nombres Descriptivos">
+Usa nombres que describan claramente el propósito de la plantilla, como `confirmacion_pedido_es` o `promo_bienvenida_2026`. Evita nombres genéricos como `plantilla_001` o `template_003`. Los nombres descriptivos facilitan la búsqueda y el mantenimiento a largo plazo.
+</Card>
+
+<Card title="Mantenimiento Regular">
+Revisa y actualiza tus plantillas periódicamente. Programa una revisión mensual de todas tus plantillas activas para verificar que:
+- El contenido sigue siendo relevante.
+- Los enlaces siguen funcionando.
+- Las variables están mapeadas correctamente.
+- No hay plantillas duplicadas o en desuso.
+</Card>
+
+<Card title="Pruebas Antes de Publicar">
+Siempre envía un mensaje de prueba antes de usar una plantilla actualizada en campañas reales. Esto te permite detectar errores de formato, variables mal reemplazadas o problemas de visualización en diferentes dispositivos.
+</Card>
+
+<Card title="Documentación">
+Mantén un registro de todas tus plantillas: fecha de creación, fecha de última actualización, propósito, campañas asociadas y estado de aprobación. Esto facilita la gestión y la toma de decisiones sobre cuándo actualizar o retirar plantillas.
+</Card>
+
+</Columns>
+
+---
+
+## Preguntas Frecuentes
+
+<Expandable title="¿Con qué frecuencia debo actualizar mis plantillas de WhatsApp?">
+No hay una frecuencia fija, pero se recomienda revisar tus plantillas al menos una vez al mes o cada vez que:
+- Cambies tus productos, servicios o precios.
+- Actualices tu política de privacidad o términos de servicio.
+- WhatsApp publique nuevas directrices o políticas.
+- Notes una disminución en la tasa de entrega o engagement.
+- Inicies una nueva campaña de marketing o promoción estacional.
+</Expandable>
+
+<Expandable title="¿Qué hago si mi plantilla actualizada es rechazada por WhatsApp?">
+Si tu plantilla es rechazada, sigue estos pasos:
+1. Ve a la sección de plantillas rechazadas en el Administrador de WhatsApp.
+2. Haz clic en los tres puntos (⋯) y selecciona **"Duplicar plantilla"**.
+3. Realiza las correcciones necesarias basándote en el motivo del rechazo.
+4. Vuelve a enviarla para aprobación.
+5. Una vez aprobada, repite el proceso de sincronización en E-SMART360.
+
+Recuerda que **no puedes editar directamente una plantilla rechazada**, debes duplicarla y crear una nueva versión.
+</Expandable>
+
+<Expandable title="¿La sincronización afecta las plantillas que ya están en uso en campañas activas?">
+Sí, puede afectarlas. Por eso es importante:
+- No desvincular una plantilla que esté siendo utilizada activamente en una campaña en curso.
+- Programar las actualizaciones para momentos de bajo tráfico.
+- Verificar siempre con una prueba antes de poner la plantilla actualizada en producción.
+- Si la campaña es crítica, considera crear una plantilla nueva en lugar de actualizar una existente, para no interrumpir la comunicación activa.
+</Expandable>
+
+<Expandable title="¿Puedo tener varias versiones de la misma plantilla en E-SMART360?">
+Sí, es posible. Cada plantilla sincronizada desde el Administrador de WhatsApp tiene un identificador único. Puedes tener múltiples versiones si cambias ligeramente el contenido o el nombre de la plantilla. Sin embargo, ten en cuenta que todas deben pasar por el proceso de aprobación de WhatsApp individualmente.
+</Expandable>
+
+<Expandable title="¿Qué límites de caracteres debo respetar en mis plantillas?">
+Los límites son los siguientes:
+- **Encabezado de texto**: Hasta 60 caracteres.
+- **Subtítulo para medios**: Hasta 256 caracteres.
+- **Cuerpo para plantillas con medios**: Hasta 1024 caracteres.
+- **Cuerpo para plantillas estándar**: Hasta 4096 caracteres.
+- **Pie de página**: Hasta 60 caracteres.
+- **Texto de botón**: Hasta 20 caracteres.
+- **Payload de respuesta rápida**: Hasta 256 caracteres.
+
+Exceder estos límites resultará en el rechazo automático de tu plantilla. Recuerda que `{{1}}` cuenta como 1 carácter.
+</Expandable>
+
+<Expandable title="¿Cómo verifico la calificación de calidad de mis plantillas en E-SMART360?">
+E-SMART360 proporciona información sobre la calificación de calidad de tus plantillas directamente desde el panel de control. Puedes acceder a esta información en la sección de **Plantillas > Calidad**. Una calificación baja puede indicar que tus plantillas están siendo marcadas como spam o que los usuarios están bloqueando los mensajes. En ese caso, revisa el contenido y la frecuencia de tus envíos.
+</Expandable>
+
+<Expandable title="¿Puedo usar plantillas de WhatsApp para enviar mensajes a cualquier hora?">
+Sí, esa es precisamente la ventaja de las plantillas aprobadas. Mientras que los mensajes de sesión (respondiendo a un cliente) solo pueden enviarse dentro de la ventana de 24 horas, las plantillas aprobadas pueden iniciar una conversación en cualquier momento. Sin embargo, ten en cuenta que:
+
+- Las plantillas de **autenticación** se pueden enviar en cualquier momento sin costo adicional.
+- Las plantillas de **utilidad** y **marketing** inician una conversación de servicio que tiene un costo asociado.
+- Cada envío de plantilla abre una ventana de 24 horas para enviar mensajes de sesión sin costo adicional.
+</Expandable>
+
+<Expandable title="¿Qué sucede si la plantilla actualizada tiene un error después de sincronizarla?">
+Si después de sincronizar y verificar encuentras un error en la plantilla:
+
+1. **No uses la plantilla** en campañas activas hasta resolver el problema.
+2. **Corrige el error** en el Administrador de WhatsApp (si el error está en el contenido) o en E-SMART360 (si está en el mapeo de variables).
+3. **Desvincula y vuelve a sincronizar** siguiendo los pasos 3 a 6 de nuestra guía.
+4. **Prueba nuevamente** antes de ponerla en producción.
+
+Si el error persiste, contacta a nuestro equipo de soporte para asistencia personalizada.
+</Expandable>
+
+<Expandable title="¿Puedo usar imágenes, videos o documentos en mis plantillas de WhatsApp?">
+Sí, WhatsApp permite plantillas con medios. Estas plantillas pueden incluir:
+
+- **Imágenes**: Hasta 5 MB en formato JPG o PNG.
+- **Videos**: Hasta 16 MB en formato MP4.
+- **Documentos**: Hasta 100 MB en formato PDF, DOCX, etc.
+
+Importante: Cuando envíes la plantilla para aprobación, debes adjuntar un archivo de muestra del medio que planeas usar. Sin este archivo de muestra, la plantilla será rechazada automáticamente. Además, las plantillas con medios tienen un límite de 1024 caracteres en el cuerpo del mensaje.
+</Expandable>
+
+<Expandable title="¿Cómo afecta la calificación de calidad al envío de plantillas?">
+La calificación de calidad de tu número de teléfono en WhatsApp afecta directamente el límite de mensajes que puedes enviar:
+
+- **Alta (Green)**: Sin restricciones, hasta el límite de tu tier de mensajería.
+- **Media (Yellow)**: Límite reducido. WhatsApp monitorea activamente tus mensajes.
+- **Baja (Red)**: Límite severamente restringido. Riesgo de bloqueo del número.
+
+Para mantener una calificación alta:
+- Envía contenido relevante y esperado por los usuarios.
+- Respeta las tasas de opt-out (baja de suscripción).
+- Evita enviar mensajes a números que han bloqueado tu cuenta.
+- Usa plantillas actualizadas y que cumplan con las políticas.
+</Expandable>
+
+---
+
+## Conclusión
+
+Actualizar las plantillas de WhatsApp en E-SMART360 es un proceso sencillo y eficiente que garantiza que tus comunicaciones sigan siendo efectivas y estén siempre actualizadas. Siguiendo los pasos descritos en esta guía —acceder al Administrador de WhatsApp, desvincular, sincronizar, mapear y verificar— puedes mantener tus plantillas en óptimas condiciones sin complicaciones.
+
+<Callout type="success">
+**Resumen rápido:**  
+1. ✅ Edita tu plantilla en WhatsApp Manager  
+2. ✅ Desvincúlala en E-SMART360  
+3. ✅ Sincroniza las plantillas  
+4. ✅ Mapea la versión actualizada  
+5. ✅ Verifica con una prueba  
+6. ✅ ¡Listo para usar en tus campañas!
+</Callout>
+
+Para obtener instrucciones más detalladas o soporte adicional, no dudes en contactar a nuestro equipo de soporte. ¡Felices mensajes!
+
+<Update title="Guía actualizada" date="2026-01-24">
+Esta guía se ha actualizado para reflejar los cambios más recientes en el proceso de sincronización de plantillas y las nuevas directrices de WhatsApp sobre límites de caracteres y categorías de plantillas.
+</Update>

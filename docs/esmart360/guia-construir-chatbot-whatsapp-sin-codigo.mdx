@@ -1,0 +1,771 @@
+---
+title: "Cómo construir un chatbot de WhatsApp simple sin programación"
+description: "Aprende paso a paso a crear tu propio chatbot de WhatsApp sin escribir una sola línea de código. Conecta tu cuenta, diseña flujos de conversación con arrastrar y soltar, y automatiza ventas, soporte y marketing desde cero."
+---
+
+import { Callout, Steps, Step, Expandable, Columns, Card, Tabs, Tab, CodeGroup, CodeGroupItem, Update } from '/src/components';
+
+# Cómo construir un chatbot de WhatsApp simple sin programación
+
+<Update title="Actualización" date="3 de febrero de 2026" />
+
+<Callout type="tip">
+**Resumen ejecutivo:** Crea un chatbot de WhatsApp en minutos — sin programación, sin dolores de cabeza. Usa una cuenta verificada de WhatsApp Business y un constructor sin código como E-SMART360 para automatizar conversaciones, impulsar ventas y ofrecer soporte instantáneo. Estos chatbots logran una **tasa de apertura del 98%** y un **aumento del 156% en las tasas de conversión** frente a los canales tradicionales. Así es como las marcas modernas convierten conversaciones en ingresos.
+</Callout>
+
+Desde que un cliente hace una consulta simple hasta que compra el producto deseado, todo ese proceso es todo un recorrido, ¿verdad?
+
+Cuando esto ocurre físicamente en una tienda, piensa en todos los pasos: recibirlos, responder sus diversas preguntas, mostrarles diferentes productos que se ajusten a sus preferencias y finalmente cerrar el trato. Sin embargo, replicar todos esos pasos de forma fiable en línea es un gran desafío, especialmente cuando se maneja un alto volumen de clientes. Pero en esta era tecnológica, lograr ese mismo éxito es más fácil — solo con mantenerse un poco actualizado.
+
+¿Te preguntas cómo? La respuesta es: un chatbot, un simple chatbot de WhatsApp.
+
+---
+
+## ¿Qué es un chatbot de WhatsApp y por qué usarlo?
+
+Un chatbot de WhatsApp es simplemente una tecnología para "chatear" automáticamente con los clientes. Aunque eres tú quien decide _qué, cuándo, por qué y cuánto_ dirá. En otras palabras, es una herramienta de automatización empresarial.
+
+<Callout type="info">
+Estudios recientes confirman que **el 67% de los usuarios se sienten más seguros** comprando en empresas a las que pueden contactar por WhatsApp, y las tasas de conversión en WhatsApp son típicamente **3 veces más altas que las campañas de correo electrónico**.
+</Callout>
+
+Por eso, gigantes corporativos como Nivea, Unilever y Flamingo han adoptado chatbots de WhatsApp desde hace bastante tiempo. Los números lo demuestran:
+
+<Columns cols="3">
+<Card title="98% de apertura">
+Los mensajes de WhatsApp tienen una tasa de apertura del 98%, superando con creces al email (20%) y a otros canales tradicionales.
+</Card>
+<Card title="156% más conversiones">
+Las empresas que implementan chatbots en WhatsApp reportan un incremento verificable del 156% en sus tasas de conversión.
+</Card>
+<Card title="3x vs Email">
+La tasa de conversión en WhatsApp es tres veces superior a la del marketing por correo electrónico.
+</Card>
+</Columns>
+
+---
+
+## Construye tu primer chatbot de WhatsApp en menos de 10 minutos
+
+Ahora, vayamos al grano — qué tan rápido puedes construir un chatbot incluso si no eres un experto en tecnología. Principalmente, necesitarás dos cosas:
+
+1. **Una Cuenta de WhatsApp Business verificada (WABA)**
+2. **Un Proveedor de Servicios Empresariales (BSP) sin código**
+
+<Callout type="warning">
+**Requisitos previos importantes:**
+- Una cuenta de Meta Business Suite con acceso de administrador
+- Una WABA vinculada a tu cuenta de Meta Business Suite o página de perfil
+- Un número de teléfono activo para verificar la cuenta
+</Callout>
+
+Suponiendo que tu WABA verificada ya está configurada. Si no es así, puedes instalar WhatsApp Business y verificarlo con tu número de móvil. No es ciencia espacial. En esta guía, el proceso completo se mostrará usando E-SMART360 como BSP. Puedes [registrarte gratis](https://esmart360.com/registro) y activar tu cuenta si aún no lo has hecho.
+
+### Paso 1: Conecta tu cuenta de WhatsApp
+
+<Steps>
+<Step title="Accede al panel principal">
+Abre tu cuenta de E-SMART360 en el navegador. Desde el menú lateral:
+
+- Selecciona **Conectar Cuenta → Conectar WhatsApp**
+- Verás dos opciones disponibles. Selecciona la opción marcada para una **integración en un solo clic**
+
+<Callout type="tip">
+La segunda opción es comparativamente más lenta y requiere más pasos. Úsala solo como respaldo. Si necesitas el proceso detallado, puedes consultar nuestra [guía de configuración de WhatsApp Cloud API](/recursos/configuracion-whatsapp-cloud-api).
+</Callout>
+</Step>
+
+<Step title="Selecciona tu método de conexión">
+Elige según tu configuración: con o sin permiso de catálogo.
+
+**Haz clic →** Serás redirigido a una página de inicio de sesión de Facebook. Completa la información requerida. Usa la cuenta que tenga acceso de administrador a tu Meta Business Suite.
+</Step>
+
+<Step title="Autoriza la conexión">
+**Siguiente →** Selecciona el botón marcado en la pantalla. Sigue las instrucciones adicionales en pantalla y haz clic en **Guardar**.
+</Step>
+
+<Step title="Confirma la vinculación">
+Una vez verificado, E-SMART360 finalizará el enlace. Después de eso, revisa tu **Panel de E-SMART360** para confirmar que tu cuenta de WhatsApp está vinculada correctamente.
+
+¡Y entonces estás listo para volar!
+</Step>
+</Steps>
+
+### Paso 2: Configura tu primer flujo de chatbot
+
+Ahora llega la parte interesante: diseñar exactamente cómo interactuará el chatbot con tus clientes sin escribir una sola línea de código. Es hora de conocer tu **Gestor de Bots**.
+
+<Steps>
+<Step title="Accede al Gestor de Bots">
+Desde el **Panel principal**:
+
+- Haz clic en **Gestor de Chatbots** → Navega al menú **Bot de WhatsApp**
+- Selecciona la sección **Respuesta del Bot** → Haz clic en **Crear**
+
+Se abrirá un lienzo de construcción de flujos visual. Aquí verás los diversos componentes que puedes usar para configurar las acciones de tu chatbot.
+</Step>
+
+<Step title="Familiarízate con el lienzo visual">
+El lienzo del constructor de flujos muestra una interfaz de **arrastrar y soltar** con múltiples componentes. Una vez que te sientas cómodo con esta interfaz, serás imparable. No hay nada que tu bot no pueda manejar: desde preguntas frecuentes y atención al cliente hasta campañas de ventas completas.
+
+<Callout type="success">
+**Componentes disponibles:**
+- **Texto mensaje**: para respuestas simples
+- **Componente interactivo**: para mensajes con botones
+- **Componente de lista**: para menús desplegables
+- **Condiciones**: para bifurcar la conversación
+- **Secuencia**: para programar mensajes diferidos
+- **Conexión HTTP**: para integrar APIs externas
+- **Componente de flujo**: para formularios nativos de WhatsApp
+- **Etiquetas**: para segmentar y rastrear usuarios
+</Callout>
+</Step>
+
+<Step title="Crea un mensaje de bienvenida">
+Comencemos con una nota de saludo simple. Arrastra un componente de **Mensaje de Texto** al lienzo. Conéctalo desde el nodo de inicio "Iniciar Flujo del Bot".
+
+Configura el mensaje con un saludo inicial, por ejemplo:
+
+```
+¡Hola! 👋 Bienvenido a [Nombre de tu empresa].
+¿En qué puedo ayudarte hoy?
+```
+
+<Callout type="tip">
+Puedes usar **variables personalizadas** en tus mensajes para personalizar la experiencia. Por ejemplo: `Hola {{nombre_usuario}}, gracias por contactarnos`.
+</Callout>
+</Step>
+
+<Step title="Guarda y prueba el bot">
+Una vez hayas configurado el flujo, guarda los cambios. Luego, abre WhatsApp y envía un mensaje a tu número de negocio para probar que el chatbot responde correctamente.
+
+¡Excelente! Está funcionando. Acabas de construir un chatbot de WhatsApp simple.
+</Step>
+</Steps>
+
+---
+
+## Crea un chatbot basado en palabras clave
+
+Los chatbots basados en palabras clave son perfectos para responder automáticamente cuando un usuario escribe términos específicos como "hola", "precio" o "catálogo". Esta funcionalidad te permite dirigir a cada cliente al flujo correcto según su intención.
+
+### Configurar una palabra clave como disparador
+
+1. En el **Gestor de Bots**, abre el nodo **Iniciar Flujo del Bot**
+2. Haz doble clic para abrir el modal **Configurar Referencia**
+3. Ingresa un nombre para tu bot en el campo **Título**
+4. En el campo **Palabra Clave**, escribe el término que activará el bot (ej: "Hola", "Ayuda", "Productos")
+5. Selecciona el tipo de coincidencia:
+   - **Coincidencia Exacta**: el bot solo se activa con la palabra exacta
+   - **Coincidencia de Cadena**: el bot se activa si el mensaje contiene la palabra clave en cualquier contexto
+
+<Callout type="info">
+Por ejemplo, si configuras "hola" con coincidencia de cadena, el bot responderá tanto si el usuario escribe "Hola" como "Hola, necesito ayuda" o "Hola buenos días".
+</Callout>
+
+### Agregar componentes interactivos con botones
+
+Los botones permiten guiar al usuario a través de un menú de opciones, mejorando la experiencia de navegación:
+
+<Steps>
+<Step title="Conecta un componente interactivo">
+Desde el conector "Siguiente" del nodo de inicio, arrastra y suelta en el lienzo. Selecciona el **Componente Interactivo** de las opciones que aparecen.
+</Step>
+
+<Step title="Configura el mensaje interactivo">
+Haz doble clic en el componente interactivo. Completa:
+- **Encabezado del mensaje**: texto opcional que aparece en negrita arriba
+- **Cuerpo del mensaje**: (obligatorio) el texto principal
+- **Pie del mensaje**: texto opcional en la parte inferior
+- **Tiempo de demora**: retardo antes de enviar el mensaje
+</Step>
+
+<Step title="Agrega botones de acción">
+Arrastra un conector desde el componente interactivo hacia el lienzo. Aparecerá un **Componente de Botón en Línea**.
+
+Configura:
+- **Texto del botón**: lo que verá el usuario (ej: "Ver productos")
+- **Acción del botón**: qué sucede al hacer clic
+  - *Enviar un mensaje*: respuesta automática
+  - *Iniciar un flujo*: activa otro bot
+  - *Acción predeterminada del sistema*: URL, llamada telefónica, etc.
+
+Repite el proceso para agregar más botones según necesites.
+</Step>
+
+<Step title="Mensaje final y guardado">
+Conecta un **Componente de Texto** para el mensaje final y configúralo. Finalmente, haz clic en **Guardar** en la esquina superior derecha del lienzo.
+</Step>
+</Steps>
+
+<Tabs>
+<Tab title="Ejemplo de flujo básico">
+```text
+Usuario escribe: "Hola"
+↓
+Bot responde: "¡Bienvenido! ¿Qué te gustaría hacer?"
+  [🛍️ Ver productos] [📞 Hablar con agente] [❓ Preguntas frecuentes]
+↓
+Si elige "Ver productos" → Bot muestra el catálogo
+Si elige "Hablar con agente" → Se transfiere al agente humano
+Si elige "Preguntas frecuentes" → Bot muestra las FAQs
+```
+</Tab>
+<Tab title="Variables disponibles para personalizar">
+```text
+{{nombre_usuario}} - Nombre del contacto
+{{telefono}} - Número del usuario
+{{producto}} - Último producto visto
+{{precio}} - Precio del producto
+{{pedido_id}} - ID del pedido
+{{estado_pedido}} - Estado actual del pedido
+```
+</Tab>
+</Tabs>
+
+---
+
+## Crea chatbots de seguimiento automático
+
+Una de las funcionalidades más potentes de la automatización es el **seguimiento automático**. Este sistema envía recordatorios a los usuarios que han mostrado interés en tu producto pero no han completado la acción deseada, como realizar una compra.
+
+<Callout type="success">
+**¿Por qué usar seguimiento automático?**
+- Ahorra tiempo al automatizar recordatorios
+- Aumenta las ventas y conversiones
+- Asegura que los usuarios no olviden tu oferta
+- Funciona 24/7 sin intervención manual
+</Callout>
+
+### Configurar el seguimiento automático
+
+<Steps>
+<Step title="Crea el flujo del chatbot de ventas">
+- Ve al panel de E-SMART360 → **Gestor de Bots** → **Respuesta del Bot** → **Crear**
+- Nombra tu bot (ej: "Bot de Seguimiento de Ventas")
+- Guarda el bot y asegúrate de que se active cuando un usuario interactúa con un mensaje relacionado con productos
+</Step>
+
+<Step title="Agrega un mensaje interactivo con botones">
+Añade un bloque interactivo con un mensaje como:
+
+```
+"Hey, ¿estarías interesado en nuestro producto?"
+```
+
+Con botones de **Sí** y **No**:
+- Si el usuario elige **Sí**: proporciónale un enlace de pago
+- Si el usuario elige **No**: finaliza la conversación u ofrece asistencia adicional
+</Step>
+
+<Step title="Aplica etiquetas para rastrear acciones">
+Cuando un usuario haga clic en "Comprar ahora", aplícale una etiqueta llamada "Comprar ahora". Si el usuario no hace clic en el botón, no recibe esta etiqueta.
+
+Usa esta etiqueta para determinar quién necesita un recordatorio de seguimiento.
+</Step>
+
+<Step title="Configura la secuencia de seguimiento">
+Desde el conector del botón "Comprar ahora", selecciona la opción **'Suscribir a Secuencia'** para iniciar un nuevo flujo de seguimiento. Configúralo para que envíe un mensaje de recordatorio si el usuario no compra dentro de 30 minutos (o el tiempo que elijas).
+
+Agrega una condición para verificar si el usuario seleccionó el botón "Comprar ahora" o no:
+- Si es **Falso**: envía el mensaje de seguimiento
+- Si es **Verdadero**: no envías seguimiento (ya compró)
+
+<Callout type="tip">
+Puedes repetir este proceso para enviar múltiples recordatorios. Por ejemplo:
+- **Recordatorio 1**: a los 30 minutos
+- **Recordatorio 2**: a las 2 horas
+- **Recordatorio 3**: a las 24 horas (usando plantilla de mensaje aprobada)
+</Callout>
+</Step>
+
+<Step title="Programa los mensajes estratégicamente">
+- WhatsApp permite enviar mensajes de seguimiento ilimitados dentro de las **24 horas** de la interacción del usuario
+- Después de 24 horas, solo se pueden enviar **plantillas de mensajes pre-aprobadas**
+- Programa tus recordatorios estratégicamente para evitar saturar a los usuarios
+
+<Callout type="warning">
+**Regla de las 24 horas:** Ten en cuenta que la ventana de 24 horas comienza desde el último mensaje enviado por el usuario. Después de ese periodo, necesitarás usar una plantilla de mensaje aprobada por Meta para reiniciar la conversación.
+</Callout>
+</Step>
+
+<Step title="Exporta y comparte flujos">
+E-SMART360 te permite exportar tu flujo de chatbot y compartirlo con otros. Esto es útil para:
+- Compartir configuraciones entre miembros del equipo
+- Usar flujos predefinidos como plantillas
+- Respaldar tus automatizaciones
+
+</Step>
+</Steps>
+
+---
+
+## El impacto de los chatbots de WhatsApp en el mundo real
+
+El mundo empresarial del siglo XXI se mueve a una velocidad aterradora. Si un cliente dice "hola" y no recibe una respuesta inmediata, ese cliente se pierde en un instante. Aquí es donde brilla la ventaja de la tecnología.
+
+Los datos confirman que, aunque existen varias plataformas de comunicación, **WhatsApp es actualmente la más popular y la más efectiva**. Por eso, las grandes industrias ya están tratando WhatsApp como su principal motor de marketing. Y en la era de la automatización, la IA ha llevado esto a un nivel completamente nuevo. Como resultado, el uso de chatbots de WhatsApp está **disparándose**.
+
+<Update title="Crecimiento de adopción de chatbots" date="2026">
+Se proyecta que el mercado global de chatbots alcance los $15.5 mil millones para 2026, impulsado principalmente por la adopción de mensajería empresarial en WhatsApp.
+</Update>
+
+### El caso de Nivea: 207% del objetivo alcanzado
+
+Nivea enfrentó un desafío familiar para toda gran marca: la **participación masiva orgánica** para un nuevo producto. La solución no fue otra campaña publicitaria, sino una inversión estratégica en automatización. Lanzaron la **Campaña Cocoa Shades**, anclada completamente en un chatbot de WhatsApp.
+
+El gancho fue simple y poderoso. Los usuarios enviaban al bot una foto y recibían al instante una versión estilizada única de sí mismos, combinada perfectamente con su tono de piel. Esto encendió inmediatamente la campaña y Nivea obtuvo la exposición deseada. Como resultado, un simple chatbot de WhatsApp logró un **asombroso 207% del objetivo de alcance**.
+
+### El caso de Unilever: ventas 14 veces más altas
+
+Unilever necesitaba desesperadamente **obtener una presencia de marca de alto impacto** para su nueva línea de productos. Por eso, **Unilever también optó por la misma estrategia que Nivea**. Crearon **MadameBot**, su propio chatbot de WhatsApp.
+
+Para despertar la curiosidad inicial, cubrieron São Paulo con 1000 carteles que mostraban el número de WhatsApp. Cuando los consumidores interesados contactaban, MadameBot tomaba el control. Ofrecía consejos personalizados sobre el cuidado de los productos mientras presentaba los nuevos artículos. Los clientes que avanzaban en la interacción recibían descuentos y envío gratuito. Muy pronto, este simple chatbot conversacional impulsó las ventas **14 veces más**.
+
+<Columns cols="2">
+<Card title="Nivea - Campaña Cocoa Shades">
+- **Objetivo:** Participación masiva orgánica para nuevo producto
+- **Estrategia:** Chatbot que estilizaba fotos según tono de piel
+- **Resultado:** 207% del objetivo de alcance
+- **Conclusión:** Un chatbot bien diseñado supera cualquier campaña tradicional
+</Card>
+<Card title="Unilever - MadameBot">
+- **Objetivo:** Presencia de alto impacto para nueva línea
+- **Estrategia:** 1000 carteles + chatbot con consejos personalizados
+- **Resultado:** Ventas 14 veces más altas
+- **Conclusión:** La personalización masiva a escala es posible con automatización
+</Card>
+</Columns>
+
+---
+
+## Cómo empezar con el marketing multicanal
+
+El verdadero poder de la automatización se desbloquea cuando no te limitas a un solo canal. Con E-SMART360 puedes gestionar simultáneamente WhatsApp, Facebook Messenger, Instagram, Telegram y Web Chat desde una sola plataforma.
+
+<Expandable title="Estrategia de automatización multicanal">
+**Unifica todos tus canales de comunicación:**
+1. Configura tu chatbot de WhatsApp para ventas directas
+2. Activa el chatbot de Facebook Messenger para atención al cliente
+3. Integra Instagram DM para generación de leads visuales
+4. Usa Telegram para comunidades y notificaciones
+5. Implementa Web Chat en tu sitio web para soporte en vivo
+
+**Beneficios:**
+- Todos los mensajes centralizados en una sola bandeja de entrada
+- Los clientes pueden elegir su canal preferido
+- El historial de conversaciones se mantiene unificado
+- Las automatizaciones funcionan sin importar el canal de origen
+</Expandable>
+
+---
+
+## Consejos para evitar que tu chatbot sea bloqueado
+
+<Callout type="danger">
+Para mantener la salud de tu cuenta y evitar el bloqueo de WhatsApp, sigue estas reglas esenciales:
+</Callout>
+
+<Steps>
+<Step title="Respeta los límites de mensajes">
+Cada cuenta de WhatsApp Business tiene límites de mensajería según su nivel de calidad. No intentes enviar miles de mensajes el primer día. Comienza pequeño y escala gradualmente.
+</Step>
+
+<Step title="Usa siempre plantillas aprobadas para mensajes fuera de la ventana de 24 horas">
+Después de las 24 horas de la última interacción del usuario, solo puedes enviar mensajes que usen plantillas aprobadas por Meta. Asegúrate de que tus plantillas estén siempre actualizadas y cumplan con las políticas.
+</Step>
+
+<Step title="Configura un límite de frecuencia">
+E-SMART360 te permite configurar la frecuencia con la que el chatbot responde al mismo usuario. Esto evita que los clientes reciban mensajes duplicados o spam accidental. Configura un límite razonable de respuestas por minuto para mantener una experiencia natural.
+</Step>
+
+<Step title="Monitorea tu calidad de cuenta (Quality Rating)">
+Meta evalúa constantemente la calidad de tu cuenta basada en cómo los usuarios interactúan con tus mensajes. Si muchos usuarios bloquean tu número o marcan tus mensajes como spam, tu calidad baja y puedes ser restringido.
+</Step>
+
+<Step title="Implementa un botón de "No" o finalización de conversación">
+Siempre ofrece a tus usuarios la opción de finalizar la conversación. Si alguien no está interesado, respeta su decisión. Forzar conversaciones solo daña tu reputación con Meta.
+</Step>
+</Steps>
+
+<Expandable title="Configuración de frecuencia del chatbot">
+Para configurar la frecuencia de respuestas de tu bot:
+1. Ve a **Gestor de Bots → Respuesta del Bot**
+2. Selecciona tu bot y haz clic en **Configurar**
+3. En la sección **Frecuencia**, establece:
+   - **Sin coincidencia**: Qué responder cuando el bot no entiende el mensaje
+   - **Frecuencia de respuesta**: Cada cuántos segundos puede responder al mismo usuario
+   - **Máximo de respuestas**: Límite de respuestas automáticas por conversación
+4. Guarda los cambios
+
+Una buena práctica es configurar un máximo de 3-4 respuestas automáticas antes de transferir al usuario a un agente humano o finalizar la conversación.
+</Expandable>
+
+---
+
+## Integraciones potentes para tu chatbot
+
+Tu chatbot se vuelve realmente poderoso cuando lo conectas con tus sistemas existentes. E-SMART360 ofrece integraciones nativas con las herramientas más populares.
+
+<Expandable title="Integraciones disponibles">
+| Integración | Uso principal |
+|---|---|
+| **WooCommerce** | Notificaciones de pedidos, recuperación de carritos abandonados, verificación COD |
+| **Shopify** | Sincronización de inventario, confirmación de pedidos, seguimiento de envíos |
+| **Google Sheets** | Envío de datos de leads, sincronización de contactos, personalización masiva |
+| **Zapier** | Conexión con +2000 aplicaciones sin código |
+| **Webhook Workflow** | Integración con sistemas propietarios mediante API |
+| **WhatsApp Catalog** | Exhibición y venta de productos directamente en el chat |
+| **WhatsApp Flows** | Formularios interactivos nativos dentro de WhatsApp |
+| **API HTTP externa** | Comunicación servidor a servidor con sistemas externos |
+| **Formularios WP/Elementor** | Captura de leads desde tu sitio web hacia WhatsApp |
+</Expandable>
+
+### Ejemplo práctico: Recuperación de carritos abandonados
+
+Supongamos que un cliente agrega productos a su carrito en WooCommerce pero no completa la compra. Con la integración nativa:
+
+1. WooCommerce envía los datos del carrito abandonado a E-SMART360 mediante webhook
+2. El sistema identifica al cliente por su número de teléfono
+3. Se activa un flujo de chatbot personalizado con los productos abandonados
+4. El cliente recibe un mensaje como:
+
+```
+🛒 ¡Tienes productos esperándote!
+
+Hola {{nombre}},
+Vimos que dejaste estos productos en tu carrito:
+- {{producto1}} - ${{precio1}}
+- {{producto2}} - ${{precio2}}
+
+💡 ¿Quieres completar tu compra ahora?
+[✅ Completar pedido] [❓ Tengo una duda]
+```
+
+5. Si el cliente hace clic en "Completar pedido", recibe un enlace directo al pago
+6. Si tiene dudas, el chatbot puede resolverlas o transferir a un agente
+
+<Callout type="success">
+**Resultados típicos:** Las empresas que implementan recuperación de carritos abandonados por WhatsApp recuperan entre un 15% y un 30% de las ventas perdidas, con un ROI promedio de 5:1 en la inversión de automatización.
+</Callout>
+
+---
+
+## Solución de problemas comunes
+
+<Expandable title="Mi chatbot no responde a las palabras clave configuradas">
+**Posibles causas y soluciones:**
+- **Palabra clave mal escrita**: Verifica que no haya errores tipográficos y que coincida con el tipo de coincidencia (exacta o cadena)
+- **Bot no guardado**: Siempre haz clic en **Guardar** antes de salir del constructor visual
+- **Cuenta no conectada**: Confirma que tu WhatsApp sigue vinculado en el panel principal
+- **Frecuencia mal configurada**: Si configuraste un límite de frecuencia muy alto, el bot puede estar ignorando mensajes duplicados
+- **Conflicto entre bots**: Si tienes múltiples bots activos, verifica el orden de prioridad
+</Expandable>
+
+<Expandable title="Los botones no aparecen en los mensajes">
+**Posibles causas y soluciones:**
+- **Componente incorrecto**: Asegúrate de usar el **Componente Interactivo** como base, no Texto Simple
+- **Enlace incorrecto**: Verifica que el botón esté correctamente conectado al componente interactivo en el lienzo
+- **Actualiza la aplicación**: Cierra y vuelve a abrir WhatsApp para forzar la descarga del último estado del bot
+- **Límite de botones**: WhatsApp permite hasta 3 botones por mensaje interactivo. Si agregaste más, algunos no aparecerán
+</Expandable>
+
+<Expandable title="Los mensajes de seguimiento no se envían">
+**Posibles causas y soluciones:**
+- **Secuencia no guardada**: Revisa que hayas configurado correctamente la secuencia desde el botón "Suscribir a Secuencia"
+- **Ventana de 24 horas vencida**: Si pasaron más de 24 horas desde la última interacción, necesitas una plantilla aprobada
+- **Etiqueta mal aplicada**: Verifica que la condición de seguimiento esté revisando la etiqueta correcta
+- **Calidad de cuenta baja**: Revisa tu Quality Rating en el panel de Meta. Si es bajo, los mensajes pueden ser restringidos
+</Expandable>
+
+<Expandable title="Los cambios en el bot no se reflejan">
+**Posibles causas y soluciones:**
+- **Caché del navegador**: Limpia la caché de tu navegador o usa una ventana de incógnito
+- **Botón de guardar**: Siempre haz clic en **Guardar** en la esquina superior derecha antes de salir
+- **Browser cerrado incorrectamente**: Si cerraste la pestaña sin guardar, los cambios se pierden
+- **Bot en uso**: Si el bot está actualmente activo, los cambios pueden tardar unos minutos en aplicarse
+</Expandable>
+
+---
+
+## Preguntas frecuentes
+
+<Expandable title="¿Qué necesito para crear un chatbot de WhatsApp?">
+Necesitas una cuenta verificada de WhatsApp Business (WABA), una cuenta de Meta Business Manager con acceso de administrador y una cuenta en E-SMART360. No necesitas conocimientos de programación. La plataforma usa un constructor visual de arrastrar y soltar que cualquiera puede aprender en minutos.
+</Expandable>
+
+<Expandable title="¿Cuánto tiempo toma configurar un chatbot de WhatsApp?">
+Generalmente toma entre 10 y 15 minutos configurar un chatbot básico. El proceso incluye: conectar tu cuenta de WhatsApp (5 minutos), crear el flujo del bot (5-10 minutos) y probarlo (2 minutos). Los flujos avanzados con múltiples ramas pueden tomar más tiempo, pero el asistente visual acelera significativamente el proceso.
+</Expandable>
+
+<Expandable title="¿El chatbot de E-SMART360 es gratuito?">
+E-SMART360 ofrece un modelo freemium. Puedes registrarte de forma gratuita y acceder a las funcionalidades básicas del chatbot. Para funciones avanzadas como secuencias ilimitadas, integraciones premium o mayores límites de mensajes, existen planes de pago que se ajustan a diferentes volúmenes de uso. Consulta nuestra [sección de precios](/recursos/precios) para más detalles.
+</Expandable>
+
+<Expandable title="¿Puedo enviar mensajes masivos a todos mis clientes a la vez?">
+Sí, el chatbot puede enviar mensajes masivos a todos tus clientes mediante la funcionalidad de **Broadcasting de WhatsApp**. Sin embargo, debes tener en cuenta las políticas de Meta:
+- Los mensajes masivos deben usar plantillas aprobadas
+- Debes respetar los límites de mensajería según tu nivel de calidad
+- Es mejor segmentar tu audiencia antes de enviar broadcasts masivos
+- Para más detalles, consulta nuestra [guía de broadcasting](/recursos/envio-masivo-whatsapp)
+</Expandable>
+
+<Expandable title="¿Puedo integrar mi catálogo de productos o Google Sheets con el chatbot?">
+Sí, absolutamente. E-SMART360 permite la integración nativa con:
+- **Catálogo de WhatsApp**: muestra y vende productos directamente en el chat
+- **Google Sheets**: usa datos de tus hojas de cálculo para personalizar mensajes y enviar notificaciones
+- **WooCommerce y Shopify**: sincronización completa de pedidos, productos y clientes
+- **Zapier y API HTTP**: conexión con prácticamente cualquier sistema externo
+No se requieren conocimientos de programación para ninguna de estas integraciones.
+</Expandable>
+
+<Expandable title="¿Es WhatsApp mejor que Messenger o Email para automatización?">
+Sí, WhatsApp ofrece una tasa de conversión que es **3 veces más alta** que el email y superior también a Messenger. Las razones principales:
+- **Tasa de apertura del 98%** vs 20% del email
+- **Respuesta inmediata**: los usuarios tienen WhatsApp siempre abierto en su móvil
+- **Alta confianza**: los consumidores confían más en las empresas que usan WhatsApp
+- **Interaction rica**: soporta imágenes, catálogos, botones, listas y pagos
+Por eso, la adopción de chatbots de WhatsApp está creciendo exponencialmente.
+</Expandable>
+
+<Expandable title="¿Qué es la regla de las 24 horas en WhatsApp?">
+La regla de las 24 horas establece que puedes enviar mensajes ilimitados a un usuario dentro de las 24 horas posteriores a su último mensaje. Después de ese período, solo puedes enviar mensajes usando **plantillas de mensaje pre-aprobadas** por Meta. Esta regla aplica a todos los Business Solution Providers (BSP). Es importante diseñar tus flujos de conversación para maximizar las interacciones dentro de esta ventana.
+</Expandable>
+
+<Expandable title="¿Cómo puedo transferir la conversación a un agente humano?">
+Puedes configurar una transferencia automática a un agente humano cuando el chatbot no pueda resolver la consulta. En E-SMART360:
+1. Configura la **Bandeja de Entrada Compartida** para tu equipo
+2. En el flujo del bot, agrega un botón "Hablar con agente"
+3. Configura el **Handover** (transferencia) para que cuando el usuario seleccione esa opción, la conversación pase automáticamente a la bandeja de agentes humanos
+4. Los agentes pueden ver el historial completo de la conversación para continuar sin fricción
+</Expandable>
+
+---
+
+## Ejemplo práctico: Chatbot para tienda de comercio electrónico
+
+<Columns cols="2">
+<Card title="🛍️ Tienda de moda online">
+**Flujo de ventas completo:**
+1. **Saludo**: "¡Bienvenido a ModaTrend! 👗 ¿Buscas algo en especial?"
+2. **Opciones**: [Ver novedades] [Mi pedido] [Ayuda]
+3. **Ver novedades**: Muestra 3 productos del catálogo con imágenes
+4. **Selección**: "¿Te gusta este vestido? Tenemos 4 colores disponibles"
+5. **Compra**: Botón de pago directo + seguimiento automático
+6. **Post-venta**: Notificación de envío, encuesta de satisfacción
+
+**Resultados:** Una tienda que implementó este flujo reportó un **40% más de ventas** en su primer mes.
+</Card>
+<Card title="🏥 Consultorio médico">
+**Flujo de agendamiento de citas:**
+1. **Contacto inicial**: "Clínica DentalCare 🦷 ¿En qué podemos ayudarte?"
+2. **Opciones**: [Agendar cita] [Horarios] [Emergencia]
+3. **Agendar**: Selecciona fecha y hora disponibles
+4. **Confirmación**: "Tu cita para el 15/05 a las 10:00 con Dr. García está confirmada ✅"
+5. **Recordatorios**: 
+   - 24h antes: "Recuerda tu cita mañana a las 10:00"
+   - 2h antes: "Tu cita es en 2 horas"
+6. **Post-cita**: Encuesta de satisfacción + opción de reprogramar
+
+**Resultados:** Una clínica reportó **60% menos ausencias** en citas con recordatorios automáticos.
+</Card>
+</Columns>
+
+---
+
+## Uso de la API HTTP externa en flujos de bot
+
+Una de las capacidades más avanzadas de E-SMART360 es la integración de **APIs HTTP externas** directamente dentro de tus flujos de chatbot. Esto te permite conectar tu bot con cualquier sistema externo que tenga una API REST, como:
+
+- Sistemas CRM (HubSpot, Salesforce)
+- Pasarelas de pago (Stripe, PayPal, Mercado Pago)
+- Sistemas de gestión de inventarios
+- Plataformas de envío
+- Servicios de verificación de identidad
+- Cualquier aplicación con API pública o privada
+
+### Cómo configurar una llamada HTTP en tu flujo
+
+<Steps>
+<Step title="Agrega un componente HTTP al flujo">
+En el lienzo del constructor, arrastra un conector desde cualquier componente y selecciona **Componente HTTP**.
+</Step>
+
+<Step title="Configura la solicitud HTTP">
+Haz doble clic en el componente HTTP y completa:
+
+- **Método**: GET, POST, PUT, DELETE, etc.
+- **URL**: El endpoint de la API externa
+- **Encabezados**: Claves API, tokens de autenticación, etc.
+- **Cuerpo (Body)**: Datos a enviar en formato JSON
+- **Variables**: Puedes usar variables como `{{telefono}}` para pasar datos del usuario
+</Step>
+
+<Step title="Maneja la respuesta">
+Después de la llamada HTTP, puedes:
+- **Procesar la respuesta JSON** y mostrarla al usuario
+- **Usar condicionales** basados en el código de respuesta (200, 404, etc.)
+- **Enviar la información** a otro sistema o almacenarla
+</Step>
+</Steps>
+
+<Callout type="info">
+**Ejemplo práctico de API HTTP:**
+
+Supón que quieres verificar el estado de un pedido en tiempo real:
+
+```json
+Método: GET
+URL: https://tu-sistema.com/api/pedidos/{{pedido_id}}
+Encabezados:
+  Authorization: Bearer tu_token_api
+  Content-Type: application/json
+```
+
+El chatbot podría responder:
+"Tu pedido #{{pedido_id}} se encuentra actualmente en: **{{estado}}**. Fecha estimada de entrega: {{fecha_entrega}} 📦"
+</Callout>
+
+## Cómo recolectar datos de usuarios sin formularios
+
+Los chatbots de E-SMART360 permiten recolectar información valiosa de los usuarios directamente dentro de la conversación de WhatsApp, sin necesidad de formularios web tradicionales. Esto mejora enormemente las tasas de captura de datos, ya que el usuario no tiene que salir de la aplicación.
+
+<Steps>
+<Step title="Diseña una conversación de captura de datos">
+Crea un flujo conversacional que solicite información paso a paso, como si fuera una conversación natural:
+
+```
+Bot: "¡Hola! Para ayudarte mejor, ¿podrías decirme tu nombre?"
+Usuario: "María"
+Bot: "Gracias, María. ¿Cuál es tu correo electrónico para enviarte más información?"
+Usuario: "maria@ejemplo.com"
+Bot: "Perfecto. ¿Qué tipo de producto te interesa más?"
+  [Ropa] [Electrónicos] [Hogar]
+```
+</Step>
+
+<Step title="Almacena los datos en variables">
+Cada respuesta del usuario puede almacenarse en variables personalizadas. Luego puedes:
+- Enviar los datos a Google Sheets automáticamente
+- Crear un lead en tu CRM mediante API HTTP
+- Segmentar al usuario según sus respuestas
+- Personalizar mensajes futuros con sus datos
+</Step>
+
+<Step title="Configura la integración con Google Sheets">
+Para enviar los datos capturados a Google Sheets:
+1. Conecta tu cuenta de Google en el panel de integraciones
+2. Selecciona la hoja de cálculo destino
+3. Mapea las variables del chatbot a las columnas de la hoja
+4. Cada vez que un usuario complete la conversación, los datos se agregan automáticamente
+</Step>
+</Steps>
+
+<Callout type="success">
+**Tasa de finalización:** Las conversaciones de captura de datos en WhatsApp tienen tasas de finalización del 70-90%, comparado con el 20-30% de los formularios web tradicionales.
+</Callout>
+
+## Configuración de mensajes de respuesta "Sin coincidencia"
+
+Es importante configurar qué sucede cuando tu chatbot recibe un mensaje que no coincide con ninguna palabra clave o flujo configurado. E-SMART360 te permite personalizar esta respuesta para mantener una experiencia de usuario coherente.
+
+<Steps>
+<Step title="Accede a la configuración de respuesta por defecto">
+Ve a **Gestor de Bots → Respuesta del Bot** y selecciona tu bot. Busca la sección **Sin coincidencia**.
+</Step>
+
+<Step title="Configura el mensaje genérico">
+Define un mensaje amable que indique al usuario que no se entendió su consulta y ofrécele opciones:
+
+```
+"No entendí tu mensaje. 😅 ¿Puedes intentar con alguna de estas opciones?
+
+1. 📋 Ver productos
+2. 💬 Hablar con agente
+3. ❓ Ayuda"
+```
+</Step>
+
+<Step title="Configura el límite de respuestas">
+Establece cuántas veces el bot puede responder "sin coincidencia" antes de transferir la conversación a un agente humano. Esto evita ciclos infinitos y mejora la experiencia del cliente.
+</Step>
+</Steps>
+
+## Integración con Zapier para automatización avanzada
+
+Conecta tu chatbot de E-SMART360 con más de 2000 aplicaciones mediante Zapier, sin escribir una sola línea de código.
+
+<Expandable title=“Ejemplos de automatización con Zapier”>
+| Disparador en E-SMART360 | Acción en otra app |
+|---|---|
+| Nuevo lead capturado | Crear contacto en HubSpot o Mailchimp |
+| Usuario completa formulario | Enviar datos a Salesforce |
+| Pedido marcado como pagado | Crear tarea en Trello o Asana |
+| Chat finalizado | Enviar encuesta NPS por email |
+| Usuario bloquea el bot | Notificar al equipo de soporte en Slack |
+| Nuevo suscriptor de WhatsApp | Agregar a lista de WhatsApp Broadcast |
+
+**Para configurar:**
+1. Conecta tu cuenta de Zapier en el panel de integraciones de E-SMART360
+2. Selecciona un disparador (trigger) de E-SMART360
+3. Elige la aplicación de destino y configura la acción
+4. Activa el Zap y prueba que funcione
+</Expandable>
+
+---
+
+## Mejores prácticas para tu chatbot de WhatsApp
+
+<Columns cols="2">
+<Card title="✅ Haz esto">
+- Mantén las conversaciones cortas y directas
+- Usa botones para guiar al usuario (3 botones máximo)
+- Personaliza los mensajes con el nombre del usuario
+- Configura límites de frecuencia para evitar saturar
+- Prueba el chatbot exhaustivamente antes de activarlo
+- Ofrece siempre una opción de transferencia a humano
+- Monitorea las métricas de calidad de tu cuenta
+- Actualiza periódicamente las palabras clave según las consultas reales
+</Card>
+<Card title="❌ No hagas esto">
+- Enviar mensajes masivos sin segmentar tu audiencia
+- Usar palabras clave demasiado genéricas ("sí", "no") que activen respuestas no deseadas
+- Ignorar los límites de mensajería de WhatsApp (riesgo de bloqueo)
+- Configurar bucles infinitos sin salida a agente humano
+- Usar mensajes largos que abrumen al usuario
+- Olvidar guardar los cambios en el constructor visual
+- Enviar mensajes fuera de la ventana de 24h sin plantilla aprobada
+</Card>
+</Columns>
+
+---
+
+## Resumen final
+
+En ventas y marketing, un chatbot de WhatsApp no es solo una puerta de entrada — es la apertura colosal que automatiza el potencial empresarial en ganancias tangibles. Una vez que cruces ese umbral, te sorprenderá la escala de posibilidades que este chatbot desbloquea.
+
+Como dice el refrán: "**De pequeñas bellotas crecen grandes robles**". Este chatbot tiene exactamente ese poder. Puede **transformar fundamentalmente la trayectoria de tu negocio**. Los grandes actores ya lo están demostrando. Por lo tanto, dudar en adoptar esta tecnología de nueva generación simplemente significa elegir dejar atrás una ventaja competitiva masiva.
+
+<Callout type="info">
+**¿Listo para empezar?**
+
+1. [Regístrate gratis en E-SMART360](https://esmart360.com/registro)
+2. Conecta tu cuenta de WhatsApp Business
+3. Crea tu primer flujo de chatbot en menos de 10 minutos
+4. Prueba, itera y escala
+
+El momento de actuar es ahora. Tus competidores ya están automatizando.
+</Callout>
+
+---
+
+## Recursos relacionados
+
+- [Guía de envíos masivos por WhatsApp usando Google Sheets](/recursos/envio-masivo-whatsapp)
+- [Regla de las 24 horas: cómo cumplirla efectivamente](/recursos/regla-24-horas)
+- [Anuncios Click-to-WhatsApp: haz que cada clic cuente](/recursos/anuncios-click-whatsapp)
+- [Cómo crear un catálogo de productos en WhatsApp](/recursos/catalogo-whatsapp)
+- [Integración de WooCommerce con chatbot](/recursos/integracion-woocommerce)
+- [Configuración de plantillas de mensaje](/recursos/plantillas-mensaje)
+- [Solución de errores comunes de WhatsApp API](/recursos/errores-comunes-api)
