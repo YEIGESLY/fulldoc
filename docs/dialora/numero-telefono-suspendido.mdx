@@ -1,0 +1,206 @@
+---
+title: "Número de Teléfono Suspendido o Que No Funciona"
+description: "Guía de solución de problemas cuando tu número de teléfono en E-SMART360 aparece suspendido, bloqueado o no realiza ni recibe llamadas. Causas comunes, pasos para resolver cada situación y consejos de prevención."
+---
+
+Si tu número de teléfono en **E-SMART360** está suspendido, bloqueado o simplemente no funciona correctamente, esta guía te ayudará a diagnosticar el problema y aplicar la solución adecuada.
+
+<Callout type="danger" title="Tu número no debería estar inactivo por mucho tiempo">
+  Un número suspendido significa que tus agentes de voz no pueden recibir ni realizar llamadas. Resuelve el problema lo antes posible para evitar interrupciones en tu operación.
+</Callout>
+
+## Síntomas
+
+Estos son los signos más comunes de que tu número telefónico tiene un problema:
+
+- Las llamadas al número de tu agente van directamente al buzón de voz o son rechazadas
+- Puedes hacer llamadas desde el agente, pero los clientes no pueden contactarte
+- El panel muestra estado **"Suspendido"** o **"Inactivo"** junto a tu número
+- El número funcionaba correctamente pero dejó de hacerlo repentinamente
+- Los llamantes internacionales no pueden comunicarse contigo
+- Aparece un mensaje de error como *"Número no vinculado al agente"* o similar
+
+## Causas comunes
+
+<Callout type="warning" title="Identifica la causa exacta">
+  Revisa el estado exacto de tu número en el panel antes de aplicar cualquier solución. Cada causa tiene un tratamiento diferente.
+</Callout>
+
+1. **Suspensión regulatoria** — Demasiadas quejas por spam, reportes de abuso o actividad sospechosa activaron una suspensión automática
+2. **KYC (Know Your Customer) incompleto** — Los números internacionales requieren verificación de identidad antes de activarse
+3. **Problemas de facturación** — La cuenta tiene facturas impagas o créditos insuficientes
+4. **Número no vinculado al agente** — El número existe pero no está asignado a tu agente activo
+
+## Cómo resolverlo
+
+### Paso 1: Verifica el estado de tu número
+
+1. Ve a **Configuración** → **Números de Teléfono**
+2. Busca tu número en la lista
+3. **Revisa la columna de estado:**
+   - **Activo** = El número funciona con normalidad
+   - **Suspendido** = El número ha sido deshabilitado (requiere acción)
+   - **Pendiente** = El número aún se está activando (espera hasta 24 horas)
+   - **Inactivo** = El número no está asignado a un agente
+4. Anota el estado exacto y cualquier mensaje de error que aparezca
+
+<Tabs>
+  <Tab title="Activo">
+    <Callout type="success">
+      Si tu número está activo, no deberías tener problemas de conectividad. Prueba reiniciando el agente o verificando la configuración de Twilio.
+    </Callout>
+  </Tab>
+  <Tab title="Suspendido">
+    <Callout type="danger">
+      Requiere acción inmediata. Revisa los pasos 2 y 3 según corresponda antes de contactar a soporte.
+    </Callout>
+  </Tab>
+  <Tab title="Pendiente">
+    <Callout type="info">
+      La activación puede tardar hasta 24 horas. Si pasó más tiempo, contacta a soporte.
+    </Callout>
+  </Tab>
+  <Tab title="Inactivo">
+    <Callout type="warning">
+      El número existe pero no está vinculado. Ve directamente al Paso 5 para asignarlo.
+    </Callout>
+  </Tab>
+</Tabs>
+
+### Paso 2: Resuelve una suspensión regulatoria
+
+**Si el estado muestra "Suspendido" debido a quejas de spam:**
+
+1. Ve a **Soporte** → **Contactar Soporte**
+2. Crea un ticket con el título: *"Solicitud de Revisión de Suspensión de Número"*
+3. En tu mensaje, incluye:
+   - Tu número de teléfono suspendido
+   - Tu correo electrónico de la cuenta y nombre de la empresa
+   - Una breve explicación de tu caso de uso (ej. *"Devolución de llamadas de servicio al cliente, recordatorios de citas"*)
+   - Confirmación de que usarás el número solo con fines comerciales legítimos
+
+<Callout type="danger" title="NO uses tu número para:">
+  - Spam de marketing o llamadas no solicitadas
+  - Suplantación de identidad
+  - Estafas o actividades fraudulentas
+  - Llamadas entrantes de alto volumen a números aleatorios
+</Callout>
+
+4. El equipo de E-SMART360 revisará tu caso y te contactará en un plazo de 24 a 48 horas
+5. Una vez aprobado, se levantará la suspensión
+
+### Paso 3: Completa la verificación KYC (para números internacionales)
+
+**Si usas un número de teléfono fuera de EE. UU. y el estado es "Suspendido":**
+
+<Callout type="info" title="¿Por qué se requiere KYC?">
+  Los números de teléfono internacionales requieren verificación de identidad antes de la activación debido a regulaciones locales de telecomunicaciones en cada país.
+</Callout>
+
+1. Ve a **Configuración** → **Cuenta** → **Verificación**
+2. Verifica si la **verificación KYC está pendiente** o falló
+3. Si está pendiente o falló:
+   - Haz clic en **Iniciar Verificación** o **Reenviar**
+   - Proporciona los documentos requeridos:
+     - Identificación oficial con foto (pasaporte, licencia de conducir, cédula de identidad nacional)
+     - Comprobante de domicilio (recibo de servicios, estado de cuenta bancario, carta oficial)
+     - Documentos comerciales si usas un número empresarial (acta constitutiva, RFC, etc.)
+   - Sube escaneos claros y legibles de los documentos
+   - Confirma que toda la información coincida con los datos de tu cuenta
+4. Envía y espera la verificación (generalmente 24 a 72 horas)
+5. Recibirás una notificación por correo electrónico una vez aprobado
+6. Tu número se activará automáticamente después de la aprobación KYC
+
+### Paso 4: Actualiza tu método de pago y verifica créditos
+
+1. Ve a **Facturación** → **Método de Pago**
+2. Verifica que tu tarjeta sea válida y no haya expirado
+3. **Si la tarjeta está vencida o no es válida:**
+   - Haz clic en **Actualizar Método de Pago**
+   - Ingresa los datos de la nueva tarjeta
+   - Guarda los cambios
+4. Ve a **Facturación** → **Créditos**
+5. Verifica que tengas **créditos disponibles** en tu cuenta
+6. **Si los créditos se agotaron:**
+   - Haz clic en **Agregar Créditos** y compra un paquete
+   - Completa el pago
+   - Los créditos se agregarán inmediatamente
+
+<Callout type="tip" title="Configura la recarga automática">
+  Para evitar interrupciones por falta de créditos, activa la recarga automática desde la sección de Facturación. Así tu cuenta se recargará automáticamente cuando el saldo baje de cierto umbral.
+</Callout>
+
+7. Espera de 5 a 10 minutos, luego vuelve a **Números de Teléfono** para verificar si el estado cambió a **"Activo"**
+
+### Paso 5: Vincula el número de teléfono a tu agente
+
+**Si el estado muestra "Inactivo" pero el número no está suspendido:**
+
+1. Ve a **Configuración del Agente** → **Números de Teléfono**
+2. En la sección **"Número Vinculado"**, haz clic en **Seleccionar**
+3. Elige tu número de teléfono del menú desplegable
+4. Haz clic en **Guardar**
+5. Vuelve a **Configuración** → **Números de Teléfono** para verificar que el estado ahora sea **"Activo"**
+6. Realiza una llamada de prueba al número para confirmar que funciona
+
+### Paso 6: Prueba tu número
+
+1. Usa un teléfono diferente (o pídele a un colega) que llame al número de tu agente
+2. Deberías escuchar:
+   - Un tono de llamada (no buzón de voz instantáneo)
+   - El saludo de tu agente después de que conteste
+3. **Si escuchas el buzón de voz inmediatamente:** El número puede seguir suspendido o no estar vinculado
+4. **Si escuchas el saludo:** Tu número está funcionando correctamente
+
+<Callout type="success" title="¡Todo listo!">
+  Si escuchaste el saludo de tu agente, la solución fue exitosa y tu número está operativo nuevamente.
+</Callout>
+
+## Consejos de prevención
+
+<Columns cols="2">
+  <Card title="Monitoreo semanal" icon="eye">
+    Revisa el estado de tus números telefónicos al menos una vez por semana para detectar problemas a tiempo.
+  </Card>
+  <Card title="Facturación al día" icon="credit-card">
+    Configura la recarga automática de créditos para evitar interrupciones en el servicio.
+  </Card>
+  <Card title="Uso legítimo" icon="shield-check">
+    Usa tu número solo para llamadas comerciales legítimas. Evita llamadas de prueba de alto volumen o comportamientos automatizados similares a spam.
+  </Card>
+  <Card title="KYC inmediato" icon="id-card">
+    Completa la verificación KYC inmediatamente al comprar números internacionales, no esperes.
+  </Card>
+  <Card title="Documenta tu caso" icon="file-text">
+    Ten preparada una explicación clara de tu propósito comercial por si te la solicitan.
+  </Card>
+  <Card title="Alertas de facturación" icon="bell">
+    Configura alertas para recibir notificaciones cuando tu cuenta tenga poco saldo.
+  </Card>
+</Columns>
+
+## Preguntas frecuentes
+
+<ExpandableGroup>
+  <Expandable title="¿Cuánto tiempo tarda en activarse un número internacional después de completar el KYC?" default-open="true">
+    Una vez que envías toda la documentación KYC, la verificación puede tardar entre 24 y 72 horas hábiles. Recibirás un correo electrónico de confirmación cuando el proceso esté completo. Si después de 72 horas no has recibido respuesta, contacta a soporte con el número de ticket de tu verificación.
+  </Expandable>
+
+  <Expandable title="¿Puedo usar el mismo número en múltiples agentes?">
+    No, cada número telefónico puede estar vinculado a un solo agente a la vez. Si necesitas que varios agentes tengan su propio número, debes adquirir un número independiente para cada uno. Puedes gestionar todos tus números desde la sección **Configuración → Números de Teléfono**.
+  </Expandable>
+
+  <Expandable title="¿Qué pasa si mi número fue suspendido por error?">
+    Si crees que la suspensión fue un error, crea un ticket de soporte con el título *"Solicitud de Revisión de Suspensión de Número"* e incluye evidencia de que tu uso es legítimo (ej. ejemplos de conversaciones, propósito comercial). El equipo de E-SMART360 revisará tu caso en un plazo de 24 a 48 horas.
+  </Expandable>
+
+  <Expandable title="¿La suspensión afecta a todos los números de mi cuenta o solo a uno?">
+    La suspensión es por número individual, no por cuenta. Si uno de tus números fue suspendido por quejas de spam, los demás números de tu cuenta pueden seguir funcionando normalmente siempre que no estén asociados a la misma actividad cuestionable.
+  </Expandable>
+
+  <Expandable title="¿Necesitas ayuda con la suspensión de tu número telefónico?">
+    <Callout type="alert" title="Soporte técnico">
+      Si has seguido todos los pasos y tu número sigue sin funcionar, o si necesitas asistencia urgente con una suspensión, nuestro equipo de soporte está disponible para ayudarte. Contáctanos desde el panel de administración en la sección de Ayuda o crea un ticket directamente.
+    </Callout>
+  </Expandable>
+</ExpandableGroup>

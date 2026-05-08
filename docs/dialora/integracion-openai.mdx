@@ -1,0 +1,210 @@
+---
+title: "Cómo Configurar la Integración de API Key de OpenAI con E-SMART360"
+description: "Guía completa para conectar tu clave API de OpenAI con E-SMART360 y potenciar tus agentes de voz con inteligencia artificial avanzada. Incluye pasos detallados, recomendaciones de seguridad y mejores prácticas."
+---
+
+<Callout kind="info" title="¿Por qué integrar OpenAI con E-SMART360?">
+Al conectar tu clave API de OpenAI, desbloqueas capacidades avanzadas de procesamiento de lenguaje natural para tus agentes de voz. Esto permite conversaciones más naturales, comprensión contextual profunda y respuestas inteligentes adaptadas a las necesidades de tu negocio.
+</Callout>
+
+## Requisitos Previos
+
+Antes de comenzar, asegúrate de tener lo siguiente:
+
+<Columns cols="2">
+  <Card title="Cuenta en OpenAI" icon="key">
+    Necesitas una cuenta activa en la plataforma de OpenAI. Si aún no tienes una, puedes crearla en platform.openai.com.
+  </Card>
+  <Card title="Cuenta en E-SMART360" icon="user">
+    Debes tener una cuenta activa en E-SMART360 con acceso al panel de integraciones.
+  </Card>
+</Columns>
+
+## Configuración Paso a Paso
+
+<Sitio>
+
+### Accede a tu Cuenta de E-SMART360
+
+1. Ingresa a [E-SMART360](/) e inicia sesión con tus credenciales.
+2. Una vez dentro, se abrirá el panel principal de control.
+
+<Callout kind="tip" title="Consejo">
+Si tienes problemas para iniciar sesión, verifica tu conexión a internet y asegúrate de usar las credenciales correctas. También puedes usar la opción de recuperación de contraseña si la has olvidado.
+</Callout>
+
+### Navega a la Sección de Integraciones
+
+1. En el panel de E-SMART360, localiza la barra lateral izquierda.
+2. Haz clic en **Integraciones** para acceder a la lista de servicios disponibles.
+
+<Callout kind="info" title="Organización del menú">
+La sección de Integraciones agrupa todos los servicios externos que puedes conectar con E-SMART360. Cada servicio tiene su propio campo de configuración claramente etiquetado.
+</Callout>
+
+### Localiza el Campo de OpenAI
+
+1. Dentro de la página de Integraciones, busca el campo etiquetado como **OpenAI API Key**.
+2. Este campo está listo para recibir tu clave. Lo llenarás en los siguientes pasos.
+
+<Callout kind="warning" title="Seguridad de la clave">
+El campo de OpenAI API Key es sensible. Asegúrate de que nadie más observe tu pantalla mientras ingresas la clave. E-SMART360 cifra esta información de forma segura.
+</Callout>
+
+### Accede a la Plataforma de OpenAI
+
+1. Abre una nueva pestaña en tu navegador y ve a [platform.openai.com](https://platform.openai.com/).
+2. Inicia sesión con tu cuenta de OpenAI.
+3. Navega a la sección **API Keys** en el menú lateral izquierdo.
+4. Haz clic en el botón **Create new secret key**.
+
+<Callout kind="success" title="Tipos de cuenta">
+Si usas una cuenta gratuita de OpenAI, ten en cuenta que existen límites de uso. Para producción, considera actualizar a un plan de pago que ofrezca mayor capacidad y velocidad de respuesta.
+</Callout>
+
+### Configura los Detalles de la Clave
+
+1. Ingresa un nombre descriptivo para tu clave, por ejemplo: "E-SMART360 Integración" o "Agente de Voz Principal".
+2. Selecciona los permisos requeridos. Para E-SMART360, la clave debe tener al menos permisos de modelo y procesamiento de texto.
+
+<Callout kind="warning" title="Permisos recomendados">
+Asigna únicamente los permisos necesarios para que E-SMART360 funcione correctamente. Evita otorgar permisos administrativos a menos que sea absolutamente necesario.
+</Callout>
+
+### Genera y Copia la API Key
+
+1. Haz clic en **Create** para generar tu clave API.
+2. **Cópiala inmediatamente** — OpenAI solo muestra la clave completa una vez. Si la pierdes, deberás crear una nueva.
+
+<Callout kind="danger" title="¡No pierdas tu clave!">
+OpenAI no almacena ni muestra la clave completa después de la creación. Si cierras la ventana sin copiarla, tendrás que generar una nueva. Guarda la clave en un gestor de contraseñas seguro.
+</Callout>
+
+### Pega la Clave en E-SMART360 y Guarda
+
+1. Regresa a tu panel de E-SMART360.
+2. Pega la API key en el campo **OpenAI** dentro de la sección de Integraciones.
+3. Haz clic en **Guardar**.
+
+¡Listo! Tu cuenta de OpenAI ahora está conectada exitosamente con E-SMART360.
+
+</Sitio>
+
+## Verificación de la Integración
+
+Una vez guardada la configuración, es recomendable verificar que la integración funcione correctamente:
+
+<Columns cols="2">
+  <Card title="Prueba Rápida" icon="check">
+    Crea un agente de voz de prueba y realiza una llamada. Si el agente responde de forma natural e inteligente, la integración está funcionando.
+  </Card>
+  <Card title="Monitoreo de Errores" icon="alert">
+    Revisa el panel de registros de E-SMART360 para detectar posibles errores de autenticación o límites de tasa de OpenAI.
+  </Card>
+</Columns>
+
+## Mejores Prácticas
+
+<Callout kind="info" title="Seguridad de claves API">
+- **Rota tus claves periódicamente**: Genera nuevas claves cada 90 días y actualiza la configuración en E-SMART360.
+- **Usa claves dedicadas**: Crea una clave específica para E-SMART360 en lugar de reutilizar claves de otros servicios.
+- **Monitorea el uso**: Revisa periódicamente el panel de uso de OpenAI para detectar actividad inusual.
+</Callout>
+
+<Callout kind="tip" title="Optimización de costos">
+OpenAI cobra por tokens procesados. Para optimizar costos:
+- Ajusta la longitud máxima de respuesta de tu agente de voz.
+- Utiliza modelos eficientes como GPT-4o mini para tareas simples.
+- Configura límites de gasto en tu cuenta de OpenAI.
+</Callout>
+
+## Modelos Compatibles
+
+E-SMART360 es compatible con los siguientes modelos de OpenAI:
+
+| Modelo | Uso Recomendado | Costo Relativo |
+|--------|----------------|----------------|
+| GPT-4o | Conversaciones complejas, razonamiento profundo | Alto |
+| GPT-4o mini | Tareas generales, respuestas rápidas | Bajo |
+| GPT-4 Turbo | Escenarios que requieren contexto extenso | Alto |
+| GPT-3.5 Turbo | Operaciones simples, bajo presupuesto | Muy bajo |
+
+<Callout kind="info" title="Selección del modelo">
+E-SMART360 selecciona automáticamente el mejor modelo disponible según la configuración de tu agente de voz. Puedes especificar el modelo deseado en la configuración avanzada de tu agente.
+</Callout>
+
+## Solución de Problemas Comunes
+
+<Tabs>
+  <Tab title="Clave Inválida">
+    Si recibes un error de "API key inválida", verifica que:
+    - Hayas copiado la clave completa sin espacios adicionales.
+    - La clave no haya expirado. Las claves de OpenAI pueden tener fecha de vencimiento.
+    - La clave tenga los permisos correctos para el uso con E-SMART360.
+  </Tab>
+  <Tab title="Límite de Tasa Excedido">
+    Si ves errores de "rate limit exceeded":
+    - Revisa el plan de OpenAI que tienes contratado.
+    - Los límites son más restrictivos en cuentas gratuitas.
+    - Considera actualizar a un plan de pago para aumentar la capacidad.
+  </Tab>
+  <Tab title="Error de Autenticación">
+    Los errores 401 suelen indicar:
+    - La clave se eliminó o desactivó en OpenAI.
+    - La clave no tiene acceso al modelo solicitado.
+    - Hay un problema de conectividad entre E-SMART360 y OpenAI.
+  </Tab>
+  <Tab title="Respuestas Lentas">
+    Si las respuestas del agente tardan demasiado:
+    - Verifica tu conexión a internet.
+    - Cambia a un modelo más rápido como GPT-4o mini.
+    - Reduce la longitud máxima de las respuestas del agente.
+    - Contacta a soporte si el problema persiste.
+  </Tab>
+</Tabs>
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+  <Expandable title="¿Puedo usar la misma clave API de OpenAI en múltiples agentes de E-SMART360?" default-open="true">
+    Sí, una sola clave API de OpenAI puede ser utilizada por todos los agentes de voz que configures en E-SMART360. La clave se almacena a nivel de cuenta y todos tus agentes comparten los mismos recursos de OpenAI. Sin embargo, ten en cuenta que el uso combinado de todos los agentes contará contra los límites de tasa y el consumo de tu cuenta de OpenAI.
+  </Expandable>
+
+  <Expandable title="¿Qué hago si mi clave API de OpenAI se ve comprometida?">
+    Si sospechas que tu clave API ha sido comprometida, actúa de inmediato:
+    
+    1. Inicia sesión en [platform.openai.com](https://platform.openai.com/).
+    2. Ve a la sección **API Keys**.
+    3. Revoca (elimina) la clave comprometida.
+    4. Genera una nueva clave siguiendo los pasos de esta guía.
+    5. Actualiza la clave en el panel de Integraciones de E-SMART360.
+    6. Revisa el historial de uso de OpenAI para detectar actividad no autorizada.
+    
+    <Callout kind="warning" title="Acción inmediata">
+      No esperes para revocar una clave comprometida. Mientras más tiempo pase, mayor será el riesgo de uso no autorizado y costos inesperados.
+    </Callout>
+  </Expandable>
+
+  <Expandable title="¿E-SMART360 funciona con Azure OpenAI Service?">
+    Actualmente, E-SMART360 es compatible con la API estándar de OpenAI. Si utilizas Azure OpenAI Service, la configuración puede requerir pasos adicionales. Ponte en contacto con nuestro equipo de soporte para obtener asistencia personalizada en la integración con Azure OpenAI.
+  </Expandable>
+
+  <Expandable title="¿Cuánto cuesta usar OpenAI con E-SMART360?">
+    El costo depende de varios factores:
+    
+    - **Modelo utilizado**: Los modelos más avanzados como GPT-4o tienen costos más altos por token.
+    - **Volumen de llamadas**: Más llamadas y conversaciones más largas generan más consumo.
+    - **Longitud de respuestas**: Respuestas más extensas utilizan más tokens.
+    
+    Te recomendamos:
+    - Configurar alertas de gasto en tu cuenta de OpenAI.
+    - Revisar el panel de uso periódicamente.
+    - Comenzar con modelos eficientes (GPT-4o mini) para producción y escalar según necesidades.
+  </Expandable>
+
+  <Expandable title="¿Necesitas ayuda con la integración de OpenAI?">
+    <Callout kind="info" title="Soporte E-SMART360">
+      Si encuentras dificultades durante la configuración o necesitas asistencia adicional, nuestro equipo de soporte está disponible para ayudarte. Contáctanos a través del panel de ayuda en E-SMART360 o escribe a nuestro equipo de soporte técnico.
+    </Callout>
+  </Expandable>
+</ExpandableGroup>

@@ -1,0 +1,136 @@
+---
+title: "Configuración de Twilio en E-SMART360"
+description: "Guía completa para conectar tu cuenta de Twilio con E-SMART360. Aprende a configurar tu Account SID y Auth Token para habilitar llamadas, SMS y flujos de voz en tus agentes inteligentes."
+---
+
+La integración con **Twilio** es el núcleo de la infraestructura de comunicaciones de E-SMART360. A través de ella, tus agentes de voz pueden realizar y recibir llamadas, enviar SMS y gestionar flujos de comunicación en tiempo real. Esta guía te mostrará cómo conectar tu cuenta de Twilio paso a paso.
+
+<Callout type="info" title="¿Qué es Twilio?">
+  Twilio es la plataforma de comunicaciones en la nube que E-SMART360 utiliza para gestionar la infraestructura telefónica. Con ella puedes comprar números telefónicos, manejar llamadas entrantes y salientes, y enviar mensajes SMS.
+</Callout>
+
+## Paso 1: Inicia sesión en tu cuenta de E-SMART360
+
+Accede a [E-SMART360](/) e inicia sesión con tus credenciales de administrador.
+
+## Paso 2: Navega a la sección de Integraciones
+
+1. Desde el panel principal de E-SMART360, localiza la barra lateral izquierda.
+2. Haz clic en **Integraciones**.
+
+![Panel de integraciones de E-SMART360](/recursos/integraciones/panel-integraciones.png)
+
+## Paso 3: Abre la integración de Twilio
+
+1. Dentro de la lista de integraciones disponibles, haz clic en el botón de **Twilio**.
+2. Se mostrarán los campos para **Account SID** y **Auth Token** — los completarás en breve.
+
+![Botón de integración Twilio](/recursos/integraciones/twilio-integracion-boton.png)
+
+<Callout type="warning" title="Información sensible">
+  El Account SID y especialmente el Auth Token son credenciales críticas. Nunca los compartas ni los expongas en repositorios públicos o código del lado del cliente.
+</Callout>
+
+## Paso 4: Inicia sesión en tu consola de Twilio
+
+1. Abre una nueva pestaña en tu navegador.
+2. Ve a [https://console.twilio.com](https://console.twilio.com/).
+3. Inicia sesión con las credenciales de tu cuenta de Twilio.
+
+<Callout type="tip" title="¿No tienes cuenta de Twilio?">
+  Puedes crear una cuenta gratuita en console.twilio.com. Twilio ofrece crédito inicial para que puedas probar sus servicios antes de comprometerte con un plan de pago.
+</Callout>
+
+## Paso 5: Copia tu Account SID y Auth Token
+
+1. En el panel principal de Twilio Console, desplázate hasta la sección **Account Info**.
+2. Verás tu **Account SID** y **Auth Token** mostrados en la pantalla.
+3. Copia ambos valores con cuidado.
+
+<Columns cols="2">
+  <Card title="Account SID" icon="key">
+    Identificador único de tu cuenta de Twilio. Comienza con "AC" seguido de 32 caracteres alfanuméricos. No es secreto, pero debe manejarse con cuidado.
+  </Card>
+  <Card title="Auth Token" icon="lock">
+    Clave secreta que autentica las solicitudes a la API de Twilio. Es la llave maestra de tu cuenta. Debe mantenerse siempre confidencial.
+  </Card>
+</Columns>
+
+![Account SID y Auth Token en Twilio Console](/recursos/integraciones/twilio-account-info.png)
+
+## Paso 6: Pega las credenciales en E-SMART360 y guarda
+
+1. Regresa al panel de administración de E-SMART360.
+2. Pega tu **Account SID** en el campo correspondiente.
+3. Pega tu **Auth Token** en el campo correspondiente.
+4. Haz clic en **Guardar** para conectar tu cuenta.
+
+![Guardar credenciales de Twilio en E-SMART360](/recursos/integraciones/twilio-configure.png)
+
+<Callout type="success" title="Conexión exitosa">
+  Tu número de Twilio ahora está conectado exitosamente con E-SMART360. Tus flujos de voz están listos para funcionar.
+</Callout>
+
+## Paso 7: Configuración adicional recomendada
+
+Una vez conectada la integración base, te recomendamos realizar estas configuraciones adicionales:
+
+### Compra de números telefónicos
+
+Para que tu agente pueda hacer y recibir llamadas, necesitas al menos un número telefónico de Twilio:
+
+1. En Twilio Console, ve a **Phone Numbers** → **Buy a Number**.
+2. Busca un número disponible en el código de área deseado.
+3. Una vez comprado, asígnalo a tu agente en E-SMART360.
+
+### Configuración de Webhooks
+
+E-SMART360 configura automáticamente los webhooks necesarios en Twilio, pero puedes verificar que estén correctos:
+
+| Webhook | URL esperada | Propósito |
+|---------|-------------|-----------|
+| **Voice (Incoming)** | `https://api.e-smart360.com/twilio/voice` | Llamadas entrantes |
+| **Status Callback** | `https://api.e-smart360.com/twilio/callback` | Eventos de estado de llamada |
+| **Messaging (Incoming)** | `https://api.e-smart360.com/twilio/sms` | SMS entrantes |
+
+## Validación de la integración
+
+Para confirmar que todo funciona correctamente:
+
+<Steps>
+  <Step icon="1">
+    <strong>Verifica la conexión</strong>: En E-SMART360, la integración de Twilio debe mostrar un indicador verde de "Conectado".
+  </Step>
+  <Step icon="2">
+    <strong>Prueba una llamada entrante</strong>: Llama al número de Twilio asignado a tu agente. Deberías escuchar el saludo de tu agente configurado.
+  </Step>
+  <Step icon="3">
+    <strong>Revisa los logs</strong>: En el panel de E-SMART360, ve a la sección de Logs para ver el registro detallado de la llamada de prueba.
+  </Step>
+</Steps>
+
+## Preguntas frecuentes
+
+<ExpandableGroup>
+  <Expandable title="¿Puedo usar mi propio número de teléfono en lugar de comprar uno en Twilio?" default-open="true">
+    Twilio requiere que los números telefónicos estén registrados en su plataforma. Puedes portar (transferir) un número existente a Twilio, pero no es posible usar directamente un número de otro operador sin portabilidad. El proceso de portabilidad suele tomar de 5 a 10 días hábiles.
+  </Expandable>
+
+  <Expandable title="¿Qué hago si mi Auth Token se ve comprometido?">
+    Si sospechas que tu Auth Token ha sido expuesto, debes rotarlo inmediatamente desde Twilio Console. Ve a Account > API Keys & Tokens y genera un nuevo Auth Token. Luego actualiza las credenciales en E-SMART360 en la sección de Integraciones.
+  </Expandable>
+
+  <Expandable title="¿Cuánto cuesta la integración con Twilio más allá de lo que cobra Twilio?">
+    E-SMART360 no cobra costos adicionales por la integración misma de Twilio. Solo pagarás los cargos estándar de Twilio por el uso de números telefónicos, minutos de llamada y mensajes SMS según tu plan de Twilio.
+  </Expandable>
+
+  <Expandable title="¿Puedo tener múltiples números de Twilio asignados a diferentes agentes?">
+    Sí, E-SMART360 soporta la asignación de diferentes números de Twilio a diferentes agentes. Cada agente puede tener su propio número entrante, y las llamadas se enrutarán automáticamente al agente correcto según la configuración.
+  </Expandable>
+
+  <Expandable title="¿Necesitas ayuda con la integración de Twilio?">
+    <Callout type="alert" title="Soporte técnico">
+      Si encuentras problemas al conectar Twilio con E-SMART360 o necesitas asistencia con la configuración avanzada (portabilidad, SIP trunking, configuraciones regionales), nuestro equipo de soporte está disponible para ayudarte. Contáctanos desde el panel de administración en la sección de Ayuda.
+    </Callout>
+  </Expandable>
+</ExpandableGroup>

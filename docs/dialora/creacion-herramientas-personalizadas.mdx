@@ -1,0 +1,394 @@
+---
+title: "Creación de Herramientas Personalizadas en E-SMART360"
+description: "Guía completa para crear herramientas personalizadas (Custom Tools) en E-SMART360. Aprende a configurar APIs, definir parámetros dinámicos y usar JSON para integrar sistemas externos con tus agentes de voz."
+---
+
+<Callout kind="info" default-open="true">
+**¿Qué son las herramientas personalizadas?**  
+Las herramientas personalizadas (Custom Tools) permiten que tus agentes de voz de E-SMART360 se conecten con sistemas externos durante las conversaciones. Pueden consultar datos, escribir registros, gestionar citas y ejecutar lógica de negocio en tiempo real, todo sin intervención humana. Esta guía cubre paso a paso cómo crearlas desde el panel de control y mediante definiciones JSON directas.
+</Callout>
+
+## Información Básica
+
+Cada herramienta personalizada se compone de tres elementos fundamentales que debes configurar al crearla:
+
+<Card title="Nombre" icon="tag">
+  La etiqueta visible en la interfaz de E-SMART360 y referenciada en los flujos. Elige un nombre descriptivo y único (por ejemplo, `VerificarDisponibilidad` en lugar de `Obtener`). Un buen nombre facilita la identificación rápida en listados y reportes.
+</Card>
+
+<Card title="Descripción" icon="file-text">
+  Una explicación concisa del propósito de la herramienta. Este campo es crítico porque el modelo de lenguaje (LLM) utiliza la descripción para decidir cuándo activar la herramienta. Una buena descripción aumenta significativamente la precisión de la activación automática.
+</Card>
+
+<Card title="Mensaje Pre-llamada (Opcional)" icon="message-square">
+  El mensaje que dirá tu agente mientras la herramienta se ejecuta. Por ejemplo: *"Un momento mientras consulto esa información para ti."* Esto mantiene la conversación natural, incluso mientras se espera una respuesta de la API externa.
+</Card>
+
+<Callout kind="tip">
+**Mejores prácticas para el mensaje pre-llamada:**  
+Usa frases que den tranquilidad al cliente y que sean breves. Evita silencios incómodos durante la ejecución de herramientas que tomen más de 1-2 segundos. Ejemplos útiles: *"Déjame verificar eso por ti…"*, *"Enseguida te confirmo la disponibilidad."*
+</Callout>
+
+## Configuración de la API
+
+La configuración de la API define cómo tu herramienta se comunica con servicios externos. Esta sección es el corazón técnico de cualquier herramienta personalizada:
+
+- **URL de la API**: El endpoint al que se llamará (por ejemplo, `https://api.ejemplo.com/verificar`).
+- **Método HTTP**: El tipo de solicitud (`GET`, `POST`, `PUT`, `DELETE`).
+- **Token de API / Headers (Opcional)**: Detalles de autenticación como tokens Bearer o cabeceras personalizadas.
+
+Esta configuración asegura que la herramienta sepa exactamente a dónde enviar los datos y cómo realizar la solicitud de forma segura.
+
+<Callout kind="warning">
+**Seguridad ante todo:**  
+Nunca expongas tokens de API en documentación pública, capturas de pantalla o interfaces de usuario. Utiliza siempre variables de entorno o prácticas seguras de gestión de configuración para almacenar credenciales.
+</Callout>
+
+## Configuración de Parámetros
+
+Los parámetros permiten que tu herramienta capture y utilice información dinámica obtenida del usuario durante una conversación. En lugar de valores fijos, los parámetros hacen que las llamadas API sean flexibles, reutilizables y personalizadas.
+
+**¿Qué son?** Piensa en los parámetros como campos de entrada que el LLM llenará con valores proporcionados por el usuario (como `fechaInicio` o `horaFin`).
+
+**¿Por qué son importantes?** Sin parámetros, cada llamada API devolvería resultados estáticos. Con parámetros, la herramienta se adapta a las necesidades específicas de cada usuario en tiempo real.
+
+**Cómo configurar parámetros:**
+
+1. **Asignar un Nombre** — por ejemplo, `fechaInicio`.
+2. **Elegir un Tipo de Dato** — por ejemplo, `string`, `number` o `boolean`.
+3. **Añadir una Descripción** — explica qué representa el parámetro para que el LLM sepa cómo y cuándo recopilarlo.
+4. **Establecer como Requerido u Opcional** — marca los parámetros que siempre deben recogerse (como una fecha de reserva) frente a los opcionales (como una nota).
+
+Ejemplo de configuración de parámetros:
+
+<CodeGroup tabs="Parámetros,Descripción">
+```text
+fechaInicio (String, Requerido) → "Fecha de inicio de la reserva."
+horaFin (String, Requerido) → "Hora de finalización de la reserva."
+```
+
+```text
+Ambos parámetros son obligatorios para poder consultar disponibilidad. El agente preguntará al usuario por estos valores durante la llamada si no se han proporcionado todavía.
+```
+</CodeGroup>
+
+Durante una llamada, el agente preguntará por estos valores si aún no se han proporcionado y luego los insertará dinámicamente en la solicitud API.
+
+## Definición de una Herramienta Personalizada Usando JSON
+
+También puedes configurar la herramienta directamente usando JSON. Esta opción es ideal para desarrolladores que prefieren trabajar con código o necesitan importar configuraciones desde otros sistemas.
+
+Aquí tienes un ejemplo de cómo se ve una definición básica de herramienta en JSON:
+
+```json
+{
+  "key": "tarea_personalizada",
+  "name": "Tarea de Prueba",
+  "description": "Ejecuta una llamada API de prueba durante la conversación.",
+  "pre_call_message": "Dame un momento, enseguida vuelvo.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "properties": {
+      "startTime": {
+        "type": "string",
+        "description": "Hora de inicio para la tarea"
+      },
+      "endTime": {
+        "type": "string",
+        "description": "Hora de finalización para la tarea"
+      }
+    }
+  },
+  "value": {
+    "method": "GET",
+    "param": {
+      "startTime": "%(startTime)s",
+      "endTime": "%(endTime)s"
+    },
+    "url": "https://api.ejemplo.com/prueba",
+    "api_token": "Bearer TU_TOKEN_API"
+  }
+}
+```
+
+<Callout kind="success">
+**Ventaja del método JSON:**  
+Puedes versionar tus herramientas en Git, compartirlas entre proyectos y automatizar su despliegue. Es especialmente útil cuando trabajas con múltiples entornos (desarrollo, pruebas, producción).
+</Callout>
+
+### JSON para Función de Reserva de Citas
+
+Este ejemplo muestra una herramienta completa para agendar citas, ideal para clínicas, consultorios o servicios profesionales:
+
+```json
+{
+  "key": "tarea_personalizada",
+  "name": "Reservar Cita",
+  "description": "Programa una nueva cita para el usuario con los detalles proporcionados.",
+  "pre_call_message": "Déjame agendar esa cita para ti...",
+  "parameters": {
+    "type": "object",
+    "required": [
+      "nombreCliente",
+      "fechaCita",
+      "horaInicio",
+      "horaFin",
+      "tipoServicio"
+    ],
+    "properties": {
+      "nombreCliente": {
+        "type": "string",
+        "description": "Nombre completo del cliente que reserva la cita."
+      },
+      "fechaCita": {
+        "type": "string",
+        "description": "La fecha de la cita en formato YYYY-MM-DD."
+      },
+      "horaInicio": {
+        "type": "string",
+        "description": "Hora de inicio de la cita en formato HH:MM (24 horas)."
+      },
+      "horaFin": {
+        "type": "string",
+        "description": "Hora de finalización de la cita en formato HH:MM (24 horas)."
+      },
+      "tipoServicio": {
+        "type": "string",
+        "description": "El tipo de servicio para la cita (por ejemplo, consulta, fotografía, peluquería)."
+      },
+      "notas": {
+        "type": "string",
+        "description": "Notas adicionales opcionales o solicitudes especiales para la cita."
+      }
+    }
+  },
+  "value": {
+    "method": "POST",
+    "url": "https://api.ejemplo.com/citas",
+    "api_token": "Authorization: Bearer TU_TOKEN_API",
+    "param": {
+      "customerName": "%(nombreCliente)s",
+      "appointmentDate": "%(fechaCita)s",
+      "startTime": "%(horaInicio)s",
+      "endTime": "%(horaFin)s",
+      "serviceType": "%(tipoServicio)s",
+      "notes": "%(notas)s"
+    }
+  }
+}
+```
+
+<Callout kind="tip">
+**Personalización de campos:**  
+Puedes añadir tantos parámetros como necesites. El LLM se encargará de extraer la información relevante de la conversación natural. No es necesario que el usuario siga un orden específico al proporcionar los datos.
+</Callout>
+
+### JSON para Función de Búsqueda de Vuelos
+
+Este ejemplo es ideal para agencias de viajes o servicios de reserva de transporte:
+
+```json
+{
+  "key": "buscar_vuelos",
+  "name": "Buscar Vuelos",
+  "description": "Obtiene vuelos disponibles según el origen, destino, fecha de viaje y número de pasajeros indicados por el usuario.",
+  "pre_call_message": "Déjame buscar los vuelos disponibles para ti...",
+  "parameters": {
+    "type": "object",
+    "required": ["origen", "destino", "fechaSalida", "pasajeros"],
+    "properties": {
+      "origen": {
+        "type": "string",
+        "description": "Código del aeropuerto de salida (por ejemplo, MAD, BCN, JFK)."
+      },
+      "destino": {
+        "type": "string",
+        "description": "Código del aeropuerto de llegada (por ejemplo, LHR, CDG, MEX)."
+      },
+      "fechaSalida": {
+        "type": "string",
+        "description": "Fecha de salida del vuelo en formato YYYY-MM-DD."
+      },
+      "fechaRegreso": {
+        "type": "string",
+        "description": "Fecha de regreso opcional para vuelos de ida y vuelta en formato YYYY-MM-DD."
+      },
+      "pasajeros": {
+        "type": "integer",
+        "description": "Número de pasajeros."
+      },
+      "clase": {
+        "type": "string",
+        "description": "Clase de viaje (por ejemplo, Económica, Ejecutiva, Primera)."
+      }
+    }
+  },
+  "value": {
+    "method": "GET",
+    "url": "https://api.ejemplo.com/vuelos/buscar",
+    "api_token": "Bearer TU_TOKEN_API",
+    "param": {
+      "origin": "%(origen)s",
+      "destination": "%(destino)s",
+      "departureDate": "%(fechaSalida)s",
+      "returnDate": "%(fechaRegreso)s",
+      "passengers": "%(pasajeros)s",
+      "classType": "%(clase)s"
+    }
+  }
+}
+```
+
+## Explicación Detallada de Cada Sección del JSON
+
+Cada campo en la definición JSON tiene un propósito específico. A continuación se explica cada uno en detalle.
+
+### 1. `name`
+
+- Etiqueta legible para humanos.
+- **Ejemplo:** "Reservar Cita" aparecerá en la interfaz y en los registros.
+
+<Callout kind="info">
+**Consejo:** Usa verbos en infinitivo que describan claramente la acción (Reservar, Buscar, Verificar, Actualizar, Cancelar). Esto ayuda tanto al LLM como a los humanos a entender rápidamente la función de la herramienta.
+</Callout>
+
+### 2. `description`
+
+- Explica qué hace la herramienta.
+- **Ejemplo:** "Programa una nueva cita para el usuario con los detalles proporcionados."
+
+### 3. `pre_call_message`
+
+- Mensaje que dice el agente antes de hacer la llamada API.
+- **Ejemplo:** "Déjame agendar esa cita para ti..."
+
+### 4. `parameters`
+
+- Define qué entradas se requieren de la conversación.
+- **`type`:** "object" indica que las entradas se pasan como JSON estructurado.
+- **`required`:** lista de campos que deben estar presentes.
+- **`properties`:** definición detallada de cada entrada:
+  - **`nombreCliente`:** Persona que reserva.
+  - **`fechaCita`:** Fecha (formato estricto YYYY-MM-DD).
+  - **`horaInicio`, `horaFin`:** Bloques horarios.
+  - **`tipoServicio`:** Tipo de servicio solicitado.
+  - **`notas`:** Texto libre opcional.
+
+### 5. `value`
+
+- Define cómo se realiza la llamada API:
+  - **`method`:** "POST" ya que la reserva modifica datos del servidor.
+  - **`url`:** El endpoint (debes reemplazarlo con tu backend real).
+  - **`api_token`:** Autenticación JSON estándar.
+  - **`param`:** El payload real enviado a la API. Cada campo usa el marcador `%(fieldName)s`, que se reemplaza dinámicamente con la entrada del usuario.
+
+### Referencia Completa de Campos
+
+| Campo | Descripción |
+|-------|-------------|
+| `key` | Identificador único para referencia interna |
+| `name` | Nombre mostrado en el constructor de flujos |
+| `description` | Describe la intención de la herramienta |
+| `pre_call_message` | Mensaje de voz durante la ejecución |
+| `parameters` | Define las variables de entrada mediante esquema JSON |
+| `value` | Detalles de ejecución HTTP para la llamada API |
+
+## Consejos y Consideraciones Importantes
+
+<Tabs>
+<Tab title="Nombres">
+Los nombres importan: evita usar verbos demasiado genéricos como "llamar" u "obtener" que podrían entrar en conflicto con acciones integradas. En su lugar, elige nombres claros y descriptivos que representen de forma única el propósito de la herramienta.
+</Tab>
+
+<Tab title="Descripciones">
+La descripción de la herramienta es uno de los aspectos más importantes para su activación. El LLM solo invocará una herramienta cuando los escenarios descritos en su descripción coincidan con la conversación. Redacta la descripción cuidadosamente para capturar los casos de uso previstos.
+</Tab>
+
+<Tab title="Parámetros">
+Define claramente qué parámetros son requeridos y cuáles opcionales. Si haces referencia a estos parámetros posteriormente en manejadores de respuesta o plantillas de mensajes, asegúrate de que estén correctamente mapeados para que la herramienta funcione de manera confiable.
+</Tab>
+
+<Tab title="Seguridad">
+Almacena siempre los tokens de API de forma segura. Evita incrustar credenciales sensibles directamente en documentación, capturas de pantalla o interfaces públicas. Utiliza variables de entorno o prácticas de gestión de configuración seguras.
+</Tab>
+</Tabs>
+
+## Mejores Prácticas para la Creación de Herramientas
+
+<Steps>
+<Step title="Planifica la herramienta">
+Antes de crearla, define claramente: ¿qué información necesita recopilar? ¿qué endpoint API va a consumir? ¿qué formato de respuesta esperas? Un buen plan ahorra tiempo de depuración posterior.
+</Step>
+
+<Step title="Diseña los parámetros">
+Identifica todos los datos que el agente debe obtener del usuario durante la conversación. Asegúrate de que las descripciones de los parámetros sean lo suficientemente detalladas para que el LLM las entienda sin ambigüedad.
+</Step>
+
+<Step title="Configura la autenticación">
+Define el método de autenticación que utilizará tu herramienta. La mayoría de las APIs externas requieren un token Bearer. Verifica que el token tenga los permisos necesarios para la operación que deseas realizar.
+</Step>
+
+<Step title="Prueba la herramienta">
+Realiza pruebas con diferentes escenarios: datos completos, datos parciales, valores inválidos y respuestas de error. Asegúrate de que el agente maneje correctamente tanto los casos exitosos como los fallos.
+</Step>
+
+<Step title="Monitorea el rendimiento">
+Después del despliegue, revisa los registros de ejecución de tus herramientas. Observa la tasa de éxito, los tiempos de respuesta y los errores más comunes para optimizar continuamente.
+</Step>
+</Steps>
+
+## Ejemplos de Casos de Uso por Industria
+
+<Columns cols="2">
+<Card title="Salud" icon="activity">
+  Verificar disponibilidad de doctores, agendar citas, consultar historiales médicos, enviar recordatorios de medicación.
+</Card>
+
+<Card title="Comercio" icon="shopping-cart">
+  Consultar stock de productos, procesar pedidos, verificar estado de envíos, gestionar devoluciones.
+</Card>
+
+<Card title="Servicios Profesionales" icon="briefcase">
+  Gestionar reservas de consultorías, enviar facturas, actualizar estados de proyectos, programar reuniones.
+</Card>
+
+<Card title="Educación" icon="book">
+  Inscribir estudiantes, consultar horarios de clases, enviar materiales didácticos, gestionar calificaciones.
+</Card>
+</Columns>
+
+## Integración con el Constructor de Flujos
+
+Una vez que creas una herramienta personalizada, puedes integrarla en cualquier flujo de conversación desde el constructor visual de E-SMART360. La herramienta aparecerá como un nodo más que puedes arrastrar a tu flujo y conectar con otros componentes.
+
+<Callout kind="success">
+**Ventaja clave:** Las herramientas personalizadas se comportan como acciones nativas dentro del flujo. Puedes combinarlas con condiciones, bucles, capturas de voz, transferencias a humanos y cualquier otro bloque disponible en la plataforma.
+</Callout>
+
+---
+
+<ExpandableGroup title="Preguntas Frecuentes">
+<Expandable title="¿Puedo usar una misma herramienta en múltiples agentes?" default-open="true">
+Sí. Las herramientas personalizadas se crean a nivel de agente, pero puedes duplicarlas o crearlas con la misma configuración JSON en diferentes agentes. También puedes exportar la definición JSON de una herramienta e importarla en otro agente para mantener la consistencia.
+</Expandable>
+
+<Expandable title="¿Qué ocurre si la API externa no responde a tiempo?">
+El agente maneja la situación de forma inteligente. Si la API no responde dentro del tiempo de espera configurado, el agente informará al usuario con un mensaje cordial como: "Lo siento, no he podido obtener la información en este momento. ¿Te gustaría que lo intente más tarde?" y podrá continuar la conversación sin interrupciones.
+</Expandable>
+
+<Expandable title="¿Cómo puedo depurar una herramienta que no funciona correctamente?">
+Puedes revisar los registros detallados de ejecución en el panel de monitoreo de E-SMART360. Allí verás el payload exacto que se envió a la API, la respuesta recibida y cualquier error que haya ocurrido. También puedes probar la herramienta manualmente usando la función de prueba integrada.
+</Expandable>
+
+<Expandable title="¿Cuántas herramientas personalizadas puedo crear por agente?">
+No hay un límite estricto predefinido. Puedes crear tantas herramientas como necesites para cubrir los casos de uso de tu agente. Sin embargo, recomendamos mantener un conjunto enfocado y bien organizado para evitar confusiones innecesarias para el LLM al seleccionar la herramienta adecuada.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda con la creación de herramientas personalizadas? Si tienes dudas sobre cómo configurar una integración específica o necesitas asistencia para definir los parámetros de tu herramienta, nuestro equipo de soporte está listo para ayudarte.">
+<Callout kind="info">
+**¿Necesitas ayuda con la creación de herramientas personalizadas?**  
+Si tienes dudas sobre cómo configurar una integración específica o necesitas asistencia para definir los parámetros de tu herramienta, contacta a nuestro equipo de soporte en <correo@e-smart360.com> o accede a la sección de ayuda dentro del panel de E-SMART360.
+</Callout>
+</Expandable>
+</ExpandableGroup>

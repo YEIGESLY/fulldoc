@@ -1,0 +1,254 @@
+---
+title: "Especificaciones Técnicas del Webhook"
+description: "Documentación técnica completa sobre las especificaciones del webhook de E-SMART360: método HTTP, tipo de contenido, headers requeridos, payload, seguridad, reintentos y mejores prácticas de implementación para agentes de voz."
+---
+
+<Callout type="info">
+  Esta guía describe las especificaciones técnicas fundamentales que tu endpoint debe cumplir para recibir correctamente los eventos del webhook de E-SMART360. Asegúrate de que tu servidor esté configurado exactamente como se indica antes de comenzar la integración.
+</Callout>
+
+## Método HTTP
+
+El webhook de E-SMART360 utiliza exclusivamente el método **POST** para enviar eventos a tu endpoint. No se admiten otros métodos HTTP.
+
+```http
+POST
+```
+
+<Callout type="tip">
+  Si estás diseñando un endpoint genérico, asegúrate de que solo acepte solicitudes POST en la ruta del webhook para evitar accesos no deseados a través de otros métodos como GET o DELETE.
+</Callout>
+
+## Tipo de Contenido
+
+Todos los payloads enviados por E-SMART360 utilizan el formato **JSON**. Tu servidor debe ser capaz de interpretar correctamente este tipo de contenido.
+
+```
+Content-Type: application/json
+```
+
+## Headers Requeridos
+
+Tu endpoint debe recibir y validar los siguientes headers en cada solicitud entrante del webhook:
+
+```json
+{
+  "Content-Type": "application/json"
+}
+```
+
+<Callout type="warning">
+  Si tu servidor espera un tipo de contenido diferente o si no configuras el parser de JSON correctamente, las solicitudes del webhook serán rechazadas. Verifica que tu framework (Express, FastAPI, Flask, etc.) tenga el middleware de JSON habilitado.
+</Callout>
+
+### Headers Adicionales Recomendados
+
+E-SMART360 puede incluir headers adicionales en las solicitudes del webhook para facilitar la depuración y el rastreo. Aunque no son obligatorios, es recomendable registrarlos en los logs:
+
+| Header | Descripción |
+|--------|-------------|
+| `X-Event-Id` | Identificador único del evento enviado |
+| `X-Event-Type` | Tipo de evento (ej. `call.completed`, `transcription.ready`) |
+| `X-Timestamp` | Marca de tiempo Unix del momento en que se generó el evento |
+| `User-Agent` | Identificador del cliente que realiza la solicitud (`E-SMART360-Webhook/1.0`) |
+
+## Estructura del Payload
+
+Cada evento que E-SMART360 envía a tu webhook sigue una estructura JSON consistente. A continuación se describen los campos principales que componen el payload:
+
+<ResponseField name="event" type="string" required>
+  Tipo de evento notificado. Ejemplo: `call.ended`, `recording.available`, `transcription.completed`.
+</ResponseField>
+
+<ResponseField name="timestamp" type="string (ISO 8601)" required>
+  Fecha y hora en que ocurrió el evento, formateada según el estándar ISO 8601. Ejemplo: `2025-04-15T14:30:00Z`.
+</ResponseField>
+
+<ResponseField name="data" type="object" required>
+  Objeto que contiene los datos específicos del evento. Su estructura varía según el tipo de evento notificado.
+</ResponseField>
+
+<ResponseField name="signature" type="string" required>
+  Firma HMAC-SHA256 del payload para verificar que la solicitud proviene realmente de E-SMART360. Consulta la sección de seguridad para más detalles.
+</ResponseField>
+
+### Ejemplo de Payload Completo
+
+```json
+{
+  "event": "call.completed",
+  "timestamp": "2025-04-15T14:30:00Z",
+  "data": {
+    "call_id": "call_abc123",
+    "duration_seconds": 245,
+    "agent_id": "agent_xyz789",
+    "phone_number": "+523312345678",
+    "disposition": "completed",
+    "recording_url": "https://api.esmart360.com/recordings/call_abc123.mp3"
+  },
+  "signature": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b"
+}
+```
+
+## Seguridad y Verificación de Firmas
+
+Para garantizar que las solicitudes entrantes provienen legítimamente de E-SMART360, cada payload incluye una firma HMAC-SHA256. Debes validar esta firma antes de procesar cualquier evento.
+
+<Steps>
+  <Step title="Obtén tu clave secreta">
+    Encuentra tu clave secreta del webhook en el panel de configuración de tu agente en E-SMART360. Esta clave es única para cada cuenta y nunca debe compartirse.
+  </Step>
+  <Step title="Extrae el payload y la firma">
+    Toma el cuerpo crudo de la solicitud (raw body) y el valor del header `X-Signature-256` o del campo `signature` en el payload.
+  </Step>
+  <Step title="Genera el HMAC localmente">
+    Calcula el HMAC-SHA256 del cuerpo de la solicitud usando tu clave secreta.
+  </Step>
+  <Step title="Compara las firmas">
+    Compara el HMAC generado con la firma recibida. Si coinciden, la solicitud es válida. Si no coinciden, recházala inmediatamente.
+  </Step>
+</Steps>
+
+<Callout type="danger">
+  Nunca proceses un payload del webhook sin verificar la firma. La suplantación de webhooks es un vector de ataque común. Si la firma no coincide, descarta la solicitud y registra el incidente.
+</Callout>
+
+### Ejemplo de Verificación en Node.js
+
+```javascript
+const crypto = require('crypto');
+
+function verificarFirma(payloadCrudo, firmaRecibida, claveSecreta) {
+  const hmac = crypto.createHmac('sha256', claveSecreta);
+  hmac.update(payloadCrudo);
+  const firmaEsperada = hmac.digest('hex');
+  return crypto.timingSafeEqual(
+    Buffer.from(firmaEsperada),
+    Buffer.from(firmaRecibida)
+  );
+}
+```
+
+### Ejemplo de Verificación en Python
+
+```python
+import hmac
+import hashlib
+
+def verificar_firma(payload_crudo: bytes, firma_recibida: str, clave_secreta: str) -> bool:
+    firma_esperada = hmac.new(
+        clave_secreta.encode('utf-8'),
+        payload_crudo,
+        hashlib.sha256
+    ).hexdigest()
+    return hmac.compare_digest(firma_esperada, firma_recibida)
+```
+
+## Códigos de Respuesta Esperados
+
+Tu endpoint debe responder a cada solicitud del webhook con un código de estado HTTP adecuado:
+
+| Código | Significado | Acción de E-SMART360 |
+|--------|-------------|----------------------|
+| `200 OK` | Procesado exitosamente | No reintenta |
+| `202 Accepted` | Aceptado para procesamiento asíncrono | No reintenta |
+| `400 Bad Request` | Payload inválido | No reintenta (error del emisor) |
+| `401 Unauthorized` | Firma inválida | No reintenta (error de seguridad) |
+| `429 Too Many Requests` | Límite de tasa excedido | Reintenta con backoff exponencial |
+| `5xx` | Error interno del servidor | Reintenta con backoff exponencial |
+
+## Política de Reintentos
+
+E-SMART360 implementa un sistema de reintentos automáticos para garantizar la entrega de eventos. La política sigue un patrón de **backoff exponencial**:
+
+<Callout type="success">
+  El sistema de reintentos está diseñado para ser resiliente. Los eventos no se pierden incluso si tu servidor experimenta cortes temporales.
+</Callout>
+
+```
+Intento 1 → espera 10 segundos
+Intento 2 → espera 30 segundos
+Intento 3 → espera 60 segundos
+Intento 4 → espera 120 segundos
+Intento 5 → espera 300 segundos (5 minutos)
+Máximo: 5 reintentos
+```
+
+Si después de 5 reintentos tu endpoint sigue sin responder con un código 2xx, el evento se descarta y se registra como `failed_delivery` en el panel de control de E-SMART360.
+
+## Buenas Prácticas de Implementación
+
+<Columns cols="2">
+  <Card title="✅ Responder rápido" icon="check-circle">
+    Tu endpoint debe responder con un código 2xx lo antes posible (idealmente en menos de 5 segundos). Si necesitas hacer procesamiento pesado, recibe el evento, responde inmediatamente con 202 Accepted, y procesa en segundo plano.
+  </Card>
+  <Card title="✅ Idempotencia" icon="check-circle">
+    Diseña tu endpoint para que sea idempotente. El mismo evento podría llegar más de una vez debido a reintentos. Usa el `X-Event-Id` para detectar y descartar duplicados.
+  </Card>
+</Columns>
+
+<Columns cols="2">
+  <Card title="✅ Logging estructurado" icon="check-circle">
+    Registra cada evento recibido con su ID, tipo y timestamp. Esto facilita la depuración cuando algo sale mal.
+  </Card>
+  <Card title="❌ Bloquear el hilo principal" icon="x-circle">
+    No realices operaciones síncronas lentas (llamadas a APIs externas, escritura a disco pesada) dentro del handler del webhook. Usa colas de procesamiento.
+  </Card>
+</Columns>
+
+<Columns cols="2">
+  <Card title="❌ Ignorar la validación de firma" icon="x-circle">
+    La verificación de firma no es opcional. Es la única forma de garantizar que la solicitud proviene de E-SMART360 y no de un atacante.
+  </Card>
+  <Card title="✅ Monitoreo de entregas" icon="check-circle">
+    Revisa periódicamente el panel de control para identificar eventos con estado `failed_delivery` y toma acciones correctivas.
+  </Card>
+</Columns>
+
+## Prueba de tu Webhook
+
+Antes de poner tu integración en producción, realiza estas pruebas mínimas:
+
+<Tabs>
+  <Tab title="Prueba de conectividad">
+    Verifica que E-SMART360 pueda alcanzar tu endpoint. Asegúrate de que el puerto esté abierto, que el firewall no bloquee la IP de E-SMART360 y que el certificado SSL sea válido (si usas HTTPS).
+  </Tab>
+  <Tab title="Prueba de formato">
+    Confirma que tu servidor pueda parsear correctamente payloads JSON con diferentes estructuras. Envía eventos de prueba desde el panel de administración.
+  </Tab>
+  <Tab title="Prueba de firma">
+    Valida que la verificación HMAC funcione correctamente. Genera un payload de prueba con firma conocida y confirma que tu endpoint la valida o rechaza según corresponda.
+  </Tab>
+  <Tab title="Prueba de reintentos">
+    Simula una caída temporal de tu servidor y verifica que E-SMART360 reintente el envío siguiendo la política de backoff exponencial.
+  </Tab>
+</Tabs>
+
+## Solución de Problemas Comunes
+
+| Problema | Causa Posible | Solución |
+|----------|--------------|----------|
+| El webhook no recibe eventos | URL incorrecta o no accesible | Verifica que la URL esté bien escrita y que tu servidor esté en línea |
+| Error 401 en cada solicitud | Firma HMAC inválida | Revisa que estés usando la clave secreta correcta y que leas el body crudo (no parseado) |
+| Eventos duplicados | Falta de idempotencia | Implementa un almacén de IDs de eventos ya procesados |
+| Timeout en la respuesta | Endpoint tarda más de 10 segundos | Refactoriza para responder inmediatamente y procesar en segundo plano |
+
+<ExpandableGroup title="Preguntas Frecuentes sobre Especificaciones Técnicas">
+  <Expandable title="¿Qué pasa si mi endpoint cambia de URL?" default-open="true">
+    Si necesitas cambiar la URL de tu webhook, actualízala en el panel de configuración de E-SMART360. Los eventos nuevos se enviarán a la nueva URL. Los eventos que ya estaban en proceso de reintento podrían seguir llegando a la URL anterior hasta agotar los reintentos, por lo que se recomienda mantener activo el endpoint anterior durante un período de transición.
+  </Expandable>
+  <Expandable title="¿E-SMART360 soporta webhooks con autenticación básica o token Bearer?">
+    Sí, puedes configurar autenticación adicional en la URL del webhook. E-SMART360 incluirá el header `Authorization` en cada solicitud si configuras un token Bearer o credenciales de autenticación básica en el panel de administración.
+  </Expandable>
+  <Expandable title="¿Cuántos eventos puedo recibir por segundo?">
+    El límite de tasa depende del plan contratado. En el plan estándar, el límite es de 100 eventos por minuto por webhook. Si superas este límite, E-SMART360 responderá con un error 429 y reintentará con backoff exponencial. Si necesitas un límite mayor, contacta a nuestro equipo de soporte.
+  </Expandable>
+  <Expandable title="¿El webhook funciona con HTTP en lugar de HTTPS?">
+    Por razones de seguridad, E-SMART360 solo envía webhooks a endpoints HTTPS. Los endpoints HTTP son rechazados automáticamente. Asegúrate de que tu servidor tenga un certificado SSL válido emitido por una autoridad de certificación reconocida.
+  </Expandable>
+  <Expandable title="¿Necesitas ayuda con la configuración técnica de tu webhook?">
+    <Callout type="info">
+      Si tienes problemas para configurar tu webhook o necesitas asistencia con la verificación de firmas, nuestro equipo de soporte técnico está disponible. Escríbenos a soporte@esmart360.com o consulta nuestra guía de <a href="/recursos/api-reference">referencia de API</a> para más detalles.
+    </Callout>
+  </Expandable>
+</ExpandableGroup>

@@ -1,0 +1,287 @@
+---
+title: "Cómo Configurar una Base de Conocimiento para tu Agente de Voz con IA"
+description: "Guía completa para crear y configurar la base de conocimiento de tu agente de voz E-SMART360. Aprende a añadir sitios web y documentos PDF para que tu agente responda con precisión sobre tu negocio."
+---
+
+import { Callout } from 'nextra/components'
+import { Steps, Step } from 'nextra/components'
+import { Tabs, Tab } from 'nextra/components'
+import { Columns, Card } from 'nextra/components'
+import { Expandable, ExpandableGroup } from 'nextra/components'
+import { CodeGroup } from 'nextra/components'
+import { Image } from 'nextra/components'
+
+<Callout kind="info" emoji="🧠">
+La Base de Conocimiento es el cerebro digital de tu agente de voz. Contiene todo lo que tu agente necesita saber sobre tu negocio: desde los servicios que ofreces hasta las políticas de la empresa. Si tu agente va a representar a tu negocio por teléfono, necesita estar equipado con la información correcta.
+</Callout>
+
+## ¿Qué es una Base de Conocimiento?
+
+Una Base de Conocimiento es el repositorio central de información que tu agente de voz utiliza para responder preguntas de los clientes de forma precisa y con confianza. Piensa en ella como el manual de operaciones de tu negocio, pero en formato digital y accesible en tiempo real durante cada llamada.
+
+<Callout kind="tip" emoji="💡">
+Una base de conocimiento bien configurada marca la diferencia entre un agente que responde con incertidumbre y uno que habla con la autoridad y precisión de un experto en tu negocio.
+</Callout>
+
+### Por Qué es Importante
+
+- **Precisión en las respuestas:** Ayuda a tu agente a responder con exactitud a las preguntas de los clientes
+- **Mejor calificación de leads:** Permite una mejor calificación de prospectos, reserva de citas y gestión de soporte
+- **Alineación con tu negocio:** Mantiene a tu IA alineada con los objetivos, el tono y la experiencia de tu empresa
+- **Consistencia en el servicio:** Garantiza que todos los clientes reciban la misma información de alta calidad
+
+## Requisitos Previos
+
+Antes de configurar tu Base de Conocimiento, asegúrate de tener lo siguiente:
+
+<Columns cols="2">
+<Card title="✅ Agente de Voz Creado" icon="🤖">
+Debes haber creado al menos un agente de voz en E-SMART360. Si aún no lo has hecho, sigue primero la guía de configuración de tu primer agente.
+</Card>
+<Card title="✅ Sesión Iniciada" icon="🔑">
+Debes haber iniciado sesión en el portal de E-SMART360 con tu cuenta. Accede a través del panel de administración.
+</Card>
+</Columns>
+
+<Callout kind="warning" emoji="⚠️">
+Si aún no has creado tu primer agente de voz, te recomendamos seguir primero la guía de configuración de tu primer agente de IA antes de continuar con la base de conocimiento.
+</Callout>
+
+## Guía Paso a Paso: Cómo Añadir una Base de Conocimiento
+
+<Steps>
+<Step title="Ve a la Sección de Agentes" icon="👥">
+Una vez dentro del panel de control de E-SMART360, mira en la barra lateral izquierda y haz clic en la pestaña **"Agents"** (Agentes). Aquí verás una lista de todos los agentes que has creado.
+
+Cada agente aparece con su nombre, estado y acciones disponibles. Si tienes varios agentes, identifica el que deseas configurar.
+</Step>
+
+<Step title="Selecciona el Agente a Configurar" icon="🎯">
+Haz clic en el agente específico al que deseas asignar una Base de Conocimiento. Esto abrirá el panel de configuración de ese agente.
+
+En este panel podrás ver toda la información relevante del agente, incluyendo su estado actual, el prompt asignado y las configuraciones de voz.
+</Step>
+
+<Step title="Accede a la Pestaña de Configuración Avanzada" icon="⚙️">
+En el panel del agente, verás dos pestañas:
+- **Basic Settings** (Configuración Básica)
+- **Advanced Settings** (Configuración Avanzada)
+
+Haz clic en **Advanced** para acceder a las opciones de configuración avanzada, donde se encuentra la gestión de la base de conocimiento.
+</Step>
+
+<Step title="Encuentra la Sección de Conocimiento" icon="📚">
+Dentro de la configuración avanzada, busca la sección **"Knowledge & Extraction"** (Conocimiento y Extracción). Esta es la sección donde puedes alimentar a tu agente con la información que necesita.
+
+<Callout kind="info" emoji="ℹ️">
+La sección de Knowledge & Extraction es el centro neurálgico de la inteligencia de tu agente. Todo lo que añadas aquí estará disponible para que el agente lo use durante las llamadas.
+</Callout>
+
+</Step>
+</Steps>
+
+## Dos Formas de Añadir una Base de Conocimiento
+
+<Tabs>
+<Tab title="Opción 1: Añadir un Sitio Web">
+La forma más rápida de dotar de conocimiento a tu agente es proporcionándole la URL de tu sitio web.
+
+**Pasos:**
+
+1. Haz clic en **"Add Website"** (Añadir Sitio Web)
+2. Se abrirá una ventana emergente donde deberás ingresar:
+   - **La URL** de tu sitio web o página de documentación
+   - **Un nombre** para esta Base de Conocimiento (ej: "Base de Reparaciones de Autos")
+3. Haz clic en **Submit** (Enviar)
+
+**Cómo funciona:** El sistema de E-SMART360 analizará automáticamente el contenido del sitio web y extraerá la información relevante. Tu agente podrá entonces utilizar contextualmente los datos de ese sitio para responder a las consultas de los usuarios.
+
+**Ejemplos de URLs que funcionan bien:**
+- Tu sitio web principal (ej: `https://tunegocio.com`)
+- Una página de servicios o productos
+- Una página de preguntas frecuentes (FAQs)
+- Documentación técnica de tu industria
+
+<Callout kind="tip" emoji="💡">
+**Recomendación:** Utiliza URLs de sitios web que estén bien estructurados y tengan contenido actualizado. Cuanto más clara sea la información en tu sitio, más inteligente será tu agente al responder.
+</Callout>
+</Tab>
+<Tab title="Opción 2: Subir un Documento">
+Si tu conocimiento está almacenado en un archivo PDF u otro formato documental, puedes subirlo directamente.
+
+**Pasos:**
+
+1. Haz clic en **"Upload Document"** (Subir Documento)
+2. Selecciona el archivo desde tu sistema (puede ser una hoja de precios, SOPs, FAQs, etc.)
+3. Asígnale un nombre descriptivo
+4. Haz clic en **Upload** (Subir)
+
+**Cómo funciona:** El documento será parseado y procesado por el sistema, extrayendo todo el contenido relevante para que tu agente lo utilice como fuente de datos durante las conversaciones.
+
+**Tipos de documentos recomendados:**
+- 📄 **Hojas de precios y tarifas**
+- 📄 **Procedimientos operativos estándar (SOPs)**
+- 📄 **Guías de productos o servicios**
+- 📄 **Políticas de devolución, garantía o cancelación**
+- 📄 **FAQs de tu industria o negocio**
+- 📄 **Catálogos de servicios**
+
+<Callout kind="warning" emoji="⚠️">
+**Importante:** Asegúrate de que los documentos que subes estén en formatos compatibles (PDF recomendado) y que el texto sea legible. Los documentos escaneados como imágenes pueden no procesarse correctamente.
+</Callout>
+</Tab>
+</Tabs>
+
+## ¿Qué Hace una Gran Base de Conocimiento?
+
+La calidad de tu base de conocimiento determina directamente la inteligencia de tu agente. Incluye documentos o enlaces que respondan a estas preguntas fundamentales:
+
+<Columns cols="2">
+<Card title="🛒 Productos y Servicios" icon="📋">
+¿Qué productos o servicios ofreces? ¿Cuáles son tus especialidades? ¿Hay algo en lo que destaques?
+</Card>
+<Card title="💰 Precios y Políticas" icon="🏷️">
+¿Cuáles son tus precios y políticas de horarios? ¿Manejas promociones o descuentos especiales?
+</Card>
+<Card title="🔄 Devoluciones y Garantía" icon="📝">
+¿Cuál es tu proceso de reembolso, garantía o cancelación? ¿Hay cargos por cancelación?
+</Card>
+<Card title="❓ Preguntas Frecuentes" icon="💬">
+¿Hay preguntas frecuentes sobre tu industria o negocio que siempre recibes? Inclúyelas.
+</Card>
+</Columns>
+
+<Callout kind="success" emoji="✨">
+**CLAVE DEL ÉXITO:** Cuanto más clara y completa sea la fuente de información, más inteligente y preciso será tu agente. Una base de conocimiento bien alimentada puede reducir las transferencias a humanos hasta en un 70%.
+</Callout>
+
+## Siguiente Paso: Pruébalo
+
+Una vez que hayas añadido tu Base de Conocimiento, vuelve al panel de tu agente y pruébala usando la función de vista previa. Haz preguntas como:
+
+- *"¿Qué servicios ofrecen?"*
+- *"¿Ofrecen reparaciones el mismo día?"*
+- *"¿Cuál es su política de cancelación?"*
+- *"¿Cuánto cuesta una consulta?"*
+- *"¿Tienen disponibilidad para mañana?"*
+
+Verás cómo el agente responde utilizando el conocimiento que acabas de proporcionarle.
+
+<Tabs>
+<Tab title="Ejemplo de Prueba 1: Servicios">
+**Pregunta del cliente:** "¿Qué servicios ofrecen?"
+
+**Respuesta esperada del agente:** "Ofrecemos servicios de reparación general, mantenimiento preventivo y diagnóstico computarizado. También tenemos un servicio express para reparaciones menores que puede estar listo en menos de 2 horas. ¿Qué tipo de servicio está buscando?"
+</Tab>
+<Tab title="Ejemplo de Prueba 2: Políticas">
+**Pregunta del cliente:** "¿Cuál es su política de cancelación?"
+
+**Respuesta esperada del agente:** "Puede cancelar su cita sin cargo hasta 24 horas antes de la hora programada. Las cancelaciones con menos de 24 horas de anticipación tienen un cargo del 50% del valor del servicio. ¿Le gustaría reprogramar o cancelar su cita?"
+</Tab>
+<Tab title="Ejemplo de Prueba 3: Disponibilidad">
+**Pregunta del cliente:** "¿Tienen disponibilidad para mañana?"
+
+**Respuesta esperada del agente:** "Déjeme revisar nuestra agenda... Sí, tenemos disponibilidad mañana a las 10:00 AM y a las 2:00 PM. ¿Cuál de estos horarios le funciona mejor?"
+</Tab>
+</Tabs>
+
+<Callout kind="info" emoji="🔄">
+Si las respuestas no son lo que esperabas, revisa el contenido de tu base de conocimiento. A veces, añadir información más específica o mejor estructurada puede mejorar significativamente la precisión de las respuestas.
+</Callout>
+
+## Mejores Prácticas para tu Base de Conocimiento
+
+### 1. Organización del Contenido
+
+Estructura tu información de forma clara y jerárquica. Utiliza títulos, subtítulos y listas para que el agente pueda encontrar la información relevante rápidamente.
+
+**Ejemplo de buena organización:**
+```
+Servicios
+  ├── Reparación General (desde $50)
+  ├── Mantenimiento Preventivo (desde $35)
+  └── Diagnóstico Computarizado ($25)
+
+Políticas
+  ├── Cancelación (sin cargo 24h antes)
+  ├── Garantía (30 días en reparaciones)
+  └── Devoluciones (reembolso completo en 7 días)
+```
+
+### 2. Actualización Periódica
+
+Mantén tu base de conocimiento actualizada. Los precios, horarios y políticas cambian, y tu agente debe reflejar siempre la información más reciente.
+
+- Revisa tu base de conocimiento mensualmente
+- Actualiza los precios tan pronto como cambien
+- Añade nuevos servicios o productos inmediatamente
+- Elimina información obsoleta
+
+### 3. Sé Específico y Conciso
+
+Incluye detalles precisos pero evita la información redundante. El agente debe poder encontrar rápidamente lo que necesita sin procesar contenido irrelevante.
+
+<Columns cols="2">
+<Card title="❌ Información vaga" icon="⚠️">
+"Ofrecemos varios servicios a buenos precios. Contáctanos para más información."
+</Card>
+<Card title="✅ Información específica" icon="✓">
+"Ofrecemos 3 servicios principales: reparación general desde $50, mantenimiento preventivo desde $35, y diagnóstico computarizado por $25. Todos incluyen garantía de 30 días."
+</Card>
+</Columns>
+
+### 4. Cubre las Preguntas Más Frecuentes
+
+Analiza las preguntas que tus clientes hacen con más frecuencia y asegúrate de que tu base de conocimiento las cubra todas. Esto reducirá las transferencias a humanos y mejorará la satisfacción del cliente.
+
+### 5. Incluye Varias Fuentes
+
+Combina sitios web y documentos para crear una base de conocimiento más rica. Cada fuente puede aportar información complementaria que mejore la comprensión del agente.
+
+<Callout kind="tip" emoji="🚀">
+**Pro Tip:** Para negocios con múltiples ubicaciones o servicios, considera crear bases de conocimiento separadas para cada área de negocio. Esto permite que agentes especializados tengan exactamente la información que necesitan.
+</Callout>
+
+## Casos de Uso Comunes
+
+### Atención al Cliente
+Una clínica dental puede cargar su sitio web con información de servicios, precios y horarios, más un PDF con políticas de cancelación y seguros aceptados. El agente podrá responder preguntas como "¿Aceptan mi seguro?" o "¿Cuánto cuesta una limpieza dental?".
+
+### Ventas y Calificación de Leads
+Una empresa de servicios para el hogar puede cargar su catálogo de servicios y una guía de precios. El agente podrá calificar leads preguntando sobre el tipo de servicio necesario y proporcionando presupuestos precisos.
+
+### Soporte Técnico
+Una empresa de software puede cargar su documentación técnica y FAQs. El agente podrá resolver problemas comunes sin necesidad de escalar a un técnico humano.
+
+## Limitaciones y Consideraciones
+
+<Callout kind="warning" emoji="🔍">
+Ten en cuenta estas limitaciones al configurar tu base de conocimiento:
+
+- **Documentos muy extensos:** Los documentos con más de 100 páginas pueden no procesarse completamente. Divide la información en documentos más pequeños y específicos.
+- **Imágenes sin texto:** Las imágenes dentro de los PDFs no se procesan como texto. Asegúrate de que la información crítica esté en formato de texto.
+- **Sitios web dinámicos:** Las páginas que requieren inicio de sesión o que cargan contenido mediante JavaScript pueden no ser accesibles para el procesamiento.
+- **Actualizaciones:** Los cambios en tu sitio web después de añadirlo pueden no reflejarse automáticamente. Considera volver a añadir la URL periódicamente.
+</Callout>
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+<Expandable title="¿Puedo añadir múltiples sitios web a un mismo agente?" default-open="true">
+Sí, puedes añadir tantos sitios web como necesites. Cada URL que añadas ampliará la base de conocimiento de tu agente. Se recomienda añadir entre 1 y 5 fuentes por agente para mantener la calidad de las respuestas. Si necesitas más, considera crear agentes especializados por área de conocimiento.
+</Expandable>
+<Expandable title="¿Cuánto tiempo tarda en procesarse un documento o sitio web?">
+El tiempo de procesamiento varía según el tamaño del contenido. Los sitios web pequeños y documentos de menos de 20 páginas suelen procesarse en segundos. Contenidos más grandes pueden tardar hasta 2-3 minutos. Recibirás una notificación cuando el procesamiento haya finalizado.
+</Expandable>
+<Expandable title="¿Puedo editar o eliminar una base de conocimiento después de crearla?">
+Sí, puedes gestionar tus bases de conocimiento desde la misma sección de Knowledge & Extraction. Verás una lista de todas las fuentes que has añadido y podrás eliminar las que ya no necesites o añadir nuevas en cualquier momento.
+</Expandable>
+<Expandable title="¿Qué formatos de documentos son compatibles?">
+Actualmente, E-SMART360 es compatible con archivos PDF, DOCX y TXT. El formato PDF es el más recomendado por su compatibilidad universal. Los documentos deben contener texto legible (no imágenes escaneadas) para que el sistema pueda procesarlos correctamente.
+</Expandable>
+<Expandable title="¿Necesitas ayuda para configurar tu base de conocimiento?">
+<Callout kind="info" emoji="🆘">
+Si encuentras dificultades al configurar tu base de conocimiento o necesitas asistencia para estructurar la información de tu negocio, nuestro equipo de soporte está disponible para ayudarte. Escríbenos a **team@e-smart360.com** y te guiaremos en el proceso.
+</Callout>
+</Expandable>
+</ExpandableGroup>

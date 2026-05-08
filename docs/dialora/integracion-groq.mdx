@@ -1,0 +1,288 @@
+---
+title: "Cómo Configurar la Integración de Groq API Key con E-SMART360"
+description: "Aprende paso a paso cómo conectar tu clave API de Groq a E-SMART360 para habilitar inferencias de IA más rápidas en tus agentes de voz y campañas automatizadas."
+---
+
+<Callout kind="info">
+  **Groq** ofrece inferencia de IA ultrarrápida gracias a su hardware especializado (LPU).
+  Al integrarlo con E-SMART360, puedes reducir drásticamente los tiempos de respuesta
+  de tu agente de voz y ejecutar modelos de lenguaje a velocidad casi instantánea.
+</Callout>
+
+Integrar Groq habilita inferencias de IA más rápidas dentro de E-SMART360. Sigue los pasos a continuación para conectar tu clave API y activarla en tu cuenta.
+
+## Paso 1: Inicia Sesión en tu Cuenta de E-SMART360
+
+1. Ve a [E-SMART360](/) e inicia sesión con tus credenciales.
+2. Una vez dentro, se te redirigirá al panel de control principal.
+
+<Callout kind="tip">
+  Si aún no tienes una cuenta, puedes registrarte desde la misma página de inicio.
+  El proceso de registro toma menos de 2 minutos.
+</Callout>
+
+## Paso 2: Navega a la Sección de Integraciones
+
+1. En el panel de control de E-SMART360, localiza la barra lateral izquierda.
+2. Haz clic en **Integraciones**.
+
+<Image alt="Panel de control de E-SMART360 mostrando la barra lateral con la opción de Integraciones" width="800" height="450" />
+
+En esta sección encontrarás todas las integraciones disponibles para conectar servicios externos a tu cuenta.
+
+## Paso 3: Localiza el Campo de Groq
+
+1. Desplázate hacia abajo dentro de la página de Integraciones.
+2. Busca el campo etiquetado como **Groq API Key**.
+3. Este campo está diseñado para recibir tu clave API de Groq.
+
+<Tabs>
+  <Tab title="Campo visible en la interfaz">
+    El campo de **Groq API Key** se encuentra generalmente en la sección de
+    proveedores de IA, junto a otros como OpenAI, Deepgram y ElevenLabs.
+    Verás un campo de texto vacío listo para recibir tu clave.
+  </Tab>
+  <Tab title="Verificación previa">
+    Asegúrate de que tu cuenta de Groq esté activa y tengas acceso a la consola
+    de Groq antes de continuar. Necesitarás una cuenta verificada para generar
+    la clave API.
+  </Tab>
+</Tabs>
+
+<Image alt="Campo de Groq API Key en la sección de integraciones de E-SMART360" width="800" height="450" />
+
+## Paso 4: Accede a la Consola de Groq
+
+1. Abre una nueva pestaña en tu navegador.
+2. Ve a [https://console.groq.com/keys](https://console.groq.com/keys).
+3. Inicia sesión con tu cuenta de Groq.
+
+<Callout kind="warning">
+  **Importante:** No cierres la pestaña de E-SMART360. Necesitarás alternar entre ambas
+  ventanas durante el proceso de configuración.
+</Callout>
+
+### Requisitos previos en Groq
+
+- Una cuenta activa en [Groq](https://groq.com)
+- Acceso a la consola de desarrollador
+- Permisos para crear claves API (cuenta con rol de administrador o desarrollador)
+
+## Paso 5: Crea una Nueva Clave API
+
+1. Dentro de la consola de Groq, haz clic en **Create API Key**.
+2. Completa los detalles solicitados, como el nombre de la clave.
+   - Usa un nombre descriptivo como `E-SMART360-Integration` para identificarla fácilmente.
+3. Selecciona los permisos o alcance si la consola los requiere (generalmente acceso completo para integraciones).
+
+<Image alt="Formulario de creación de API Key en la consola de Groq" width="800" height="450" />
+
+<Callout kind="tip">
+  **Buenas prácticas:** Asigna nombres descriptivos a tus claves API. Si gestionas
+  múltiples integraciones, usar nombres como `esmart360-produccion` o
+  `esmart360-staging` te ayudará a identificar cada clave en el futuro.
+</Callout>
+
+### Configuración recomendada de la clave
+
+| Campo | Valor recomendado |
+|-------|-------------------|
+| Nombre de la clave | `E-SMART360 Integración` |
+| Permisos | Completo (o lectura/escritura) |
+| Proyecto asociado | Tu proyecto principal en Groq |
+
+## Paso 6: Genera y Copia la Clave API
+
+1. Haz clic en **Submit** o **Create** para generar tu clave API.
+2. **Asegúrate de copiarla inmediatamente** — solo se mostrará una vez.
+
+<Callout kind="danger">
+  **Advertencia crítica:** Las claves API de Groq solo se muestran una vez después de crearlas.
+  Si cierras la ventana sin copiarla, tendrás que generar una nueva. Guárdala en un gestor
+  de contraseñas o en un lugar seguro.
+</Callout>
+
+<Image alt="Clave API de Groq generada y lista para copiar" width="800" height="450" />
+
+### Dónde guardar tu clave API de forma segura
+
+- **Gestores de contraseñas** — 1Password, Bitwarden, LastPass
+- **Variables de entorno** — si también la usas en desarrollo local
+- **Archivo cifrado** — con herramientas como GPG o vaults cifrados
+
+<Callout kind="warning">
+  **Nunca** compartas tu clave API en repositorios públicos, chats, o documentación.
+  Si sospechas que tu clave fue comprometida, revócala inmediatamente desde la consola de Groq.
+</Callout>
+
+## Paso 7: Pega la Clave en E-SMART360 y Guarda
+
+1. Vuelve a tu panel de E-SMART360 (la pestaña que dejaste abierta).
+2. Pega la clave API en el campo de **Groq** dentro de la sección de Integraciones.
+3. Haz clic en **Guardar**.
+
+```bash
+# Ejemplo: verificación rápida de que la clave se almacenó correctamente
+# Puedes verificar que la integración esté activa desde el panel de Integraciones
+# Busca un indicador verde o un check junto al campo de Groq API Key
+```
+
+<Image alt="Clave API de Groq pegada en el campo correspondiente en E-SMART360" width="800" height="450" />
+
+## Paso 8: Verifica la Integración
+
+Una vez guardada la clave, E-SMART360 realizará una verificación automática para confirmar que la clave es válida y está activa.
+
+<Callout kind="success">
+  **¡Listo!** Tu cuenta de Groq ahora está conectada exitosamente a E-SMART360.
+  Puedes comenzar a usar modelos de Groq para tus agentes de voz inmediatamente.
+</Callout>
+
+### Señales de que la integración funcionó correctamente
+
+- ✅ El campo de Groq API Key muestra un indicador verde de "conectado"
+- ✅ Puedes seleccionar modelos de Groq al configurar un agente de voz
+- ✅ Las llamadas y respuestas de IA se procesan con la velocidad característica de Groq
+- ✅ No aparecen errores de autenticación en los logs de actividad
+
+## Beneficios de Usar Groq con E-SMART360
+
+<Columns cols="3">
+  <Card title="Velocidad LPU" icon="zap">
+    La unidad de procesamiento de lenguaje (LPU) de Groq ofrece inferencias
+    hasta 10-20x más rápidas que GPUs tradicionales.
+  </Card>
+  <Card title="Modelos Open Source" icon="layers">
+    Accede a modelos como Llama 3, Mixtral y Gemma directamente desde
+    la plataforma de E-SMART360.
+  </Card>
+  <Card title="Baja Latencia" icon="clock">
+    Ideal para aplicaciones de voz en tiempo real donde cada milisegundo
+    de respuesta impacta la experiencia del usuario.
+  </Card>
+</Columns>
+
+## Modelos Compatibles
+
+Al integrar Groq, podrás utilizar los siguientes modelos en tus agentes de E-SMART360:
+
+<CodeGroup tabs="Modelos disponibles, Ejemplo de configuración">
+```text
+- Llama 3.1 70B
+- Llama 3.1 8B
+- Mixtral 8x7B
+- Gemma 2 9B
+- Gemma 2 27B
+- Whisper (speech-to-text)
+```
+
+```json
+{
+  "model": "llama-3.1-70b-versatile",
+  "provider": "groq",
+  "temperature": 0.7,
+  "max_tokens": 4096
+}
+```
+</CodeGroup>
+
+## Casos de Uso Recomendados
+
+La integración con Groq es especialmente útil en escenarios donde la velocidad de respuesta es crítica:
+
+| Caso de uso | Beneficio con Groq |
+|-------------|-------------------|
+| Atención al cliente en vivo | Respuestas casi instantáneas sin pausas incómodas |
+| Transcripción en tiempo real | Procesamiento ultrarrápido de audio con Whisper |
+| Campañas outbound masivas | Menor latencia por llamada, mayor throughput |
+| Asistentes virtuales conversacionales | Experiencia fluida y natural sin demoras perceptibles |
+
+## Solución de Problemas
+
+<ExpandableGroup>
+  <Expandable title="La clave API no se guarda o muestra error" default-open="true">
+    <Callout kind="warning">
+      Si al hacer clic en **Guardar** aparece un mensaje de error, verifica lo siguiente:
+    </Callout>
+    - Asegúrate de haber copiado la clave completa, sin espacios adicionales al inicio o final.
+    - Confirma que la clave no haya expirado. Las claves de Groq pueden tener fecha de vencimiento.
+    - Revisa que tu cuenta de Groq esté activa y con saldo disponible (si aplica).
+    - Intenta generar una nueva clave desde la consola de Groq si el problema persiste.
+  </Expandable>
+
+  <Expandable title="No aparecen los modelos de Groq al configurar un agente">
+    <Callout kind="info">
+      Si después de guardar la clave no ves los modelos de Groq disponibles:
+    </Callout>
+    1. Cierra sesión y vuelve a iniciar sesión en E-SMART360 para refrescar la configuración.
+    2. Verifica en la sección de Integraciones que el estado muestre "conectado".
+    3. Asegúrate de que tu clave tenga los permisos necesarios para acceder a los modelos.
+    4. Contacta a soporte si después de estos pasos los modelos siguen sin aparecer.
+  </Expandable>
+
+  <Expandable title="Las respuestas son lentas a pesar de la integración">
+    <Callout kind="tip">
+      La velocidad de Groq depende de varios factores:
+    </Callout>
+    - El modelo seleccionado (modelos más grandes como Llama 3.1 70B pueden tener más latencia).
+    - La configuración de `max_tokens` — valores muy altos incrementan el tiempo de generación.
+    - La calidad de tu conexión a internet.
+    - Prueba con modelos más pequeños como Llama 3.1 8B para máxima velocidad.
+  </Expandable>
+
+  <Expandable title="¿Cómo revocar o rotar la clave API de Groq?">
+    Para revocar una clave API de Groq:
+    1. Ve a [https://console.groq.com/keys](https://console.groq.com/keys).
+    2. Localiza la clave que deseas revocar.
+    3. Haz clic en el ícono de eliminar o revocar.
+    4. Genera una nueva clave y actualízala en E-SMART360 siguiendo los pasos de esta guía.
+  </Expandable>
+
+  <Expandable title="¿Necesitas ayuda con la integración de Groq?">
+    <Callout kind="alert">
+      Si encuentras algún problema durante la configuración o necesitas asistencia
+      adicional, nuestro equipo de soporte está disponible para ayudarte.
+      Escríbenos a través del centro de ayuda en E-SMART360 o consulta nuestra
+      documentación de integraciones para más detalles.
+    </Callout>
+  </Expandable>
+</ExpandableGroup>
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+  <Expandable title="¿Es obligatorio tener una cuenta de Groq para usar E-SMART360?" default-open="true">
+    No, no es obligatorio. Groq es uno de los múltiples proveedores de IA que puedes integrar.
+    E-SMART360 funciona con OpenAI, Anthropic, Deepgram y otros proveedores.
+    La integración con Groq es opcional y te permite aprovechar su velocidad superior
+    si tus casos de uso lo requieren.
+  </Expandable>
+
+  <Expandable title="¿Tiene costo adicional la integración con Groq en E-SMART360?">
+    La integración en sí no tiene costo dentro de E-SMART360. Sin embargo, el uso de
+    los modelos de Groq se factura según las tarifas de Groq directamente. E-SMART360
+    no aplica márgenes adicionales sobre el consumo de inferencia de Groq.
+    Revisa los precios actualizados en la página de precios de Groq.
+  </Expandable>
+
+  <Expandable title="¿Puedo usar múltiples claves API de Groq en una misma cuenta?">
+    Actualmente, E-SMART360 permite una clave API de Groq por cuenta. Si necesitas
+    cambiar la clave, simplemente sobrescribe el campo con la nueva clave y guarda.
+    La clave anterior quedará reemplazada automáticamente.
+  </Expandable>
+
+  <Expandable title="¿Groq funciona con la funcionalidad de voz en tiempo real de E-SMART360?">
+    Sí, Groq es compatible con la funcionalidad de voz en tiempo real. Su baja latencia
+    lo hace especialmente adecuado para aplicaciones de voz donde la velocidad de
+    inferencia es crítica. Además, Groq ofrece Whisper para transcripción de audio,
+    lo que permite procesamiento de voz completo dentro de un mismo ecosistema.
+  </Expandable>
+
+  <Expandable title="¿Necesitas ayuda con la integración de Groq?">
+    <Callout kind="alert">
+      Si tienes dudas adicionales o encuentras algún problema durante la configuración,
+      nuestro equipo de soporte está listo para asistirte. Puedes contactarnos desde el
+      panel de E-SMART360 o enviar un correo a soporte.
+    </Callout>
+  </Expandable>
+</ExpandableGroup>

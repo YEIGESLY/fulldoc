@@ -1,0 +1,190 @@
+---
+title: "Integración de Webhooks de E-SMART360 con Make.com"
+description: "Aprende a conectar E-SMART360 con Make.com para automatizar flujos de trabajo. Incluye configuración paso a paso del módulo HTTP, mapeo de campos JSON y ejemplo práctico de formularios."
+---
+
+<Callout kind="info">
+  Make.com (antes conocido como Integromat) es una plataforma de automatización visual que se integra perfectamente con los webhooks de E-SMART360. Con esta guía podrás conectar tu agente de voz con cientos de aplicaciones en minutos.
+</Callout>
+
+## Configuración de la Integración
+
+Sigue estos pasos para conectar E-SMART360 con Make.com:
+
+<Steps>
+<Step title="Crea un nuevo escenario" icon="plus-circle">
+  Inicia sesión en Make.com y crea un nuevo escenario de automatización. Desde el panel principal, haz clic en **Crear un nuevo escenario** para comenzar.
+</Step>
+
+<Step title="Añade tu disparador" icon="zap">
+  Selecciona la aplicación que actuará como disparador del flujo. Las opciones más comunes incluyen:
+  
+  - **Google Forms** — Cuando alguien llena un formulario
+  - **WordPress** — Cuando se publica un nuevo contenido o se envía un formulario de contacto
+  - **CRM (HubSpot, Pipedrive, Salesforce)** — Cuando un lead cambia de etapa
+  - **Calendly** — Cuando se agenda una cita
+  - **Correo electrónico** — Cuando llega un correo con ciertos criterios
+  
+  Elige la que mejor se adapte a tu flujo de negocio.
+</Step>
+
+<Step title="Añade el módulo HTTP" icon="globe">
+  Busca el módulo **HTTP** en el panel de aplicaciones de Make.com y selecciona la opción **Make a request**. Este módulo será el encargado de enviar la solicitud al webhook de E-SMART360.
+</Step>
+
+<Step title="Configura la solicitud HTTP" icon="settings">
+  Completa los campos de configuración del módulo HTTP con los siguientes valores:
+</Step>
+</Steps>
+
+### Configuración del Módulo HTTP
+
+<CodeGroup tabs="Parámetros del Módulo">
+```yaml
+URL: "[URL de tu webhook de E-SMART360]"
+Method: POST
+Headers:
+  Content-Type: application/json
+Body: 
+  # Mapa los campos de tu formulario o sistema 
+  # al formato JSON requerido por E-SMART360
+```
+</CodeGroup>
+
+<Callout kind="tip">
+  Para obtener la URL de tu webhook de E-SMART360, ve al panel de control, selecciona tu agente y busca la sección **Webhooks**. Allí encontrarás la URL única que deberás copiar en el campo URL del módulo HTTP.
+</Callout>
+
+### Ejemplo de Mapeo en Make.com
+
+Cuando trabajes con formularios (Google Forms, Typeform, etc.), deberás mapear los campos del formulario a la estructura JSON que E-SMART360 espera. Aquí tienes un ejemplo de cómo debe verse el cuerpo de la solicitud:
+
+```json
+{
+  "name": "{{1.name}}",
+  "phone": "{{1.phone}}",
+  "email": "{{1.email}}",
+  "company": "{{1.company}}",
+  "notes": "Lead from {{1.source}} - {{1.message}}"
+}
+```
+
+<Columns cols="2">
+<Card title="Campos Obligatorios" icon="asterisk">
+  - **name** — Nombre completo del contacto
+  - **phone** — Número de teléfono con código de país (formato E.164: +521234567890)
+  - **email** — Correo electrónico del contacto
+</Card>
+<Card title="Campos Opcionales" icon="file-text">
+  - **company** — Nombre de la empresa
+  - **notes** — Notas adicionales sobre el lead
+  - **source** — Origen del lead (web, formulario, referido)
+  - **custom_fields** — Objeto con campos personalizados adicionales
+</Card>
+</Columns>
+
+<Callout kind="warning">
+  El campo **phone** debe incluir el código de país completo con el signo `+`. Ejemplo: `+521234567890` para México. Sin el código de país correcto, E-SMART360 no podrá establecer la llamada.
+</Callout>
+
+## Casos de Uso Comunes
+
+<Tabs>
+<Tab title="Formulario de Contacto Web">
+  Cuando un visitante completa un formulario en tu sitio web (WordPress, Wix, etc.), Make.com captura los datos y los envía al webhook de E-SMART360, que inicia una llamada automática al nuevo lead.
+  
+  ```json
+  {
+    "name": "Juan Pérez",
+    "phone": "+525512345678",
+    "email": "juan@ejemplo.com",
+    "company": "Empresa Ejemplo",
+    "notes": "Interesado en paquete premium - cotización solicitada"
+  }
+  ```
+</Tab>
+<Tab title="Lead de CRM">
+  Cuando un lead en tu CRM alcanza una etapa específica (por ejemplo, "calificado"), Make.com dispara una llamada de seguimiento automática desde E-SMART360.
+  
+  ```json
+  {
+    "name": "María García",
+    "phone": "+34612345678",
+    "email": "maria@cliente.es",
+    "company": "Tech Solutions",
+    "notes": "Lead calificado - presupuesto aprobado - llamar para confirmar"
+  }
+  ```
+</Tab>
+<Tab title="Registro de Evento">
+  Después de que alguien se registra para un webinar o evento, Make.com envía la confirmación a E-SMART360 para una llamada de bienvenida personalizada.
+  
+  ```json
+  {
+    "name": "Carlos López",
+    "phone": "+573001234567",
+    "email": "carlos@asistente.co",
+    "company": "Digital SA",
+    "notes": "Registrado para webinar de IA - llamada de bienvenida"
+  }
+  ```
+</Tab>
+</Tabs>
+
+## Prueba de la Integración
+
+Antes de poner en producción tu escenario de Make.com, sigue estos pasos de verificación:
+
+1. **Activa el modo de pruebas** en Make.com para evitar enviar datos reales.
+2. **Completa el formulario de prueba** o simula el evento disparador.
+3. **Verifica el módulo HTTP** — Revisa que la respuesta de E-SMART360 sea un código `200 OK` o `201 Created`.
+4. **Revisa los logs** en el panel de E-SMART360 para confirmar que la llamada se disparó correctamente.
+5. **Escucha la llamada de prueba** en la sección de grabaciones para verificar que el agente recibió los datos correctamente.
+
+<Callout kind="success">
+  Una vez que la prueba sea exitosa, activa tu escenario en Make.com. E-SMART360 comenzará a recibir los datos y a realizar las llamadas automáticamente según los eventos que configures.
+</Callout>
+
+## Solución de Problemas
+
+<ExpandableGroup>
+<Expandable title="Make.com devuelve error 404" default-open="true">
+  Verifica que la URL del webhook de E-SMART360 sea correcta. Un error común es copiar la URL con espacios adicionales o caracteres ocultos. Vuelve al panel de E-SMART360, copia la URL completa nuevamente y pégala en Make.com.
+</Expandable>
+
+<Expandable title="La llamada no se dispara aunque Make.com muestra éxito">
+  Revisa los logs de actividad en E-SMART360. Si el webhook recibió la solicitud pero no se realizó la llamada, es posible que el número de teléfono esté en un formato incorrecto o que no tengas créditos suficientes. Verifica también que el agente esté activo y asignado al webhook correcto.
+</Expandable>
+
+<Expandable title="¿Make.com muestra error de timeout?">
+  Make.com tiene un tiempo de espera predeterminado de 40 segundos para respuestas HTTP. Si tu escenario incluye múltiples pasos, considera usar el módulo de **Webhooks → respuesta** con un timeout más largo o divide el escenario en flujos más pequeños. En E-SMART360, el webhook procesa la solicitud y responde inmediatamente, por lo que los timeouts suelen deberse a pasos intermedios en Make.com.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda para configurar tu integración con Make.com?">
+  <Callout kind="info">
+    Si encuentras dificultades durante la configuración, el equipo de soporte de E-SMART360 está disponible para ayudarte. Proporciona una descripción de tu flujo de trabajo ideal y te guiaremos paso a paso en la implementación. Escríbenos a través del panel de soporte.
+  </Callout>
+</Expandable>
+</ExpandableGroup>
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+<Expandable title="¿Qué plan de Make.com necesito para esta integración?" default-open="true">
+  La integración básica con E-SMART360 funciona con el plan **Gratuito** de Make.com, que incluye 1000 operaciones al mes. Para flujos más complejos o mayor volumen, el plan **Pro** (a partir de $9/mes) ofrece operaciones ilimitadas y ejecución en segundo plano. Make.com no tiene límites de aplicaciones conectadas en ningún plan.
+</Expandable>
+
+<Expandable title="¿Puedo conectar E-SMART360 con Make.com sin usar webhooks?">
+  La conexión a través de webhooks es el método recomendado y más fiable. Make.com también ofrece módulos SOAP, FTP y SSH, pero los webhooks HTTP proporcionan la menor latencia y la mejor compatibilidad con la arquitectura de E-SMART360. Si tu caso de uso requiere otro método, consulta con nuestro equipo de soporte.
+</Expandable>
+
+<Expandable title="¿Make.com reemplaza a Zapier para integrar E-SMART360?">
+  Make.com y Zapier son plataformas complementarias. Make.com ofrece mayor flexibilidad en escenarios complejos con múltiples rutas y condiciones. Zapier es más sencillo para automatizaciones lineales. E-SMART360 funciona con ambas plataformas mediante webhooks, así que puedes elegir la que mejor se adapte a tu equipo y presupuesto.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda adicional con Make.com?">
+  <Callout kind="info">
+    Consulta la documentación oficial de Make.com para tutoriales detallados sobre módulos HTTP, manejo de errores y escenarios avanzados. Para dudas específicas sobre la integración con E-SMART360, nuestro equipo técnico está listo para asistirte.
+  </Callout>
+</Expandable>
+</ExpandableGroup>

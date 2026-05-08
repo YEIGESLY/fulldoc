@@ -1,0 +1,280 @@
+---
+title: "Framework de Pruebas, Checklist de Implementación y Optimización de Rendimiento"
+description: "Kit completo para desarrollar, probar y optimizar automatizaciones de E-SMART360. Incluye generador de payloads de prueba, checklist de implementación rápida para Zapier y Make.com, y consejos de optimización de rendimiento para tus agentes de voz IA."
+---
+
+<Callout kind="info">
+  Este recurso reúne tres herramientas esenciales para implementar automatizaciones con E-SMART360: un framework de pruebas para validar tus integraciones, un checklist de implementación rápida para no saltarte ningún paso crítico, y consejos de optimización de rendimiento para que tus agentes de voz respondan con la máxima velocidad.
+</Callout>
+
+## Framework de Pruebas
+
+El framework de pruebas te permite generar payloads JSON de prueba para verificar que tus integraciones funcionan correctamente antes de ponerlas en producción. Utiliza esta función JavaScript para simular diferentes tipos de eventos.
+
+### Generador de Payloads de Prueba
+
+```javascript
+const generateTestPayload = (actionType) => {
+  const testPayloads = {
+    calendar: {
+      action: "book_calendar",
+      caller_name: "Usuario de Prueba",
+      caller_email: "test@ejemplo.com",
+      requested_date: "próximo martes",
+      requested_time: "2pm",
+      duration: 30
+    },
+    email: {
+      action: "send_email",
+      recipient: "test@ejemplo.com",
+      template: "follow_up",
+      call_summary: "Se discutieron precios y características"
+    },
+    sms: {
+      action: "send_sms",
+      phone: "+521234567890",
+      message: "Gracias por tu llamada",
+      consent: true
+    }
+  };
+
+  return testPayloads[actionType];
+};
+
+// Ejemplo de uso:
+console.log(generateTestPayload("calendar"));
+// Resultado: { action: "book_calendar", caller_name: "Usuario de Prueba", ... }
+```
+
+<CodeGroup tabs="Uso con cURL">
+```bash
+# Probar payload de calendario
+curl -X POST https://hooks.zapier.com/hooks/catch/TU_ID/TU_KEY/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "action": "book_calendar",
+    "caller_name": "Usuario de Prueba",
+    "caller_email": "test@ejemplo.com",
+    "requested_date": "próximo martes",
+    "requested_time": "2pm",
+    "duration": 30
+  }'
+
+# Probar payload de correo electrónico
+curl -X POST https://hooks.zapier.com/hooks/catch/TU_ID/TU_KEY/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "action": "send_email",
+    "recipient": "test@ejemplo.com",
+    "template": "follow_up",
+    "call_summary": "Se discutieron precios y características"
+  }'
+
+# Probar payload de SMS
+curl -X POST https://hooks.zapier.com/hooks/catch/TU_ID/TU_KEY/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "action": "send_sms",
+    "phone": "+521234567890",
+    "message": "Gracias por tu llamada",
+    "consent": true
+  }'
+```
+</CodeGroup>
+
+<Callout kind="tip">
+  Ejecuta las pruebas con **RequestBin** o **Webhook.site** primero para inspeccionar qué datos está recibiendo realmente tu webhook. Luego, cuando estés seguro de que la estructura es correcta, apunta a la URL real de tu automatización.
+</Callout>
+
+### Pruebas por Tipo de Acción
+
+<Tabs>
+<Tab title="Calendario">
+  <Steps>
+    <Step title="Genera el payload" icon="code">
+      Usa `generateTestPayload("calendar")` para obtener el payload de prueba de reserva de calendario.
+    </Step>
+    <Step title="Envía al webhook" icon="send">
+      Ejecuta el comando cURL correspondiente apuntando a tu Catch Hook de Zapier o módulo HTTP de Make.com.
+    </Step>
+    <Step title="Verifica la ejecución" icon="check-circle">
+      Confirma que el Zap o escenario se ejecutó correctamente: el evento de calendario debe crearse en Google Calendar y el correo de confirmación debe llegar a la bandeja de entrada de prueba.
+    </Step>
+    <Step title="Revisa los logs" icon="file-text">
+      Tanto Zapier como Make.com tienen paneles de logs donde puedes ver el estado de cada paso de la automatización.
+    </Step>
+  </Steps>
+</Tab>
+<Tab title="Correo Electrónico">
+  <Steps>
+    <Step title="Genera el payload" icon="code">
+      Usa `generateTestPayload("email")` para simular el envío de un correo de seguimiento.
+    </Step>
+    <Step title="Envía al webhook" icon="send">
+      Apunta al webhook de prueba. Asegúrate de que el campo `template` use un ID de plantilla que exista en tu sistema de correos.
+    </Step>
+    <Step title="Verifica la entrega" icon="inbox">
+      Revisa la bandeja de entrada de `test@ejemplo.com`. Si no llegó el correo, verifica que la plantilla exista y que el servicio de correos (Gmail, Outlook, SendGrid) esté autenticado correctamente.
+    </Step>
+  </Steps>
+</Tab>
+<Tab title="SMS">
+  <Steps>
+    <Step title="Genera el payload" icon="code">
+      Usa `generateTestPayload("sms")`. Verifica que `consent` esté en `true`.
+    </Step>
+    <Step title="Envía al webhook" icon="send">
+      El número de teléfono debe estar en formato E.164 completo. Ajusta `+521234567890` por un número real de prueba.
+    </Step>
+    <Step title="Verifica la recepción" icon="smartphone">
+      Confirma que el mensaje SMS llegó al número de prueba. Revisa los logs de Twilio o el servicio SMS que uses para verificar la entrega.
+    </Step>
+  </Steps>
+</Tab>
+</Tabs>
+
+## Checklist de Implementación Rápida
+
+Utiliza este checklist para asegurarte de que no te saltas ningún paso crítico durante la configuración de tus automatizaciones.
+
+### Para Usuarios de Zapier
+
+<Steps>
+<Step title="Configuración Inicial (5 minutos)">
+  - [ ] Copia la URL del webhook desde Zapier
+  - [ ] Agrégala en la configuración de webhooks de E-SMART360
+  - [ ] Prueba con un payload de muestra
+  - [ ] Mapea los campos correctamente
+</Step>
+<Step title="Autenticación (10 minutos)">
+  - [ ] Conecta Google Calendar
+  - [ ] Conecta el servicio de correo electrónico
+  - [ ] Conecta el servicio de SMS (Twilio / TextMagic)
+  - [ ] Conecta el CRM
+</Step>
+<Step title="Personalización (15 minutos)">
+  - [ ] Actualiza las plantillas de correo electrónico
+  - [ ] Configura las reglas de disponibilidad del calendario
+  - [ ] Personaliza el texto de consentimiento para SMS
+  - [ ] Añade preferencias de notificación al equipo
+</Step>
+</Steps>
+
+<Callout kind="success">
+  Tiempo total estimado para Zapier: **30 minutos** desde cero hasta tener tu automatización funcionando.
+</Callout>
+
+### Para Usuarios de Make.com
+
+<Steps>
+<Step title="Importación del Blueprint (3 minutos)">
+  - [ ] Importa el escenario desde un blueprint
+  - [ ] Actualiza la URL del webhook
+  - [ ] Configura las conexiones a los servicios
+</Step>
+<Step title="Configuración Avanzada (20 minutos)">
+  - [ ] Configura almacenes de datos para gestión de contactos
+  - [ ] Configura enrutadores para lógica condicional
+  - [ ] Añade manejadores de errores
+  - [ ] Configura webhooks de monitoreo
+</Step>
+</Steps>
+
+<Callout kind="success">
+  Tiempo total estimado para Make.com: **23 minutos** si partes de un blueprint, o hasta **45 minutos** si construyes el escenario desde cero.
+</Callout>
+
+## Consejos de Optimización de Rendimiento
+
+<Callout kind="tip">
+  Un agente de voz de E-SMART360 bien optimizado puede completar el ciclo completo de llamada → recolección de datos → automatización → confirmación al cliente en menos de 5 segundos.
+</Callout>
+
+### Reducción de Latencia
+
+<Columns cols="2">
+<Card title="Procesamiento en Paralelo" icon="fast-forward">
+  En Make.com, utiliza módulos de enrutamiento paralelo para ejecutar múltiples acciones simultáneas (crear contacto en CRM + enviar SMS + notificar por Slack) en lugar de secuencial.
+</Card>
+<Card title="Webhooks en Lugar de Polling" icon="zap">
+  Los webhooks son significativamente más rápidos que el polling (consultas periódicas). Configura E-SMART360 para que envíe los datos apenas ocurra el evento, en lugar de que la automatización consulte constantemente.
+</Card>
+<Card title="Caché de Datos" icon="database">
+  Si tu automatización consulta datos que cambian con poca frecuencia (precios, horarios, disponibilidad), usa un almacén de datos temporal (data store) en Make.com o una hoja de cálculo en Google Sheets con caché.
+</Card>
+<Card title="Módulos Ligeros" icon="package">
+  Evita módulos que hagan transformaciones complejas innecesarias. Por ejemplo, si solo necesitas formatear un teléfono, usa un módulo específico de formateo en lugar de un script completo.
+</Card>
+</Columns>
+
+### Tiempo de Respuesta del Agente de Voz
+
+La sincronización entre la pausa del agente y la ejecución de la automatización es clave para que la conversación fluya de forma natural:
+
+```
+"Déjame [ACCIÓN]..." → 2-3 segundos de automatización → "¡Listo! [CONFIRMACIÓN]"
+```
+
+<Callout kind="warning">
+  Si la automatización tarda más de 3 segundos, el cliente puede pensar que el agente se quedó en silencio. Para flujos que requieren más tiempo (como consultas a APIs externas lentas), considera usar esta estrategia:
+  
+  **"Déjame verificar eso por ti... toma solo un momento."**
+</Callout>
+
+### Estrategias de Fallback
+
+Siempre ten un plan B para cuando la automatización falle:
+
+- [ ] **Opciones de anulación manual** — Cuando la automatización falle, el sistema debe escalar a un humano
+- [ ] **Degradación gradual** — Si el SMS no se envía, que el agente ofrezca enviar un correo en su lugar
+- [ ] **Mantener el flujo de conversación** — Si la automatización falla, el agente debe continuar la conversación con el cliente sin interrupciones:
+
+<Tabs>
+<Tab title="Si el webhook falla">
+  <Callout kind="danger">
+    "Parece que tuve un problema para agendar la cita. No te preocupes, he tomado nota de tu solicitud y te contactaremos para confirmarla. ¡Gracias por tu paciencia!"
+  </Callout>
+</Tab>
+<Tab title="Si el CRM no responde">
+  <Callout kind="danger">
+    "He registrado tu información en nuestro sistema. Un asesor revisará los detalles y te confirmará por correo electrónico dentro de las próximas 2 horas."
+  </Callout>
+</Tab>
+<Tab title="Si el servicio SMS falla">
+  <Callout kind="danger">
+    "No pude enviar el mensaje de texto. ¿Prefieres que te envíe la información por correo electrónico o prefieres confirmar los detalles ahora mismo durante esta llamada?"
+  </Callout>
+</Tab>
+</Tabs>
+
+## Próximos Pasos
+
+<Callout kind="success">
+  Con estas tres herramientas —framework de pruebas, checklist de implementación y consejos de optimización— estás listo para implementar automatizaciones robustas y rápidas con E-SMART360. Recuerda siempre probar en un entorno aislado antes de activar en producción.
+</Callout>
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+<Expandable title="¿Con qué frecuencia debo ejecutar las pruebas del framework?" default-open="true">
+  Ejecuta las pruebas cada vez que realices cambios en tu flujo de automatización: al añadir un nuevo servicio, cambiar el mapeo de campos, actualizar plantillas de correo o modificar la lógica condicional. También recomendamos ejecutar una batería de pruebas completa cada mes para verificar que todo sigue funcionando correctamente después de actualizaciones de los servicios externos.
+</Expandable>
+
+<Expandable title="¿El checklist es el mismo para todos los tipos de automatización?">
+  El checklist base cubre los escenarios más comunes (calendario, correo y SMS). Puedes extenderlo según tu caso de uso específico. Por ejemplo, si trabajas con facturación, añade pasos para verificar la generación de PDFs y el envío de facturas. Si integras con un CRM complejo como Salesforce, añade la verificación de campos personalizados y workflows del CRM.
+</Expandable>
+
+<Expandable title="¿Cómo mido el rendimiento real de mi automatización?">
+  Tanto Zapier como Make.com ofrecen paneles de monitoreo con tiempos de ejecución por paso. En E-SMART360, el panel de actividad muestra cuándo se disparó cada webhook y cuánto tardó en procesarse. Para una medición más precisa, añade un paso de logging que registre la hora exacta de inicio y fin de cada automatización en una hoja de Google Sheets.
+</Expandable>
+
+<Expandable title="¿Qué hago si mi automatización funciona en pruebas pero falla en producción?">
+  Las causas más comunes son: (1) diferencias en los datos reales vs. datos de prueba — los clientes reales pueden tener formatos de teléfono o correo inesperados; (2) límites de tasa (rate limits) — en producción hay más solicitudes concurrentes; (3) timeout — algunas APIs externas responden más lento bajo carga. Añade logs detallados y manejadores de errores para identificar el problema exacto.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda para optimizar tus automatizaciones de E-SMART360?">
+  <Callout kind="info">
+    Nuestro equipo de ingeniería puede revisar tu configuración actual y recomendar optimizaciones específicas para tu caso de uso. Escríbenos a través del panel de soporte incluyendo una descripción de tu flujo de automatización y los tiempos de respuesta que estás obteniendo.
+  </Callout>
+</Expandable>
+</ExpandableGroup>

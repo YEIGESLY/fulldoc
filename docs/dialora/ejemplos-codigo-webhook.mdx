@@ -1,0 +1,236 @@
+---
+title: "Ejemplos de Código para Webhooks — Payloads y Llamadas API"
+description: "Ejemplos completos de payloads para webhooks de E-SMART360: payload básico, payload completo con campos extendidos y ejemplos en cURL para integrar tu agente de voz con sistemas externos."
+---
+
+<Callout kind="info" title="¿Qué encontrarás aquí?">
+Esta guía contiene ejemplos prácticos de los payloads JSON que envía y recibe tu webhook de E-SMART360, junto con ejemplos funcionales en cURL para que puedas empezar a probar tus integraciones de inmediato.
+</Callout>
+
+## Payload Básico de Webhook
+
+El payload más simple que puedes enviar a un webhook de E-SMART360 incluye únicamente los campos esenciales: el nombre de la persona que llama y su número de teléfono. Es ideal para integraciones donde solo necesitas identificar al contacto y dejar que el agente de voz maneje el resto de la interacción.
+
+```json
+{
+  "name": "John Smith",
+  "phone": "+1234567890"
+}
+```
+
+<Callout kind="tip" title="Mejora la identificación">
+El campo `name` no es obligatorio, pero incluirlo mejora la experiencia del agente de voz, que podrá saludar al contacto por su nombre desde el primer momento.
+</Callout>
+
+## Payload Completo de Webhook
+
+Cuando necesitas enriquecer la llamada con datos adicionales, puedes enviar un payload con campos extendidos. E-SMART360 acepta campos personalizados ilimitados, lo que te permite pasar contexto de negocio directamente al agente de voz.
+
+```json
+{
+  "name": "Sarah Johnson",
+  "phone": "+1234567890",
+  "email": "sarah.johnson@example.com",
+  "company": "TechStart Inc",
+  "notes": "Descargó la guía de precios — interesada en el plan empresarial",
+  "lead_source": "Formulario de contacto web",
+  "custom_field_1": "Lead de alta prioridad"
+}
+```
+
+<Callout kind="success" title="Campos personalizados dinámicos">
+Puedes nombrar tus campos personalizados como prefieras: `custom_field_1`, `priority`, `utm_source`, `account_id`, etc. No hay límite en la cantidad de campos adicionales que puedes incluir.
+</Callout>
+
+## Ejemplo con cURL
+
+El siguiente ejemplo muestra cómo disparar un webhook de E-SMART360 usando cURL desde tu terminal o script. Reemplaza el ID del webhook con el tuyo propio.
+
+<CodeGroup>
+```bash cURL
+curl -X POST https://api.e-smart360.com/webhooks/agents/webh_7ejvxjh9lq6bdgwo/trigger \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Michael Chen",
+    "phone": "+1555123456",
+    "email": "michael.chen@email.com",
+    "company": "Digital Solutions LLC",
+    "notes": "Solicitó demo para automatización de ventas"
+  }'
+```
+
+```python Python
+import requests
+import json
+
+url = "https://api.e-smart360.com/webhooks/agents/webh_7ejvxjh9lq6bdgwo/trigger"
+payload = {
+    "name": "Michael Chen",
+    "phone": "+1555123456",
+    "email": "michael.chen@email.com",
+    "company": "Digital Solutions LLC",
+    "notes": "Solicitó demo para automatización de ventas"
+}
+headers = {"Content-Type": "application/json"}
+
+response = requests.post(url, json=payload, headers=headers)
+print(f"Estado: {response.status_code}")
+print(f"Respuesta: {response.json()}")
+```
+
+```javascript Node.js
+const https = require('https');
+
+const data = JSON.stringify({
+  name: "Michael Chen",
+  phone: "+1555123456",
+  email: "michael.chen@email.com",
+  company: "Digital Solutions LLC",
+  notes: "Solicitó demo para automatización de ventas"
+});
+
+const options = {
+  hostname: 'api.e-smart360.com',
+  path: '/webhooks/agents/webh_7ejvxjh9lq6bdgwo/trigger',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+};
+
+const req = https.request(options, (res) => {
+  let data = '';
+  res.on('data', (chunk) => data += chunk);
+  res.on('end', () => console.log(JSON.parse(data)));
+});
+
+req.write(data);
+req.end();
+```
+</CodeGroup>
+
+<Callout kind="warning" title="URL del webhook">
+Asegúrate de usar la URL completa de tu webhook, que encuentras en el panel de configuración de tu agente en E-SMART360. El identificador `webh_7ejvxjh9lq6bdgwo` es solo un ejemplo.
+</Callout>
+
+## Parámetros del Payload
+
+Aquí tienes la descripción detallada de cada campo que puedes incluir en el payload de tu webhook:
+
+<ParamField body="name" type="string" required>
+  Nombre completo de la persona que llama. Se utiliza para personalizar el saludo y la experiencia durante la llamada.
+</ParamField>
+
+<ParamField body="phone" type="string" required>
+  Número de teléfono en formato internacional (E.164). Ejemplo: `+1234567890`. Es el identificador principal del contacto.
+</ParamField>
+
+<ParamField body="email" type="string" optional>
+  Correo electrónico del contacto. Útil para envío de correos posteriores a la llamada o para integración con CRMs.
+</ParamField>
+
+<ParamField body="company" type="string" optional>
+  Nombre de la empresa del contacto. Permite al agente de voz contextualizar la conversación.
+</ParamField>
+
+<ParamField body="notes" type="string" optional>
+  Notas adicionales sobre el contacto o el motivo de la llamada. El agente de voz leerá esta información al inicio de la conversación.
+</ParamField>
+
+<ParamField body="lead_source" type="string" optional>
+  Fuente de origen del lead (ej: "Formulario web", "Facebook Ads", "Referido"). Ayuda a medir la efectividad de tus canales de captación.
+</ParamField>
+
+<ParamField body="custom_field_*" type="string" optional>
+  Campos personalizados adicionales. Puedes agregar tantos como necesites: `custom_field_1`, `priority`, `account_id`, etc.
+</ParamField>
+
+## Campos de Respuesta del Webhook
+
+Cuando envías un payload a tu webhook, E-SMART360 responde con la siguiente estructura:
+
+<ResponseField name="success" type="boolean">
+  Indica si la solicitud se procesó correctamente.
+</ResponseField>
+
+<ResponseField name="call_id" type="string">
+  Identificador único de la llamada generada. Úsalo para hacer seguimiento en los registros del agente.
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Estado de la llamada: `queued` (en cola), `initiated` (iniciada) o `failed` (falló).
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Mensaje descriptivo del resultado. Si ocurre un error, aquí encontrarás detalles sobre la causa.
+</ResponseField>
+
+```json Ejemplo de respuesta exitosa
+{
+  "success": true,
+  "call_id": "call_abc123def456",
+  "status": "queued",
+  "message": "La llamada se ha encolado correctamente"
+}
+```
+
+```json Ejemplo de respuesta con error
+{
+  "success": false,
+  "call_id": null,
+  "status": "failed",
+  "message": "El número de teléfono no tiene un formato válido. Usa formato E.164: +[código de país][número]"
+}
+```
+
+## Casos de Uso Comunes
+
+<Columns cols="2">
+<Card title="📞 Llamada desde formulario web" description="Conecta tu formulario de contacto con un webhook de E-SMART360 para llamar automáticamente a cada persona que completa el formulario, pasando sus datos como contexto." icon="window" />
+
+<Card title="📋 Activación desde CRM" description="Cuando un lead alcanza cierto puntaje en tu CRM, dispara un webhook para que E-SMART360 llame al prospecto con toda la información de contexto." icon="database" />
+
+<Card title="🔄 Recontacto automatizado" description="Usa campos personalizados para indicar el motivo de la llamada: seguimiento de cotización, recordatorio de cita o encuesta de satisfacción." icon="refresh-cw" />
+
+<Card title="🏷️ Segmentación por campaña" description="Pasa el origen de la campaña (UTM, Facebook Ads, email marketing) como campo personalizado para que el agente adapte su discurso." icon="tag" />
+</Columns>
+
+## Consideraciones Técnicas
+
+<Callout kind="alert" title="Formato del número telefónico">
+El campo `phone` debe cumplir estrictamente con el formato E.164. No incluyas espacios, guiones ni paréntesis. Un número inválido hará que la llamada falle.
+</Callout>
+
+<Callout kind="info" title="Límite de tamaño del payload">
+El payload JSON no debe superar los 64 KB. Si necesitas enviar más datos, considera usar campos personalizados o enviar la información en lotes separados.
+</Callout>
+
+<Callout kind="warning" title="Codificación de caracteres especiales">
+Asegúrate de que tu payload use codificación UTF-8. Caracteres como ñ, tildes o emojis deben estar correctamente codificados para evitar errores de parsing.
+</Callout>
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+<Expandable title="¿Puedo enviar el payload sin el campo name?" default-open="true">
+Sí, el campo `name` no es obligatorio. Sin embargo, recomendamos incluirlo siempre que sea posible, ya que permite al agente de voz personalizar el saludo inicial con el nombre del contacto, lo que mejora significativamente la experiencia de la llamada.
+</Expandable>
+
+<Expandable title="¿Cuántos campos personalizados puedo agregar?">
+No existe un límite máximo documentado. Puedes agregar tantos campos personalizados como necesites para tu caso de uso. Eso sí, ten en cuenta que el payload total no debe superar los 64 KB. Si trabajas con muchos datos, prioriza los campos más relevantes para la llamada.
+</Expandable>
+
+<Expandable title="¿Cómo sé si el webhook se disparó correctamente?">
+Cada solicitud al webhook devuelve una respuesta JSON con el campo `success`. Si es `true`, la llamada se ha encolado exitosamente. También puedes revisar el historial de llamadas en el panel de control de E-SMART360 para ver el estado de cada llamada disparada por webhook.
+</Expandable>
+
+<Expandable title="¿Puedo probar el webhook sin hacer llamadas reales?">
+Actualmente no existe un modo de prueba específico para webhooks, pero puedes usar herramientas como Postman o cURL para enviar payloads y verificar que la conexión funciona. Si el agente de voz está en modo de prueba o pausado, las llamadas no se realizarán aunque el webhook se dispare correctamente.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda con la integración de webhooks?">
+<Callout kind="tip" title="Contacta a soporte">
+Si tienes dudas sobre cómo estructurar tu payload, problemas con la autenticación del webhook o necesitas ayuda para depurar integraciones complejas, nuestro equipo de soporte está listo para ayudarte. Escríbenos a través del panel de control de E-SMART360 o consulta la sección de soporte técnico.
+</Callout>
+</Expandable>
+</ExpandableGroup>

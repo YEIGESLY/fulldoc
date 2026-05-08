@@ -1,0 +1,98 @@
+---
+title: "Referencia de API — Webhooks para Automatizar Llamadas Salientes"
+description: "Guía completa sobre webhooks de E-SMART360: qué son, cómo funcionan y cómo usarlos para automatizar llamadas salientes desde formularios, eventos de ventas, registro de eventos y más."
+---
+
+<Callout kind="info" defaultOpen="true">
+Los webhooks son el mecanismo más potente para integrar E-SMART360 con tus sistemas existentes. Esta guía te explica todo lo que necesitas saber para empezar.
+</Callout>
+
+Los webhooks son notificaciones automáticas entre diferentes sistemas de software. Cuando ocurre algo en una aplicación – como el envío de un formulario en tu sitio web – un webhook le indica instantáneamente a otra aplicación (como E-SMART360) que debe realizar una acción.
+
+En el contexto de E-SMART360, los webhooks te permiten **disparar llamadas salientes automáticamente** cuando ocurren eventos específicos en tus procesos de negocio. Sin intervención manual.
+
+## ¿Cómo funcionan en la práctica?
+
+<Steps>
+<Step icon="mail" title="1. Ocurre un evento">
+Un cliente potencial completa un formulario de contacto en tu sitio web, descarga un whitepaper, o se registra para un evento.
+</Step>
+<Step icon="zap" title="2. El webhook se activa">
+Tu sistema (CRM, formulario, plataforma de marketing) envía una solicitud HTTP a la URL del webhook de E-SMART360 con los datos del evento.
+</Step>
+<Step icon="phone" title="3. Se inicia la llamada">
+E-SMART360 recibe los datos, procesa la información y realiza una llamada saliente al número indicado usando un agente de voz con IA.
+</Step>
+<Step icon="check" title="4. Se completa el ciclo">
+El agente conversa con el cliente, califica la oportunidad, agenda una cita o realiza el seguimiento necesario, y el resultado se registra.
+</Step>
+</Steps>
+
+## Casos de uso principales
+
+<Columns cols="2">
+<Card icon="users" title="Generación de leads" description="Llama automáticamente a nuevos prospectos que completan formularios de contacto en tu sitio web." />
+<Card icon="download" title="Descargas de contenido" description="Realiza seguimiento inmediato con prospectos que descargan contenido restringido como whitepapers o guías." />
+<Card icon="calendar" title="Registro a eventos" description="Confirma la asistencia de participantes registrados y proporciona detalles del evento." />
+<Card icon="help-circle" title="Solicitudes de soporte" description="Inicia llamadas de devolución cuando un cliente solicita asistencia desde tu sistema de soporte." />
+<Card icon="trending-up" title="Pipeline de ventas" description="Dispara llamadas cuando los leads alcanzan etapas específicas en tu pipeline de ventas." />
+</Columns>
+
+## Beneficios clave de usar webhooks
+
+<Tabs>
+<Tab title="Automatización total">
+Elimina la necesidad de marcar números manualmente. Cada lead es contactado en segundos, no en horas o días.
+</Tab>
+<Tab title="Respuesta inmediata">
+Los leads se atienden en el momento exacto en que muestran interés, aumentando drásticamente las tasas de conversión.
+</Tab>
+<Tab title="Integración sin código">
+No necesitas conocimientos avanzados de programación. La mayoría de los CRM y herramientas de formularios modernos soportan webhooks con configuración simple.
+</Tab>
+<Tab title="Escalabilidad">
+Desde 10 hasta 10,000 llamadas diarias, los webhooks se escalan automáticamente sin necesidad de cambiar tu infraestructura.
+</Tab>
+</Tabs>
+
+## ¿Qué necesitas para empezar?
+
+<Callout kind="tip" title="Requisitos básicos">
+Para comenzar a usar webhooks con E-SMART360 solo necesitas:
+1. Una cuenta activa en E-SMART360
+2. Un sistema que pueda enviar solicitudes HTTP (formulario, CRM, herramienta No-Code)
+3. La URL del webhook de tu agente (disponible en el panel de configuración)
+</Callout>
+
+## Próximos pasos
+
+Una vez que entiendes el concepto básico, te recomendamos seguir estas guías en orden:
+
+<Columns cols="2">
+<Card title="📖 Cómo funcionan los webhooks" description="Profundiza en el mecanismo técnico detrás de los webhooks de E-SMART360." href="/recursos/webhooks/funcionamiento-webhooks" />
+<Card title="🔗 Integración con herramientas" description="Aprende a integrar webhooks con Make, Zapier y otras automatizaciones." href="/recursos/webhooks/integracion-make-webhook" />
+<Card title="🧪 Prueba tu webhook" description="Guía paso a paso para probar que tu webhook funciona correctamente." href="/recursos/webhooks/prueba-webhook" />
+<Card title="🔧 Solución de problemas" description="Resuelve los problemas más comunes al configurar webhooks." href="/recursos/webhooks/solucion-problemas-webhook" />
+</Columns>
+
+## Preguntas frecuentes
+
+<ExpandableGroup>
+<Expandable title="¿Los webhooks funcionan en tiempo real?" defaultOpen="true">
+Sí. Los webhooks de E-SMART360 se procesan en tiempo real. Cuando tu sistema envía la solicitud, el agente de voz inicia la llamada en cuestión de segundos. El tiempo total depende de la latencia de tu sistema y de la red telefónica.
+</Expandable>
+<Expandable title="¿Necesito saber programar para usar webhooks?">
+No es necesario. Muchas herramientas modernas como Typeform, HubSpot, Salesforce y WordPress tienen soporte nativo para webhooks. Solo necesitas copiar la URL del webhook de E-SMART360 y configurarla en tu herramienta. Si usas plataformas No-Code como Make o Zapier, la configuración es aún más sencilla.
+</Expandable>
+<Expandable title="¿Cuántos webhooks puedo tener activos simultáneamente?">
+No hay un límite estricto en la cantidad de webhooks. Puedes configurar tantos como necesites para diferentes casos de uso: uno para leads del sitio web, otro para registros de eventos, otro para solicitudes de soporte, etc. Cada webhook apunta a un agente de voz específico.
+</Expandable>
+<Expandable title="¿Los webhooks son seguros?">
+Sí. E-SMART360 utiliza HTTPS para todas las comunicaciones de webhook. Puedes implementar validación adicional como tokens de verificación secretos o direcciones IP fijas para mayor seguridad. Consulta la guía de especificaciones técnicas para más detalles.
+</Expandable>
+<Expandable title="¿Necesitas ayuda con la integración de webhooks?">
+<Callout kind="info" title="Soporte técnico">
+Si encuentras dificultades al configurar tus webhooks o necesitas asistencia personalizada, nuestro equipo de soporte está listo para ayudarte. Escríbenos a través del panel de ayuda en tu cuenta de E-SMART360 o consulta la guía de solución de problemas.
+</Callout>
+</Expandable>
+</ExpandableGroup>

@@ -1,0 +1,227 @@
+---
+title: "Transferencia de Llamadas No Funciona"
+description: "Guía completa para diagnosticar y resolver problemas de transferencia de llamadas en agentes de voz de E-SMART360. Incluye soluciones para llamadas caídas, transferencias a destinatarios incorrectos y silencios durante la transferencia."
+---
+
+Tu agente intenta transferir llamadas, pero la transferencia falla o no se completa hacia el destinatario previsto.
+
+<Callout kind="warning" title="¿Problemas al transferir?">
+Si las transferencias de llamadas no funcionan correctamente, es posible que pierdas oportunidades de negocio importantes. Sigue los pasos de esta guía para restaurar la funcionalidad rápidamente.
+</Callout>
+
+## Síntomas
+
+- El agente inicia una transferencia, pero la llamada se cae
+- La transferencia se completa, pero va al número equivocado o al buzón de voz
+- No aparece ningún mensaje de error, pero la llamada simplemente se desconecta
+- La persona que llama escucha silencio o es devuelta al agente en lugar de ser transferida
+- La transferencia funciona en pruebas, pero falla en producción
+
+## Causas Comunes
+
+1. **Probar transferencias en llamadas web**: los widgets de llamadas web no admiten transferencias de teléfono a teléfono; las transferencias solo funcionan con llamadas telefónicas reales
+2. **Usar el nodo Workflow Transfer**: el método Workflow Transfer tiene un error persistente conocido y no debe utilizarse
+3. **Formato de número telefónico incorrecto**: los números de destino sin el prefijo del código de país (por ejemplo, falta +1 para números de EE. UU.)
+4. **Incompatibilidad del modelo**: los modelos de LLM más antiguos pueden no iniciar transferencias de forma confiable
+
+<Callout kind="tip" title="Solución rápida">
+Usa el método **Function Call Transfer** en lugar del nodo Workflow Transfer.
+</Callout>
+
+### Cómo aplicar la solución rápida
+
+1. Ve a **Configuración del Agente** → **Function Calls**
+2. Activa la función **"Transfer Call"**
+3. Configura los parámetros: número de destino, identificador de llamada (opcional), motivo (opcional)
+4. Actualiza tu workflow para llamar a esta función en lugar de usar el nodo Transfer
+5. Guarda y prueba con una llamada telefónica real
+
+## Cómo Solucionarlo
+
+### Paso 1: Usa llamadas telefónicas reales, no llamadas web
+
+<Callout kind="danger" title="Importante">
+No realices pruebas de transferencia usando el widget web en tu panel de control. Las llamadas web tienen una arquitectura diferente que no soporta transferencias de teléfono a teléfono.
+</Callout>
+
+1. **No pruebes transferencias** usando el widget web en tu panel de control
+2. En su lugar, prueba con una **llamada telefónica real** al número de teléfono de tu agente
+3. Haz que el agente te transfiera a un número de destino real
+4. Las llamadas web tienen una arquitectura diferente que no soporta transferencias de teléfono a teléfono
+
+### Paso 2: Cambia de Workflow Transfer a Function Call Transfer
+
+<Steps>
+<Step title="Abre tu Workflow de Agente">
+Dirígete al editor de workflows y localiza los nodos de transferencia existentes.
+</Step>
+<Step title="Identifica los nodos Workflow Transfer">
+Busca cualquier nodo **"Transfer Call"** que use el método **Workflow Transfer**. Estos son los que causan problemas.
+</Step>
+<Step title="Elimina los nodos problemáticos">
+Borra estos nodos de tu workflow. No los mantengas como respaldo, ya que el error es persistente.
+</Step>
+<Step title="Configura Function Call Transfer">
+Ve a **Configuración del Agente** → **Function Calls** y activa la función **"Transfer Call"**.
+</Step>
+<Step title="Configura los parámetros">
+Define:
+- **Número de destino**: el número al que se transferirá la llamada
+- **Identificador de llamada** (opcional): número que aparecerá como remitente
+- **Motivo** (opcional): razón de la transferencia para contexto
+</Step>
+<Step title="Actualiza el workflow">
+Asegúrate de que tu workflow llame a esta función en lugar de usar el nodo Transfer anterior.
+</Step>
+<Step title="Guarda y prueba">
+Guarda los cambios y prueba con una llamada telefónica real para verificar que la transferencia funciona correctamente.
+</Step>
+</Steps>
+
+### Paso 3: Verifica el formato del número telefónico
+
+<Callout kind="info" title="Formato correcto de números telefónicos">
+El formato del número de destino es una de las causas más comunes de fallos en transferencias. Sigue estas reglas estrictamente.
+</Callout>
+
+1. Al especificar un número de destino para la transferencia, asegúrate de:
+   - **Números de EE. UU.**: usa el formato `+1XXXXXXXXXX` (ejemplo: `+12125551234`)
+   - **Internacionales**: incluye siempre el código de país con el prefijo `+` (ejemplo: `+447911123456` para Reino Unido)
+   - **Sin guiones, espacios ni paréntesis**: solo dígitos y el prefijo `+`
+2. Verifica que el número de destino sea:
+   - Un número telefónico real y activo
+   - No una línea fija que no acepte llamadas entrantes
+   - No un número que requiera códigos de marcación especiales
+3. Actualiza tu workflow con el número correctamente formateado
+
+<CodeGroup>
+```javascript Ejemplo: Formato correcto en configuración
+// Formato correcto para números de EE. UU.
+const destinoEEUU = "+12125551234";
+
+// Formato correcto para números internacionales
+const destinoUK = "+447911123456";
+const destinoMX = "+525512345678";
+
+// Formato correcto para números de España
+const destinoES = "+34911234567";
+```
+
+```text Ejemplo: Formato incorrecto (NO USAR)
+// Incorrecto: falta el prefijo +
+"12125551234"
+
+// Incorrecto: usa guiones
+"+1-212-555-1234"
+
+// Incorrecto: usa paréntesis y espacios
+"+1 (212) 555-1234"
+```
+</CodeGroup>
+
+### Paso 4: Asegura la compatibilidad del modelo
+
+1. Ve a **Configuración del Agente** → **Model Configuration**
+2. Verifica que estés usando **GPT 4.1** o **GPT 4.1-mini**
+3. Si estás usando un modelo más antiguo, actualiza a uno de los modelos recomendados
+4. Guarda los cambios y vuelve a probar el flujo de transferencia
+
+<Callout kind="tip" title="¿Por qué es importante el modelo?">
+Los modelos más recientes como GPT 4.1 y GPT 4.1-mini tienen mejor soporte para la ejecución de llamadas a funciones, lo que incluye las transferencias. Los modelos antiguos pueden no interpretar correctamente la intención de transferencia o tener problemas con los parámetros.
+</Callout>
+
+### Paso 5: Prueba el flujo completo de transferencia
+
+1. Llama al número de teléfono de tu agente desde un teléfono real
+2. Solicita una transferencia a través de la conversación con tu agente
+3. Verifica que:
+   - El teléfono de destino suene
+   - La transferencia se complete sin que la llamada se caiga
+   - Estés conectado con el destinatario previsto
+4. Si la transferencia aún falla, verifica el estado de facturación y del número telefónico en E-SMART360
+
+<Callout kind="success" title="Consejos de prevención">
+Sigue estas recomendaciones para evitar problemas de transferencia en el futuro.
+</Callout>
+
+## Consejos de prevención
+
+- **Prueba las transferencias siempre con llamadas telefónicas reales**, nunca con el widget web
+- **Usa exclusivamente el método Function Call Transfer** — evita los nodos Workflow Transfer
+- **Crea un formato estandarizado de números telefónicos** para todas las transferencias (con códigos de país)
+- **Mantén una lista de destinos de transferencia válidos** y valídalos regularmente
+- **Prueba la funcionalidad de transferencia semanalmente** para detectar problemas a tiempo
+- **Usa GPT 4.1 o 4.1-mini** para todos los agentes de producción que manejen transferencias
+
+## Escenarios adicionales de solución de problemas
+
+<Callout kind="warning" title="La transferencia funciona en prueba pero no en producción">
+Si la transferencia funciona en tu entorno de pruebas pero falla en producción, verifica:
+- Que el número de destino en producción tenga el formato correcto
+- Que el agente de producción use el modelo recomendado
+- Que no haya diferencias en la configuración de funciones entre entornos
+</Callout>
+
+### Caso: El agente inicia la transferencia pero se escucha silencio
+
+Si la persona que llama escucha silencio después de que el agente inicia la transferencia:
+
+1. El problema suele estar en el formato del número de destino
+2. Verifica que el número incluya el código de país con el prefijo `+`
+3. Comprueba que el número de destino sea un número real y activo
+4. Si el problema persiste, cambia temporalmente a un número de destino diferente para aislar el problema
+
+### Caso: La transferencia va al buzón de voz en lugar de a una persona real
+
+1. Asegúrate de que el número de destino sea un número que acepte llamadas en vivo
+2. Algunos números configurados con "No Molestar" o desvío directo a buzón de voz pueden causar este comportamiento
+3. Prueba con un número móvil que sepas que responde llamadas
+4. Verifica que el destinatario no tenga configurado un saludo que tome la llamada inmediatamente
+
+### Caso: Error sin mensaje, la llamada simplemente se desconecta
+
+1. Este síntoma suele indicar un problema con el método de transferencia
+2. Asegúrate de no estar usando el método Workflow Transfer
+3. Cambia a Function Call Transfer siguiendo los pasos anteriores
+4. Si la llamada sigue desconectándose, verifica el estado de tu plan de E-SMART360
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+<Expandable title="¿Por qué no puedo probar transferencias con el widget web?" default-open="true">
+El widget web usa una arquitectura diferente a las llamadas telefónicas reales. Las transferencias de teléfono a teléfono requieren infraestructura de red telefónica (PSTN) que no está disponible en las llamadas web. El widget web es útil para probar la conversación del agente, pero no para validar funcionalidades telefónicas como transferencias.
+
+<Callout kind="info">
+Para pruebas de transferencia, llama siempre al número telefónico real de tu agente desde otro teléfono.
+</Callout>
+</Expandable>
+
+<Expandable title="¿El método Workflow Transfer tiene algún caso de uso donde funcione correctamente?">
+No. El método Workflow Transfer tiene un error persistente conocido que afecta a todos los casos de uso. E-SMART360 recomienda descontinuar su uso por completo y migrar todas las transferencias existentes al método Function Call Transfer. No hay planes de corregir este error, ya que el método Function Call Transfer es la solución oficial y más robusta.
+</Expandable>
+
+<Expandable title="¿Puedo usar un número con extensión como destino de transferencia?">
+Depende del operador telefónico. Algunos operadores permiten añadir extensiones al número de destino, pero no es una funcionalidad garantizada. E-SMART360 recomienda usar números directos sin extensiones como destinos de transferencia para mayor confiabilidad. Si necesitas usar extensiones, pruébalo exhaustivamente con tu operador específico.
+</Expandable>
+
+<Expandable title="¿Cómo afecta el modelo de IA a las transferencias de llamadas?">
+El modelo de IA es responsable de interpretar la intención del usuario, construir la llamada a función correcta y pasar los parámetros adecuados. Los modelos más antiguos pueden:
+- No detectar correctamente cuándo el usuario quiere ser transferido
+- Pasar parámetros incorrectos al intentar la transferencia
+- Fallar silenciosamente sin notificar al usuario
+
+Los modelos GPT 4.1 y GPT 4.1-mini tienen un rendimiento significativamente mejor en estas tareas.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda con la transferencia de llamadas?">
+<Callout kind="alert">
+Si después de seguir todos estos pasos la transferencia de llamadas sigue sin funcionar, contacta al equipo de soporte de E-SMART360. Proporciona los siguientes detalles para acelerar la resolución:
+- Captura de pantalla de tu configuración de funciones
+- Número de destino que estás utilizando
+- Modelo de IA configurado
+- Descripción del comportamiento observado
+
+El equipo de soporte revisará tu configuración y te ayudará a resolver el problema.
+</Callout>
+</Expandable>
+</ExpandableGroup>

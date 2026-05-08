@@ -1,0 +1,291 @@
+---
+title: "Plantillas de Zapier para Agentes de Voz IA"
+description: "Implementa automatizaciones potentes entre E-SMART360 y cientos de aplicaciones usando Zapier. Plantillas listas para usar de reservas de calendario, notificaciones SMS, creación de contactos CRM y más."
+---
+
+<Callout kind="info">
+Zapier actúa como el puente de integración entre los webhooks de E-SMART360 y más de 5000 aplicaciones. Estas plantillas están diseñadas para que las implementes en minutos, conectando tu agente de voz con tu ecosistema de herramientas.
+</Callout>
+
+## Estructura del Webhook para E-SMART360 → Plataforma de Automatización
+
+Cada plantilla sigue una arquitectura común: un webhook de E-SMART360 dispara un flujo en Zapier, que luego ejecuta acciones en las aplicaciones destino. El payload entrante contiene todos los datos de la llamada estructurados en JSON.
+
+<Callout kind="tip">
+Configura cada Zap con un **webhook Catch Hook** de Zapier como desencadenante. La URL que genera Zapier la usarás como webhook de callback en E-SMART360.
+</Callout>
+
+## Automatización de Reservas de Calendario
+
+<Steps>
+<Step title="Configura el disparador en Zapier">
+  Crea un nuevo Zap con **Webhooks by Zapier → Catch Hook** como trigger. Copia la URL generada — esa será la URL de callback que configures en E-SMART360.
+</Step>
+<Step title="Conecta Google Calendar">
+  Añade un paso de acción **Google Calendar → Find or Create Event** usando `{{caller_email}}` y `{{requested_date}}` como términos de búsqueda para evitar duplicados.
+</Step>
+<Step title="Crea el evento detallado">
+  Configura **Google Calendar → Create Detailed Event** con los campos mapeados desde el webhook de E-SMART360.
+</Step>
+<Step title="Envía la confirmación por correo">
+  Añade **Gmail → Send Email** para enviar un resumen de la reserva al cliente.
+</Step>
+</Steps>
+
+### Configuración Completa del Zap de Calendario
+
+El siguiente esquema JSON representa el flujo completo que debes configurar en Zapier:
+
+```json
+{
+  "trigger": {
+    "app": "Webhooks by Zapier",
+    "action": "Catch Hook",
+    "url": "https://hooks.zapier.com/hooks/catch/[TU_ID]/[TU_KEY]/"
+  },
+  "actions": [
+    {
+      "app": "Google Calendar",
+      "action": "Find or Create Event",
+      "search_term": "{{caller_email}} + {{requested_date}}"
+    },
+    {
+      "app": "Google Calendar",
+      "action": "Create Detailed Event",
+      "calendar": "[Tu Calendario]",
+      "summary": "Reunión con {{caller_name}}",
+      "start": "{{parsed_datetime}}",
+      "duration": "{{meeting_duration}}",
+      "description": "Reservado vía E-SMART360 IA",
+      "attendees": "{{caller_email}}"
+    },
+    {
+      "app": "Gmail",
+      "action": "Send Email",
+      "to": "{{caller_email}}",
+      "subject": "Reunión Confirmada - {{parsed_datetime}}"
+    },
+    {
+      "app": "Webhooks by Zapier",
+      "action": "POST",
+      "url": "[URL de Callback de E-SMART360]",
+      "payload": {
+        "status": "booked",
+        "meeting_time": "{{formatted_time}}"
+      }
+    }
+  ]
+}
+```
+
+### Plantilla de Correo de Confirmación
+
+```
+Hola {{caller_name}},
+
+Tu reunión ha sido confirmada para el {{formatted_date}} a las {{formatted_time}}.
+
+Detalles de la reunión:
+- Duración: {{meeting_duration}} minutos
+- Ubicación: {{meeting_location}}
+- Enlace: {{meeting_link}}
+
+Añadir al calendario: {{calendar_link}}
+
+Para reprogramar, puedes devolver la llamada en cualquier momento.
+
+Saludos cordiales,
+{{company_name}}
+```
+
+### Script de Confirmación para el Agente de Voz
+
+<Callout kind="success">
+**DESPUÉS DE RESERVAR CON ÉXITO:**
+
+"¡Perfecto! He agendado tu reunión para el [FECHA] a las [HORA]. Recibirás un correo de confirmación en [CORREO] en los próximos segundos. ¿Quieres que también te envíe un recordatorio por mensaje de texto?"
+</Callout>
+
+## Automatización de Notificaciones SMS
+
+Conecta E-SMART360 con Twilio para enviar mensajes SMS automatizados durante o después de las interacciones con el agente de voz.
+
+<CodeGroup tabs="Configuración Zapier">
+```json
+{
+  "trigger": {
+    "app": "Webhooks by Zapier",
+    "action": "Catch Hook"
+  },
+  "filter": {
+    "condition": "Solo continuar si action_type = 'send_sms'"
+  },
+  "actions": [
+    {
+      "app": "Formatter by Zapier",
+      "action": "Phone Number",
+      "format": "E.164",
+      "input": "{{caller_phone}}"
+    },
+    {
+      "app": "Twilio",
+      "action": "Send SMS",
+      "to": "{{formatted_phone}}",
+      "from": "[Tu Número de Twilio]",
+      "message": "{{sms_content}}"
+    },
+    {
+      "app": "Webhooks by Zapier",
+      "action": "POST (Callback)",
+      "url": "[Callback de E-SMART360]",
+      "payload": {
+        "sms_sent": true,
+        "phone": "{{formatted_phone}}"
+      }
+    }
+  ]
+}
+```
+</CodeGroup>
+
+<Callout kind="warning">
+Asegúrate de que el número de teléfono esté en formato **E.164** antes de enviarlo a Twilio. Usa el módulo **Formatter by Zapier → Phone Number** para estandarizar el formato automáticamente.
+</Callout>
+
+## Creación de Contactos en CRM
+
+Conecta E-SMART360 con HubSpot, Salesforce o cualquier CRM compatible para crear y actualizar contactos automáticamente después de cada llamada.
+
+<Columns cols="2">
+<Card title="HubSpot CRM" icon="database">
+  Crea o actualiza contactos y deals en HubSpot con los datos extraídos de la conversación del agente de IA.
+</Card>
+<Card title="Salesforce" icon="cloud">
+  Sincroniza leads y oportunidades en Salesforce automáticamente cuando el agente califica a un prospecto.
+</Card>
+</Columns>
+
+### Configuración para HubSpot/Salesforce
+
+<CodeGroup tabs="Esquema del Zap">
+```json
+{
+  "trigger": {
+    "app": "Webhooks by Zapier",
+    "action": "Catch Hook"
+  },
+  "actions": [
+    {
+      "app": "HubSpot",
+      "action": "Find or Create Contact",
+      "email": "{{caller_email}}"
+    },
+    {
+      "app": "HubSpot",
+      "action": "Update Contact",
+      "fields": {
+        "first_name": "{{first_name}}",
+        "last_name": "{{last_name}}",
+        "phone": "{{caller_phone}}",
+        "lead_source": "E-SMART360 Voice AI",
+        "notes": "{{call_summary}}"
+      }
+    },
+    {
+      "app": "HubSpot",
+      "action": "Create Deal (if qualified)",
+      "deal_name": "{{company}} - {{service_interest}}",
+      "amount": "{{estimated_value}}",
+      "stage": "Calificación"
+    },
+    {
+      "app": "Slack",
+      "action": "Send Message",
+      "channel": "#alertas-ventas",
+      "message": "🔥 Nuevo lead desde E-SMART360: {{caller_name}} - {{company}}"
+    }
+  ]
+}
+```
+</CodeGroup>
+
+## Mapeo de Campos del Webhook
+
+<Columns cols="2">
+<Card title="Campos de Contacto" icon="user">
+- `caller_name` — Nombre completo
+- `caller_email` — Correo electrónico
+- `caller_phone` — Teléfono en formato original
+- `first_name` — Nombre
+- `last_name` — Apellido
+</Card>
+<Card title="Campos de Negocio" icon="briefcase">
+- `company` — Empresa
+- `service_interest` — Servicio de interés
+- `estimated_value` — Valor estimado
+- `call_summary` — Resumen de la llamada
+- `caller_id` — Identificador único
+</Card>
+</Columns>
+
+## Buenas Prácticas para Zaps de Producción
+
+<Callout kind="tip">
+  Siempre prueba tus Zaps en modo **sin publicar** primero. Envía una llamada de prueba desde E-SMART360 y verifica que todos los pasos se ejecuten correctamente antes de activarlos en producción.
+</Callout>
+
+1. **Filtros inteligentes**: Añade condiciones de filtro para que el Zap solo se ejecute cuando se cumplan ciertos criterios (por ejemplo, `action_type = 'book_meeting'`).
+2. **Manejo de errores**: Configura pasos de reintento en Zapier para cuando un servicio externo esté temporalmente caído.
+3. **Campos opcionales**: Usa formateadores de Zapier para manejar valores nulos o vacíos que puedan llegar desde el webhook de E-SMART360.
+4. **Logs de depuración**: Añade un paso final que registre la ejecución en una hoja de Google Sheets para mantener un historial de cada acción ejecutada.
+5. **Rate limiting**: Ten en cuenta los límites de tasa de Zapier en tu plan. Para alto volumen, considera usar webhooks directos o Make.com.
+
+## Automatización Avanzada con Múltiples Acciones
+
+<Steps>
+<Step title="Captura el hook entrante" icon="webhook">
+  Configura el Catch Hook de Zapier con la URL que proporcionará E-SMART360 como webhook de callback. E-SMART360 enviará un payload JSON completo con los datos de la llamada cada vez que ocurra un evento definido.
+</Step>
+<Step title="Filtra por tipo de evento" icon="filter">
+  Usa el módulo **Filter by Zapier** para que el flujo solo continúe si el campo `event_type` coincide con el tipo de acción que deseas procesar (por ejemplo, `new_lead`, `booking_confirmed`, `support_request`).
+</Step>
+<Step title="Enriquece los datos" icon="search">
+  Si necesitas información adicional (por ejemplo, datos de contacto de un CRM), usa los pasos **Find or Create** de Zapier antes de continuar con las acciones de escritura.
+</Step>
+<Step title="Ejecuta acciones en paralelo" icon="layers">
+  Zapier permite ejecutar múltiples acciones en paralelo. Configura rutas separadas para: crear el contacto en CRM, enviar el SMS de confirmación, notificar al equipo por Slack y registrar el evento en una hoja de cálculo.
+</Step>
+<Step title="Envía el callback de confirmación" icon="check-circle">
+  Configura un paso final que envíe una respuesta POST a la URL de callback de E-SMART360, para que el agente de voz pueda confirmar al cliente que la acción se completó exitosamente.
+</Step>
+</Steps>
+
+<Callout kind="success">
+  Con esta arquitectura de múltiples acciones, un solo webhook de E-SMART360 puede disparar un ecosistema completo de automatización: CRM actualizado, cliente notificado, equipo alertado y registro histórico guardado, todo en segundos.
+</Callout>
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+<Expandable title="¿Qué plan de Zapier necesito para estas integraciones?" default-open="true">
+  Las plantillas básicas (webhook simple + una acción) funcionan con el plan **Starter** de Zapier. Para flujos de múltiples pasos o ejecuciones en paralelo, necesitarás al menos el plan **Professional** ($49/mes). Si esperas más de 2000 ejecuciones mensuales, considera el plan **Team** que ofrece mejor soporte y mayor volumen.
+</Expandable>
+
+<Expandable title="¿Puedo usar estas plantillas si no tengo experiencia en Zapier?">
+  Sí. Las plantillas están diseñadas para que solo tengas que copiar la configuración y reemplazar los valores marcados entre corchetes (`[TU_ID]`, `[Tu Calendario]`, etc.). Zapier tiene una interfaz visual donde arrastras y conectas módulos. Si te atascas, su documentación es muy completa. También puedes consultar nuestra guía de integraciones para ver tutoriales paso a paso.
+</Expandable>
+
+<Expandable title="¿Cómo manejo errores cuando Zapier no puede conectar con un servicio externo?">
+  En cada paso de Zapier puedes habilitar **reintentos automáticos** (hasta 3 intentos). Además, añade un paso condicional con **Filter by Zapier** para detectar errores y enviar una notificación por correo electrónico si algún paso falla. Para mayor robustez, considera usar **Webhooks by Zapier → POST** como paso final que envíe el estado de la ejecución a un endpoint de monitoreo.
+</Expandable>
+
+<Expandable title="¿Cuánto tardan en ejecutarse mis automatizaciones de Zapier?">
+  La mayoría de los Zaps se ejecutan en menos de 5 segundos. Factores como la latencia de APIs externas (Google Calendar, HubSpot) o la cantidad de pasos pueden aumentar el tiempo. Para aplicaciones en tiempo real que requieren confirmación inmediata al cliente (como la reserva de citas), este tiempo es perfectamente aceptable. Para casos de uso más críticos, recomendamos usar webhooks directos desde E-SMART360.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda para implementar estas plantillas de Zapier?">
+  <Callout kind="info">
+    Nuestro equipo de soporte técnico puede ayudarte a configurar tus primeros Zaps y resolver cualquier duda sobre el mapeo de campos entre E-SMART360 y tus aplicaciones. Escríbenos describiendo tu caso de uso y recibirás asistencia personalizada en menos de 24 horas hábiles.
+  </Callout>
+</Expandable>
+</ExpandableGroup>

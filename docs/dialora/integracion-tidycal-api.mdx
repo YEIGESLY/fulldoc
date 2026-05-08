@@ -1,0 +1,370 @@
+---
+title: "Integración con TidyCal — API de Reservas y Disponibilidad en E-SMART360"
+description: "Guía completa para integrar TidyCal con E-SMART360 mediante herramientas personalizadas. Aprende a consultar disponibilidad, reservar citas y sincronizar la gestión de agenda directamente desde tus agentes de voz."
+---
+
+<Callout kind="info" default-open="true">
+**¿Qué es la integración con TidyCal?**  
+La integración de TidyCal dentro de las herramientas personalizadas de E-SMART360 permite vincular cuentas de TidyCal y gestionar toda la programación de citas directamente desde la plataforma. Proporciona sincronización fluida de reuniones, disponibilidad y reservas a través de la API de TidyCal, optimizando la gestión de calendarios y mejorando la eficiencia de los flujos de trabajo.
+</Callout>
+
+## Visión General
+
+La integración expone dos herramientas principales que puedes configurar en tus agentes de voz:
+
+<Columns cols="2">
+<Card title="tidycal_check_availability_of_slots" icon="calendar">
+  Obtiene los espacios de tiempo disponibles para un tipo de reserva específico entre dos fechas determinadas.
+</Card>
+
+<Card title="tidycal_book_appointment" icon="check-circle">
+  Crea una reserva (reserva un espacio) para un tipo de reserva especificado.
+</Card>
+</Columns>
+
+Estas herramientas realizan llamadas a la API REST de TidyCal. La autenticación se realiza mediante un Token de Acceso Personal (Personal Access Token) o token Bearer OAuth.
+
+<Callout kind="info">
+**Versión de la API:** 0.1
+</Callout>
+
+## Autenticación
+
+Para autenticarte con la API de TidyCal, necesitas usar un Token de Acceso Personal:
+
+<Steps>
+<Step title="Crear el token">
+Genera un Token de Acceso Personal desde la configuración de integraciones de TidyCal. Este token es único para tu cuenta y debe mantenerse en secreto.
+</Step>
+<Step title="Enviar el token en las cabeceras">
+Envía el token en la cabecera `Authorization: Bearer {TOKEN}` en todas las llamadas a las herramientas.
+</Step>
+<Step title="Verificar el acceso">
+Asegúrate de que el token tenga permisos de lectura y escritura sobre los tipos de reserva que deseas gestionar.
+</Step>
+</Steps>
+
+<Callout kind="warning">
+**Seguridad del token:**  
+Mantén tu token seguro y nunca lo expongas en código del lado del cliente, repositorios públicos o documentación. Utiliza variables de entorno o un gestor de secretos para almacenarlo de forma segura.
+</Callout>
+
+## Herramienta 1: Verificar Disponibilidad (`tidycal_check_availability_of_slots`)
+
+### ¿Qué hace?
+
+Obtiene los espacios disponibles entre dos fechas determinadas para un tipo de reserva específico.
+
+### Parámetros
+
+<ParamField body="startTime" type="string" required>
+  Fecha de inicio para consultar espacios disponibles en formato YYYY-MM-DD. Se combina con la hora (normalmente medianoche UTC) para la API.
+</ParamField>
+
+<ParamField body="endTime" type="string" required>
+  Fecha de finalización para consultar espacios disponibles en formato YYYY-MM-DD. Se combina con la hora UTC según sea necesario, generalmente el final del día.
+</ParamField>
+
+### Comportamiento
+
+1. Convierte las fechas `startTime` y `endTime` proporcionadas por el usuario (fechas locales) en fechas ISO completas en UTC para la consulta, por ejemplo `YYYY-MM-DDT00:00:00Z` y `YYYY-MM-DDT23:59:59Z`.
+2. Envía una solicitud GET a `https://tidycal.com/api/booking-types/{idTipoReserva}/timeslots` con los parámetros de consulta `starts_at` y `ends_at`.
+
+### Respuesta Exitosa
+
+<ResponseField name="200 OK" type="http-status">
+  La solicitud se procesó correctamente. La respuesta contiene un objeto JSON con el campo `data` que incluye una lista de objetos, cada uno con campos como `starts_at`, `ends_at` y `available_bookings`.
+</ResponseField>
+
+### Errores y Casos Límite
+
+<ResponseField name="403 / 404" type="http-status">
+  Si el tipo de reserva no existe o no es accesible, la API devolverá un error 403 (Prohibido) o 404 (No Encontrado).
+</ResponseField>
+
+<ResponseField name="Lista vacía" type="http-status">
+  Si no hay espacios disponibles en el período consultado, el campo `data` puede devolver una lista vacía.
+</ResponseField>
+
+### Definición JSON de la Herramienta
+
+```json
+{
+  "key": "tidycal_check_availability_of_slots",
+  "name": "Verificar Disponibilidad TidyCal",
+  "description": "Obtiene los espacios de tiempo disponibles para un tipo de reserva entre dos fechas determinadas.",
+  "pre_call_message": "Déjame consultar los espacios disponibles para ti...",
+  "parameters": {
+    "type": "object",
+    "required": ["startTime", "endTime"],
+    "properties": {
+      "startTime": {
+        "type": "string",
+        "description": "Fecha de inicio para consultar espacios en formato YYYY-MM-DD. Se combina con hora UTC para la API."
+      },
+      "endTime": {
+        "type": "string",
+        "description": "Fecha de finalización para consultar espacios en formato YYYY-MM-DD. Se combina con hora UTC para la API."
+      }
+    }
+  },
+  "value": {
+    "method": "GET",
+    "url": "https://tidycal.com/api/booking-types/TU_ID_TIPO_RESERVA/timeslots",
+    "api_token": "Bearer TU_TOKEN_API",
+    "param": {
+      "starts_at": "%(startTime)sT00:00:00Z",
+      "ends_at": "%(endTime)sT23:59:59Z"
+    }
+  }
+}
+```
+
+<Callout kind="tip">
+**Optimización de consultas:**  
+Para evitar errores de desfase de un día, asegúrate de que las fechas se conviertan correctamente a UTC. Recomendamos usar rangos de 1 a 7 días para mantener las respuestas rápidas y manejables.
+</Callout>
+
+## Herramienta 2: Reservar Cita (`tidycal_book_appointment`)
+
+### ¿Qué hace?
+
+Crea una reserva (reserva un espacio de tiempo) para un tipo de reserva especificado.
+
+### Parámetros
+
+<ParamField body="preferred_date" type="string (YYYY-MM-DD)" required>
+  La fecha de la reserva en hora local. Debe combinarse con la hora preferida para la conversión a UTC.
+</ParamField>
+
+<ParamField body="preferred_time" type="string (HH:mm, 24h)" required>
+  La hora en esa fecha en formato HH:mm (24 horas). Debe convertirse a UTC.
+</ParamField>
+
+<ParamField body="name" type="string" required>
+  Nombre completo de la persona que realiza la reserva.
+</ParamField>
+
+<ParamField body="email" type="string" required>
+  Dirección de correo electrónico de la persona que realiza la reserva.
+</ParamField>
+
+<ParamField body="timezone" type="string (IANA)" required>
+  Identificador de zona horaria IANA (por ejemplo, `America/New_York`, `Europe/Madrid`, `America/Mexico_City`). Necesario para la conversión a UTC.
+</ParamField>
+
+### Comportamiento
+
+1. Combina `preferred_date` + `preferred_time` en la zona horaria del usuario.
+2. Convierte a una cadena de fecha-hora ISO en UTC, por ejemplo: `2025-09-17T12:30:00.000000Z`.
+3. Envía una solicitud POST con los campos `starts_at`, `name`, `email` y `timezone`.
+4. Opcionalmente puede incluir `booking_questions` si el tipo de reserva define preguntas personalizadas.
+
+### Respuesta Exitosa
+
+<ResponseField name="201 Created" type="http-status">
+  La reserva se creó correctamente. La respuesta JSON contiene un campo `data` con los detalles de la reserva: `id`, `contact_id`, `booking_type_id`, `starts_at`, `ends_at`, entre otros.
+</ResponseField>
+
+### Errores y Casos Límite
+
+| Código | Significado | Causa Común |
+|--------|-------------|-------------|
+| `403 Forbidden` | Prohibido | El token no tiene permisos de acceso |
+| `409 Conflict` | Conflicto | El espacio de tiempo ya no está disponible |
+| `422 Validation Error` | Error de validación | Entrada malformada (email inválido, zona horaria incorrecta o campos faltantes) |
+
+### Definición JSON de la Herramienta
+
+```json
+{
+  "key": "tidycal_book_appointment",
+  "name": "Reservar Cita TidyCal",
+  "description": "Crea una reserva (reserva un espacio de tiempo) para un tipo de reserva especificado.",
+  "pre_call_message": "Déjame agendar esa cita para ti...",
+  "parameters": {
+    "type": "object",
+    "required": ["preferred_date", "preferred_time", "name", "email", "timezone"],
+    "properties": {
+      "preferred_date": {
+        "type": "string",
+        "description": "La fecha de la reserva en formato YYYY-MM-DD (hora local)."
+      },
+      "preferred_time": {
+        "type": "string",
+        "description": "La hora en esa fecha en formato HH:mm (24 horas). Debe convertirse a UTC."
+      },
+      "name": {
+        "type": "string",
+        "description": "Nombre completo de la persona que realiza la reserva."
+      },
+      "email": {
+        "type": "string",
+        "description": "Correo electrónico de la persona que realiza la reserva."
+      },
+      "timezone": {
+        "type": "string",
+        "description": "Identificador de zona horaria IANA (por ejemplo, America/Los_Angeles, Europe/London). Necesario para la conversión a UTC."
+      }
+    }
+  },
+  "value": {
+    "method": "POST",
+    "url": "https://tidycal.com/api/booking-types/TU_ID_TIPO_RESERVA/bookings",
+    "api_token": "Bearer TU_TOKEN_API",
+    "param": {
+      "starts_at": "%(preferred_date)sT%(preferred_time)s:00.000000Z",
+      "name": "%(name)s",
+      "email": "%(email)s",
+      "timezone": "%(timezone)s"
+    }
+  }
+}
+```
+
+## Endpoints Utilizados
+
+Según la documentación oficial de la API de TidyCal, estos son los endpoints relevantes:
+
+| Propósito | Método HTTP | Ruta |
+|-----------|-------------|------|
+| Listar espacios disponibles para un tipo de reserva | GET | `/api/booking-types/{idTipoReserva}/timeslots` |
+| Crear una reserva | POST | `/api/booking-types/{idTipoReserva}/bookings` |
+
+Ambos endpoints requieren autenticación mediante la cabecera `Authorization: Bearer {TOKEN}`.
+
+## Ejemplos de Uso
+
+### 1. Consultar disponibilidad
+
+```bash curl
+curl --location 'https://tidycal.com/api/booking-types/1367385/timeslots?starts_at=2025-09-17T00:00:00Z&ends_at=2025-09-18T23:59:59Z' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer TU_TOKEN'
+```
+
+```python
+import requests
+
+url = "https://tidycal.com/api/booking-types/1367385/timeslots"
+params = {
+    "starts_at": "2025-09-17T00:00:00Z",
+    "ends_at": "2025-09-18T23:59:59Z"
+}
+headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer TU_TOKEN"
+}
+
+response = requests.get(url, params=params, headers=headers)
+print(response.json())
+```
+
+### 2. Reservar una cita
+
+```bash curl
+curl --location 'https://tidycal.com/api/booking-types/1367385/bookings' \
+  --header 'Content-Type: application/json' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer TU_TOKEN' \
+  --data-raw '{
+    "starts_at": "2025-09-17T12:30:00.000000Z",
+    "name": "Juan Pérez Prueba",
+    "email": "juan@ejemplo.com",
+    "timezone": "America/Mexico_City"
+  }'
+```
+
+```python
+import requests
+
+url = "https://tidycal.com/api/booking-types/1367385/bookings"
+headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer TU_TOKEN"
+}
+payload = {
+    "starts_at": "2025-09-17T12:30:00.000000Z",
+    "name": "Juan Pérez Prueba",
+    "email": "juan@ejemplo.com",
+    "timezone": "America/Mexico_City"
+}
+
+response = requests.post(url, json=payload, headers=headers)
+print(response.json())
+```
+
+## Mejores Prácticas y Notas
+
+<Tabs>
+<Tab title="Formato de Fecha y Hora">
+Asegúrate de que todos los valores de fecha y hora enviados a la API estén en UTC y en formato ISO 8601 válido. TidyCal espera este formato estrictamente. Un error común es enviar fechas en hora local sin convertir; esto puede causar desfases de horas o incluso días.
+</Tab>
+
+<Tab title="Gestión de Zonas Horarias">
+Incluye siempre la zona horaria en las llamadas de reserva para que TidyCal pueda interpretar correctamente la hora. Utiliza identificadores de zona horaria IANA (por ejemplo, `America/New_York`, `Europe/London`, `Asia/Tokyo`). Evita usar abreviaturas como EST o GMT ya que pueden ser ambiguas.
+</Tab>
+
+<Tab title="Manejo de Errores">
+Gestiona los errores adecuadamente: conflicto (espacio ya ocupado), prohibido, errores de validación. Verifica siempre los códigos de estado de la respuesta y proporciona mensajes de error significativos a los usuarios. Por ejemplo, si recibes un 409 Conflict, informa al usuario que el espacio ya no está disponible y sugiere horarios alternativos.
+</Tab>
+
+<Tab title="Consultas de Disponibilidad">
+Para las consultas de disponibilidad, utiliza fechas de inicio y finalización precisas; evita errores de desfase de un día. Convierte siempre las fechas locales a UTC correctamente. Recomendamos validar la conversión antes de enviar la solicitud.
+</Tab>
+
+<Tab title="Seguridad">
+Almacena siempre los tokens de API de forma segura. Nunca expongas tokens en código del lado del cliente, repositorios públicos o documentación. Utiliza variables de entorno o prácticas seguras de gestión de configuración.
+</Tab>
+
+<Tab title="ID del Tipo de Reserva">
+Reemplaza `TU_ID_TIPO_RESERVA` en las URL por el ID real de tu tipo de reserva en TidyCal. Puedes encontrar este ID en el panel de control de TidyCal, en la configuración de cada tipo de reserva.
+</Tab>
+</Tabs>
+
+## Integración en el Flujo de Conversación
+
+<Callout kind="success">
+**Flujo recomendado:**  
+1. El agente pregunta al usuario qué tipo de cita necesita y en qué fecha.  
+2. Llama a `tidycal_check_availability_of_slots` para mostrar opciones disponibles.  
+3. El usuario selecciona un horario.  
+4. El agente recopila nombre, email y zona horaria.  
+5. Llama a `tidycal_book_appointment` para confirmar la reserva.  
+6. El agente confirma al usuario los detalles de la cita.
+</Callout>
+
+Este flujo de 6 pasos se completa en una sola conversación natural, sin que el usuario tenga que salir de la llamada o acceder a ningún otro sistema.
+
+<Callout kind="warning">
+**Prueba en entorno de desarrollo:**  
+Antes de poner en producción la integración, realiza pruebas exhaustivas con diferentes escenarios: fechas con disponibilidad, fechas sin espacios, usuarios con email inválido, cambios de zona horaria y reintentos tras conflictos 409.
+</Callout>
+
+---
+
+<ExpandableGroup title="Preguntas Frecuentes">
+<Expandable title="¿Qué hago si recibo un error 409 Conflict al reservar?" default-open="true">
+El error 409 significa que el espacio de tiempo que intentabas reservar ya no está disponible (otro usuario lo tomó entre que consultaste disponibilidad e intentaste reservar). La mejor práctica es informar al usuario, consultar nuevamente la disponibilidad actualizada y ofrecer alternativas cercanas. El agente puede decir: *"Ese horario acaba de ser tomado. ¿Te gustaría ver opciones cercanas?"*
+</Expandable>
+
+<Expandable title="¿Puedo usar la misma integración con varias cuentas de TidyCal?">
+Sí. Puedes crear herramientas personalizadas separadas para cada cuenta de TidyCal, cada una con su propio token de acceso. E-SMART360 te permite asignar diferentes herramientas a diferentes agentes, por lo que puedes tener un agente por sucursal o por servicio, cada uno vinculado a su propia cuenta de TidyCal.
+</Expandable>
+
+<Expandable title="¿Cómo manejo diferentes tipos de reserva (consulta, consultoría, llamada)?">
+Cada tipo de reserva en TidyCal tiene un ID único. Puedes crear herramientas separadas para cada tipo de reserva o, más eficientemente, usar una sola herramienta con un parámetro adicional para el tipo de servicio. El agente determinará qué tipo de reserva corresponde según la conversación con el usuario.
+</Expandable>
+
+<Expandable title="¿Qué formato de zona horaria debo usar exactamente?">
+Debes usar identificadores IANA (también conocidos como zona horaria Olson), como `America/New_York`, `Europe/Madrid`, `America/Santiago`, `Asia/Tokyo`. No uses abreviaturas como EST, PST o GMT ya que pueden ser ambiguas. Si no estás seguro de la zona horaria del usuario, el agente puede preguntar: *"¿En qué ciudad te encuentras?"* para determinar la zona horaria correcta.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda con la integración de TidyCal?">
+<Callout kind="info">
+**¿Necesitas ayuda con la integración de TidyCal?**  
+Si encuentras dificultades para configurar la autenticación, los parámetros de las herramientas o necesitas ayuda con casos de uso específicos para tu industria, nuestro equipo de soporte técnico está disponible. Escríbenos a <soporte@e-smart360.com> o accede al centro de ayuda desde tu panel de E-SMART360.
+</Callout>
+</Expandable>
+</ExpandableGroup>

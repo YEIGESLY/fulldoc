@@ -1,0 +1,214 @@
+---
+title: "Integración de ElevenLabs con E-SMART360"
+description: "Aprende a conectar ElevenLabs con E-SMART360 paso a paso. Obtén voces realistas y sintaxis de audio de alta calidad para tus agentes de IA en minutos."
+---
+
+La integración de **ElevenLabs** con **E-SMART360** te permite dotar a tus agentes de voz de una calidad de audio excepcional. ElevenLabs ofrece síntesis de voz ultrarrealista con múltiples opciones de personalización, desde clonación de voz hasta ajuste fino de la entonación.
+
+Esta guía cubre todo el proceso de conexión, desde la obtención de tu API Key hasta la configuración de permisos avanzados.
+
+<Callout kind="info">
+  **¿Qué necesitas para empezar?** Una cuenta activa en E-SMART360 y una cuenta en ElevenLabs.io. Todo el proceso toma aproximadamente 5 minutos.
+</Callout>
+
+## Requisitos previos
+
+Antes de comenzar, asegúrate de contar con lo siguiente:
+
+- Una cuenta activa en **E-SMART360** con acceso al panel de control
+- Una cuenta en **[ElevenLabs](https://elevenlabs.io/)** (puedes crear una gratis si eres nuevo)
+- Acceso a Internet estable para realizar la conexión entre plataformas
+
+## Guía paso a paso
+
+Sigue estos pasos para conectar ElevenLabs a tu cuenta de E-SMART360.
+
+<Steps>
+  <Step icon="log-in" label="Inicia sesión en E-SMART360">
+    Accede al panel de control de E-SMART360 desde tu navegador. Ingresa tus credenciales en la página de inicio de sesión.
+  </Step>
+
+  <Step icon="settings" label="Navega a la sección de Integraciones">
+    Dentro del panel de control, localiza la barra lateral izquierda. Busca y haz clic en la opción **Integraciones**. Esta sección agrupa todas las conexiones disponibles con proveedores externos.
+
+    <Callout kind="tip">
+      **Consejo profesional:** Si ya tienes otras integraciones activas (Deepgram, OpenAI, etc.), la encontrarás fácilmente en el mismo grupo.
+    </Callout>
+  </Step>
+
+  <Step icon="search" label="Localiza el campo de ElevenLabs">
+    En la página de Integraciones, desplázate hasta encontrar el campo etiquetado como **ElevenLabs API Key**. Este campo está diseñado para recibir la clave que generarás desde la plataforma de ElevenLabs.
+
+    <Callout kind="warning">
+      **Importante:** No intentes escribir una clave aleatoria o de otro servicio. La clave debe ser generada específicamente desde tu cuenta de ElevenLabs.
+    </Callout>
+  </Step>
+
+  <Step icon="external-link" label="Inicia sesión en ElevenLabs">
+    Abre una nueva pestaña o ventana y dirígete a **[ElevenLabs](https://elevenlabs.io/)**. Inicia sesión con tus credenciales. Si eres usuario nuevo, completa el proceso de onboarding que te guiará por las funciones básicas de la plataforma.
+  </Step>
+
+  <Step icon="key" label="Accede a la página de API Keys">
+    Una vez dentro de ElevenLabs, navega directamente a la sección de desarrolladores:
+
+    `https://elevenlabs.io/app/developers/api-keys`
+
+    Aquí encontrarás todas las claves API que has creado, junto con opciones para generar nuevas.
+  </Step>
+
+  <Step icon="plus-circle" label="Crea una nueva API Key">
+    Haz clic en el botón **Create API Key**. Se abrirá un formulario donde podrás asignar un nombre descriptivo a la clave (por ejemplo, "E-SMART360 Integration") y seleccionar los permisos correspondientes.
+  </Step>
+
+  <Step icon="shield" label="Configura los permisos de la clave">
+    ElevenLabs te permite definir qué acciones puede realizar esta clave. Elige la opción que mejor se adapte a tu caso de uso:
+
+    <Tabs>
+      <Tab title="Opción A — Acceso completo">
+        Selecciona esta opción si deseas que tu agente de E-SMART360 tenga acceso a todas las capacidades de ElevenLabs. Sin embargo, se recomienda encarecidamente hacer clic en **Restrict Key** para limitar los permisos innecesarios y mejorar la seguridad.
+
+        <Callout kind="alert">
+          **Seguridad ante todo:** Incluso con acceso completo, activa la restricción de clave para evitar usos no autorizados en caso de que la clave se vea comprometida.
+        </Callout>
+      </Tab>
+
+      <Tab title="Opción B — Acceso limitado">
+        Para un enfoque más seguro y minimalista, selecciona únicamente estos dos permisos:
+
+        <ParamField name="Text to Speech" field-type="Permiso" required>
+          Permite a E-SMART360 generar audios con las voces de ElevenLabs. Esencial para que tus agentes de voz puedan hablar.
+        </ParamField>
+
+        <ParamField name="Voice (Write)" field-type="Permiso" required>
+          Permite gestionar las voces disponibles, incluyendo la creación de nuevas voces personalizadas. Necesario si planeas usar clonación de voz.
+        </ParamField>
+
+        <Callout kind="success">
+          **Recomendado:** Esta configuración es la más segura y cubre el 100 % de las funcionalidades que E-SMART360 necesita de ElevenLabs.
+        </Callout>
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step icon="check-circle" label="Genera la clave y conéctala a E-SMART360">
+    Una vez configurados los permisos, haz clic en **Create** para generar tu API Key. Se mostrará una ventana con la clave recién creada.
+
+    <Callout kind="danger">
+      **¡No cierres esta ventana sin copiar la clave!** ElevenLabs solo muestra la clave completa una vez. Si la pierdes, tendrás que generar una nueva.
+    </Callout>
+
+    Copia la clave y vuelve al panel de E-SMART360. Pégala en el campo **ElevenLabs API Key** que localizaste en el paso 3. Haz clic en **Guardar** para completar la conexión.
+  </Step>
+</Steps>
+
+¡Listo! Tu cuenta de ElevenLabs ya está conectada exitosamente a E-SMART360. Tus agentes de voz ahora pueden utilizar las voces de ElevenLabs para ofrecer una experiencia de llamada más natural y realista.
+
+## Configuración adicional recomendada
+
+Una vez conectada la integración, puedes aprovechar estas configuraciones complementarias para optimizar la experiencia de tus agentes de voz:
+
+### Selección de voz
+
+Dentro del panel de configuración de tu agente de voz en E-SMART360, podrás elegir entre las voces disponibles en tu cuenta de ElevenLabs. Puedes probar diferentes opciones antes de decidir cuál usar:
+
+```json
+{
+  "configuracion_voz": {
+    "proveedor": "elevenlabs",
+    "voice_id": "21m00Tcm4TlvDq8ikWAM",
+    "modelo": "eleven_multilingual_v2",
+    "estabilidad": 0.5,
+    "similitud": 0.75
+  }
+}
+```
+
+<Callout kind="tip">
+  **Tip:** El modelo `eleven_multilingual_v2` soporta múltiples idiomas (español, inglés, francés, alemán, italiano, portugués, etc.). Si tu agente necesita atender en varios idiomas, este es el modelo ideal.
+  </Callout>
+
+### Ajuste de parámetros de voz
+
+ElevenLabs ofrece parámetros avanzados que puedes configurar desde E-SMART360 para refinar la salida de audio:
+
+| Parámetro | Rango | Descripción |
+|-----------|-------|-------------|
+| **Estabilidad** | 0.0 – 1.0 | Controla la consistencia de la voz. Valores más altos producen un tono más estable pero menos expresivo. |
+| **Similitud + Claridad** | 0.0 – 1.0 | Define qué tan fiel es la voz generada respecto a la voz original o seleccionada. |
+| **Estilización** | 0.0 – 1.0 | Agrega variación y expresividad a la voz. Valores altos pueden sonar menos naturales. |
+| **Velocidad** | 0.7 – 1.2 | Acelera o desacelera la reproducción del audio. |
+
+### Clonación de voz personalizada
+
+Si tu caso de uso lo requiere, ElevenLabs permite crear voces personalizadas mediante clonación:
+
+1.  Accede a tu cuenta de ElevenLabs
+2.  Ve a la sección **VoiceLab**
+3.  Selecciona **Instant Voice Cloning** o **Professional Voice Cloning**
+4.  Sube las muestras de audio requeridas (mínimo 1 minuto para clonación instantánea)
+5.  Una vez creada, la voz aparecerá automáticamente disponible en E-SMART360
+
+<Callout kind="info">
+  **Nota técnica:** La clonación de voz profesional requiere un plan de pago en ElevenLabs y ofrece una calidad superior con muestras de audio más extensas (mínimo 30 minutos).
+</Callout>
+
+## Ejemplos de uso práctico
+
+### Atención al cliente con voz personalizada
+
+```json
+{
+  "agente": "soporte_elevenlabs",
+  "voice_id": "EXAVITQu4vrCxn3kS8Cw",
+  "saludo_inicial": "Hola, soy el asistente virtual de E-SMART360. ¿En qué puedo ayudarte hoy?",
+  "parametros": {
+    "estabilidad": 0.6,
+    "similitud": 0.8,
+    "modelo": "eleven_turbo_v2"
+  }
+}
+```
+
+<Callout kind="success">
+  **Resultado:** Los clientes reportan una experiencia de llamada más natural, con menor fatiga auditiva en conversaciones largas gracias a la calidad superior de ElevenLabs.
+</Callout>
+
+### Ventas entrantes con diferentes voces por campaña
+
+Puedes asignar distintas voces de ElevenLabs a diferentes agentes o campañas según el tono que desees proyectar:
+
+<Columns cols="2">
+  <Card title="Campaña corporativa" icon="briefcase">
+    Voz seria y profesional. Estabilidad alta (0.8), similitud alta (0.9).
+  </Card>
+
+  <Card title="Campaña promocional" icon="gift">
+    Voz enérgica y amigable. Estabilidad baja (0.3), estilización alta (0.6).
+  </Card>
+</Columns>
+
+## Preguntas frecuentes
+
+<ExpandableGroup>
+  <Expandable title="¿Qué plan de ElevenLabs necesito para usar la integración?" default-open="true">
+    Puedes usar cualquier plan de ElevenLabs, incluyendo el plan gratuito. Sin embargo, el plan gratuito tiene límites de caracteres mensuales. Para uso profesional con alto volumen de llamadas, te recomendamos al menos el plan **Starter** o **Creator**.
+  </Expandable>
+
+  <Expandable title="¿Puedo usar varias voces de ElevenLabs en un mismo agente?">
+    Sí. E-SMART360 te permite cambiar dinámicamente la voz de ElevenLabs durante una conversación mediante la API. Puedes, por ejemplo, usar una voz para el saludo y otra para la despedida, o cambiar según el idioma detectado.
+  </Expandable>
+
+  <Expandable title="¿La integración funciona con todos los modelos de ElevenLabs?">
+    E-SMART360 es compatible con los modelos principales de ElevenLabs: `eleven_monolingual_v1`, `eleven_multilingual_v2` y `eleven_turbo_v2`. El modelo `eleven_turbo_v2` es el más rápido y recomendado para llamadas en tiempo real.
+  </Expandable>
+
+  <Expandable title="¿Cómo puedo verificar que la integración funciona correctamente?">
+    Después de guardar la API Key en E-SMART360, puedes ir a la configuración de tu agente de voz y seleccionar ElevenLabs como proveedor de voz. Realiza una llamada de prueba. Si escuchas la voz correctamente, la integración está funcionando. También puedes revisar los logs de llamadas en el panel de E-SMART360 para confirmar que no hay errores de conexión.
+  </Expandable>
+
+  <Expandable title="¿Necesitas ayuda con la integración de ElevenLabs?">
+    <Callout kind="warning">
+      **¿Problemas con la configuración?** Ponte en contacto con nuestro equipo de soporte técnico. Estamos disponibles para ayudarte a resolver cualquier incidencia con tu integración de ElevenLabs o cualquier otro proveedor de voz. Escríbenos a través del panel de ayuda en E-SMART360.
+    </Callout>
+  </Expandable>
+</ExpandableGroup>

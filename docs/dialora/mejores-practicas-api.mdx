@@ -1,0 +1,284 @@
+---
+title: "Mejores Prácticas para la Integración de API y Webhooks"
+description: "Guía completa de mejores prácticas para trabajar con la API de E-SMART360: rate limiting, seguridad en webhooks, optimización de llamadas concurrentes y recomendaciones para mantener tu integración robusta y segura."
+---
+
+<Callout kind="info" title="Sobre esta guía">
+Esta página reúne las mejores prácticas recomendadas para integrar la API de E-SMART360 y gestionar webhooks de forma segura, eficiente y escalable. Aplicar estos principios desde el inicio reduce errores, mejora el rendimiento y protege tus datos y los de tus clientes.
+</Callout>
+
+## Límite de Tasa (Rate Limiting)
+
+La API de E-SMART360 está diseñada para manejar cargas de trabajo variables, pero es importante implementar buenas prácticas para no saturar el webhook con demasiadas solicitudes simultáneas. El rate limiting protege tanto tu infraestructura como la nuestra, garantizando un servicio equitativo para todos los usuarios.
+
+<Callout kind="warning" title="¿Qué ocurre si excedes los límites?">
+Si realizas demasiadas solicitudes en un período corto, la API puede responder con un código de estado `429 (Too Many Requests)`. En ese caso, debes esperar el tiempo indicado en la cabecera `Retry-After` antes de reintentar.
+</Callout>
+
+### Implementar Retardos entre Llamadas
+
+Cuando necesites realizar múltiples solicitudes a la API, introduce un retardo controlado entre cada una. Esto evita picos de tráfico que podrían activar los límites de tasa.
+
+**Ejemplo en JavaScript:**
+
+```javascript
+// Retardo controlado entre solicitudes a la API de E-SMART360
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+async function enviarSolicitudesConRetardo(solicitudes) {
+  for (const solicitud of solicitudes) {
+    try {
+      const respuesta = await fetch(solicitud.url, {
+        method: solicitud.metodo || 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.ESMART360_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(solicitud.datos)
+      });
+      
+      if (!respuesta.ok) {
+        console.error(`Error en solicitud: ${respuesta.status}`);
+      }
+      
+      const resultado = await respuesta.json();
+      console.log('Solicitud procesada:', resultado);
+      
+      // Esperar 500ms antes de la siguiente solicitud
+      await delay(500);
+    } catch (error) {
+      console.error('Error de red:', error);
+    }
+  }
+}
+```
+
+<Callout kind="tip" title="Consejo">
+Ajusta el tiempo de retardo según el volumen de solicitudes. Para operaciones críticas en producción, recomendamos un mínimo de 200-500ms entre llamadas. Para desarrollo o pruebas, 100ms puede ser suficiente.
+</Callout>
+
+### Usar Sistemas de Colas para Alto Volumen
+
+Si manejas un volumen elevado de solicitudes —por ejemplo, durante campañas de llamadas salientes masivas o procesamiento por lotes— implementa un sistema de colas. Las colas permiten gestionar las solicitudes de forma ordenada y dentro de los límites permitidos.
+
+**Ejemplo con cola simple en Node.js:**
+
+```javascript
+class ColaAPIEsmart360 {
+  constructor(intervaloMs = 300) {
+    this.cola = [];
+    this.procesando = false;
+    this.intervaloMs = intervaloMs;
+  }
+
+  agregar(solicitud) {
+    this.cola.push(solicitud);
+    if (!this.procesando) {
+      this.procesar();
+    }
+  }
+
+  async procesar() {
+    this.procesando = true;
+    while (this.cola.length > 0) {
+      const solicitud = this.cola.shift();
+      try {
+        const respuesta = await this.enviar(solicitud);
+        console.log('Éxito:', respuesta);
+      } catch (error) {
+        console.error('Falló:', error);
+        // Reintentar después de un tiempo
+      }
+      await new Promise(resolve => setTimeout(resolve, this.intervaloMs));
+    }
+    this.procesando = false;
+  }
+
+  async enviar(solicitud) {
+    const respuesta = await fetch(solicitud.url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.ESMART360_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(solicitud.datos)
+    });
+    return respuesta.json();
+  }
+}
+
+// Uso
+const cola = new ColaAPIEsmart360(400);
+cola.agregar({ url: 'https://api.esmart360.com/v1/llamada', datos: { /* ... */ } });
+```
+
+### Monitorear el Uso de la API
+
+El panel de control de E-SMART360 ofrece métricas detalladas sobre el uso de la API. Revisa periódicamente:
+
+- **Número de solicitudes** por período de tiempo
+- **Tasa de errores** (`4xx`, `5xx`)
+- **Tiempo de respuesta** promedio
+- **Llamadas concurrentes** activas
+
+<Callout kind="success" title="Dato importante">
+Monitorear tu uso te permite anticiparte a cuellos de botella y ajustar la configuración antes de que afecten a tus agentes de voz o integraciones.
+</Callout>
+
+## Seguridad en Webhooks
+
+La seguridad de tu webhook es fundamental para proteger la integridad de los datos y evitar accesos no autorizados. Sigue estas recomendaciones para mantener tu integración segura.
+
+### Almacenar URLs como Variables de Entorno
+
+Nunca codifiques las URLs de webhook directamente en el código fuente. En su lugar, utiliza variables de entorno para mantenerlas fuera del repositorio.
+
+```bash
+# .env (NUNCA subir a Git)
+ESMART360_WEBHOOK_URL=https://api.esmart360.com/v1/webhook/mi-integracion
+ESMART360_API_KEY=sk_prod_abc123def456
+ESMART360_WEBHOOK_SECRET=whsec_xyz789
+```
+
+```javascript
+// Acceso seguro desde la aplicación
+const webhookURL = process.env.ESMART360_WEBHOOK_URL;
+const apiKey = process.env.ESMART360_API_KEY;
+```
+
+<Callout kind="danger" title="¡Importante!" emoji="🛡️">
+Si expones tus claves de API o URLs de webhook en un repositorio público como GitHub, **revócalas inmediatamente** desde el panel de control de E-SMART360 y genera nuevas credenciales.
+</Callout>
+
+### Usar Conexiones HTTPS Exclusivamente
+
+Todas las comunicaciones con la API de E-SMART360 deben realizarse a través de **HTTPS**. Esto asegura que los datos viajen cifrados y no puedan ser interceptados durante la transmisión.
+
+<Callout kind="alert" title="Verificación de seguridad">
+Antes de poner en producción tu integración, verifica que:
+- Tu servidor webhook tenga un certificado SSL/TLS válido
+- Todas las URLs de callback usen `https://` (nunca `http://`)
+- Los certificados no estén próximos a expirar
+</Callout>
+
+### Monitorear Actividad Inusual
+
+Configura alertas para detectar patrones de actividad sospechosa:
+
+- Picos repentinos de solicitudes desde una misma IP
+- Intentos de acceso con tokens inválidos
+- Solicitudes con payloads malformados
+- Accesos fuera del horario comercial habitual
+
+### Rotar URLs de Webhook Periódicamente
+
+Como buena práctica de seguridad, cambia las URLs de webhook de forma periódica. Esto reduce el riesgo de que una URL comprometida sea utilizada de forma malintencionada.
+
+**Frecuencia recomendada:**
+
+| Tipo de implementación | Frecuencia de rotación |
+|------------------------|------------------------|
+| Producción crítica | Cada 30-60 días |
+| Producción estándar | Cada 90 días |
+| Desarrollo / pruebas | Según sea necesario |
+
+### Validar Firmas de Webhook
+
+E-SMART360 incluye un mecanismo de firma para verificar que las solicitudes entrantes realmente provienen de nuestros servidores. Siempre valida esta firma en tu endpoint.
+
+```javascript
+const crypto = require('crypto');
+
+function validarFirmaWebhook(payload, firmaRecibida, secretoWebhook) {
+  const firmaEsperada = crypto
+    .createHmac('sha256', secretoWebhook)
+    .update(JSON.stringify(payload))
+    .digest('hex');
+  
+  if (firmaRecibida !== firmaEsperada) {
+    throw new Error('Firma de webhook inválida — posible intento de suplantación');
+  }
+  
+  console.log('✅ Firma validada correctamente');
+  return true;
+}
+
+// Uso en el endpoint del webhook
+app.post('/webhook/esmart360', (req, res) => {
+  const firma = req.headers['x-esmart360-signature'];
+  
+  try {
+    validarFirmaWebhook(req.body, firma, process.env.ESMART360_WEBHOOK_SECRET);
+    // Procesar el webhook
+    res.status(200).send('OK');
+  } catch (error) {
+    console.error('Firma inválida:', error.message);
+    res.status(403).send('Acceso denegado');
+  }
+});
+```
+
+<Callout kind="tip" title="Mejora tu postura de seguridad">
+Además de firmas, considera implementar listas blancas de IPs, autenticación de dos factores para el panel de administración, y registros de auditoría para todas las operaciones sensibles.
+</Callout>
+
+## Reintentos y Manejo de Errores
+
+Incluso con las mejores prácticas, pueden ocurrir errores. Prepárate para manejar fallos de forma elegante.
+
+### Estrategia de Reintentos con Backoff Exponencial
+
+Cuando una solicitud falla, no reintentes de inmediato. Usa un backoff exponencial que aumente el tiempo de espera progresivamente.
+
+```javascript
+async function solicitudConReintento(url, opciones, maxReintentos = 5) {
+  for (let intento = 1; intento <= maxReintentos; intento++) {
+    try {
+      const respuesta = await fetch(url, opciones);
+      if (respuesta.ok) return await respuesta.json();
+      
+      if (respuesta.status === 429) {
+        // Rate limit alcanzado
+        const espera = Math.pow(2, intento) * 1000; // 2s, 4s, 8s, 16s, 32s
+        console.log(`Rate limit alcanzado. Esperando ${espera}ms...`);
+        await new Promise(r => setTimeout(r, espera));
+        continue;
+      }
+      
+      // Otros errores HTTP
+      throw new Error(`HTTP ${respuesta.status}: ${respuesta.statusText}`);
+    } catch (error) {
+      if (intento === maxReintentos) throw error;
+      const espera = Math.pow(2, intento) * 500;
+      console.log(`Intento ${intento} falló. Reintentando en ${espera}ms...`);
+      await new Promise(r => setTimeout(r, espera));
+    }
+  }
+}
+```
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+<Expandable title="¿Cuál es el límite de tasa predeterminado de la API?" defaultOpen="true">
+El límite de tasa depende del plan contratado. Generalmente, los planes estándar permiten hasta 60 solicitudes por minuto. Los planes empresariales tienen límites más altos personalizables. Consulta tu panel de control en E-SMART360 para ver el límite específico de tu cuenta.
+</Expandable>
+
+<Expandable title="¿Puedo probar la integración en un entorno de pruebas antes de producción?">
+Sí. E-SMART360 ofrece un entorno sandbox con webhooks de prueba y claves de API separadas. Puedes activarlo desde la sección de configuración de desarrollador en el panel de control.
+</Expandable>
+
+<Expandable title="¿Qué hago si mi webhook deja de recibir eventos?">
+Primero, verifica que tu endpoint esté accesible (sin firewalls bloqueando la IP de E-SMART360). Luego, revisa el panel de control para ver si hay eventos fallidos en el registro de actividad. Finalmente, comprueba que tu URL de webhook sigue siendo válida y no ha expirado.
+</Expandable>
+
+<Expandable title="¿Cómo sé si alguien está intentando usar mi webhook sin autorización?">
+Activa las alertas de seguridad desde el panel de control de E-SMART360. Recibirás notificaciones por correo electrónico cuando se detecten actividades inusuales, como múltiples intentos fallidos de validación de firma o picos de tráfico anómalos.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda para optimizar tu integración?">
+<Callout kind="info" title="Soporte técnico">
+Si tienes dudas sobre la implementación de estas mejores prácticas o necesitas ayuda para escalar tu integración, contacta a nuestro equipo de soporte desde el panel de control o a través de los canales habilitados para tu plan.
+</Callout>
+</Expandable>
+</ExpandableGroup>

@@ -1,0 +1,264 @@
+---
+title: "Cómo escribir un prompt de alta calidad para tu agente de voz IA"
+description: "Aprende a redactar prompts efectivos para tu agente de voz con E-SMART360. Estructura, componentes clave, ejemplos prácticos y mejores prácticas para lograr interacciones naturales y precisas."
+---
+
+<Callout kind="info">
+El prompt de tu agente de voz es el corazón de su personalidad y comportamiento. Un prompt bien construido marca la diferencia entre una conversación fluida y una experiencia frustrante para tus clientes.
+</Callout>
+
+Tu agente de voz con IA necesita instrucciones claras y precisas para comportarse exactamente como deseas en cada llamada. **E-SMART360 genera automáticamente un prompt base para cada agente que creas**, basado en su propósito y configuración inicial. Sin embargo, para obtener los mejores resultados, es altamente recomendable personalizar ese prompt siguiendo las guías que presentamos a continuación.
+
+## Estructura del prompt
+
+El framework de prompts de E-SMART360 sigue una estructura probada que te ayuda a definir:
+
+- **El rol y la personalidad** del agente
+- **Cómo debe comportarse** en diferentes situaciones
+- **Qué tareas debe realizar** durante la conversación
+- **Cómo mantenerse consistente** en tono y precisión
+
+<Callout kind="tip">
+**Consejo**: Piensa en el prompt como el guion de un actor. Mientras más detalles le des sobre su personaje, el contexto y las reglas, mejor será su actuación en cada llamada.
+</Callout>
+
+### Componentes del prompt
+
+Cada prompt en E-SMART360 se compone de las siguientes secciones clave:
+
+<Steps>
+<Step title="Perfil del agente de IA">
+Identifica al agente con su nombre y el nombre de la empresa que representa. Esta sección establece la identidad básica.
+
+<CodeGroup>
+```prompt
+PERFIL DEL AGENTE DE IA: "Alexa" para "Inmobiliaria Horizonte"
+```
+</CodeGroup>
+</Step>
+
+<Step title="Definición del personaje">
+Describe quién es el agente, su experiencia, tono de voz y estilo de comunicación. Sé específico sobre su personalidad.
+
+<CodeGroup>
+```prompt
+DEFINICIÓN DEL PERSONAJE:
+- Nombre: Alexa
+- Rol: Asistente de ventas y atención al cliente
+- Tono: Amable, profesional y proactivo
+- Experiencia: 5 años en el sector inmobiliario
+- Estilo: Explicaciones claras, lenguaje accesible, evita jerga técnica
+```
+</CodeGroup>
+</Step>
+
+<Step title="Modo de interacción">
+Define cómo debe iniciar y mantener la conversación, incluyendo el manejo de interrupciones, pausas y el flujo natural del diálogo.
+
+<CodeGroup>
+```prompt
+MODO DE INTERACCIÓN:
+- Inicia siempre saludando cordialmente y presentándose
+- Permite que el cliente hable sin interrumpir
+- Si el cliente se desvía del tema, retoma el control amablemente
+- Usa pausas naturales para que el cliente pueda responder
+- Confirma información importante antes de continuar
+```
+</CodeGroup>
+</Step>
+
+<Step title="Instrucciones operativas centrales">
+Establece las reglas fundamentales de operación. Aquí defines el propósito principal del agente y los límites de su actuación.
+
+<CodeGroup>
+```prompt
+INSTRUCCIONES OPERATIVAS CENTRALES PARA "Alexa":
+1. Tu objetivo principal es agendar citas para visitar propiedades
+2. Solo puedes proporcionar información sobre propiedades listadas en el sistema
+3. Nunca inventes precios, disponibilidad o características de propiedades
+4. Si no sabes la respuesta, di "No tengo esa información, pero puedo transferirte con un asesor"
+5. Al final de cada llamada, pregunta si hay algo más en lo que puedas ayudar
+```
+</CodeGroup>
+</Step>
+
+<Step title="Logro de objetivos y extracción de información">
+Especifica cómo debe trabajar el agente para cumplir sus metas y qué datos debe capturar de cada interacción.
+
+<CodeGroup>
+```prompt
+CUMPLIMIENTO DE OBJETIVOS Y EXTRACCIÓN DE INFORMACIÓN:
+Objetivos de la llamada:
+- goals: ["Agendar cita de visita", "Calificar lead", "Capturar información de contacto"]
+
+Información a extraer:
+- extractInfo: ["nombre_completo", "telefono", "email", "tipo_propiedad_interes", "presupuesto_aproximado", "horario_preferido_visita"]
+
+Instrucciones:
+- Durante la conversación, extrae cada campo de forma natural
+- No hagas todas las preguntas de golpe; distribúyelas a lo largo de la charla
+- Si el cliente se resiste a dar un dato, continúa sin presionar
+```
+</CodeGroup>
+</Step>
+
+<Step title="Integridad del personaje">
+Define cómo el agente debe mantenerse fiel a su personalidad incluso en situaciones difíciles, como objeciones, quejas o llamadas largas.
+
+<CodeGroup>
+```prompt
+INTEGRIDAD DEL PERSONAJE:
+- Mantén un tono positivo incluso si el cliente está frustrado
+- No te salgas de tu rol de asistente inmobiliario
+- Si el cliente insiste en temas fuera de tu alcance, ofrece transferir a un humano
+- Siempre agradece al cliente por su tiempo al finalizar la llamada
+- Respeta los horarios de contacto establecidos por el cliente
+```
+</CodeGroup>
+</Step>
+</Steps>
+
+## Dónde configurar el prompt
+
+<Steps>
+<Step title="Accede al panel de Agentes">
+Ve a la pestaña **"Agentes"** en el panel de control de E-SMART360.
+</Step>
+
+<Step title="Selecciona tu agente">
+Elige el agente que deseas editar de la lista disponible. Verás su configuración actual y estadísticas de uso.
+</Step>
+
+<Step title="Edita el prompt">
+En el panel lateral izquierdo, haz clic en la sección **"Prompt del agente"**. Allí encontrarás un prompt autogenerado basado en el propósito del agente. Puedes editarlo y mejorarlo directamente.
+</Step>
+
+<Step title="Guarda y prueba">
+Una vez que hayas realizado los cambios, guarda el prompt. Realiza una llamada de prueba para verificar que el comportamiento sea el esperado. Ajusta según sea necesario.
+</Step>
+</Steps>
+
+<Callout kind="success">
+**Dato importante**: Cada vez que modifies el prompt, E-SMART360 regenera la respuesta del agente usando las nuevas instrucciones en la siguiente llamada. No necesitas reiniciar ni reconfigurar nada más.
+</Callout>
+
+## Ejemplo completo de prompt
+
+A continuación, un ejemplo integral de un prompt para un agente de atención al cliente en el sector de servicios profesionales:
+
+<CodeGroup>
+```prompt
+PERFIL DEL AGENTE DE IA: "Sofia" para "Bufete Legal Asesores"
+
+DEFINICIÓN DEL PERSONAJE:
+- Nombre: Sofia
+- Rol: Asistente de recepción y calendarización
+- Tono: Profesional, empático y eficiente
+- Especialidad: Programación de consultas legales iniciales
+- Idioma: Español neutro (adaptable al dialecto del cliente)
+
+MODO DE INTERACCIÓN:
+- Saludo profesional con presentación completa
+- Escucha activa, permitiendo pausas para que el cliente exprese su consulta
+- Validación empática de las necesidades del cliente antes de ofrecer soluciones
+- Cierre con resumen de lo acordado y confirmación de siguiente paso
+
+INSTRUCCIONES OPERATIVAS CENTRALES PARA "Sofia":
+1. Tu función principal es agendar consultas legales iniciales de 30 minutos
+2. No proporciones asesoría legal bajo ninguna circunstancia
+3. Si el cliente pregunta sobre casos específicos, di: "Esa es una excelente pregunta que nuestro abogado podrá responder en la consulta"
+4. Confirma nombre completo, teléfono, correo electrónico y motivo breve de la consulta
+5. Ofrece los horarios disponibles más próximos (lunes a viernes de 9:00 a 18:00)
+6. Envía un correo de confirmación con los detalles de la cita
+
+CUMPLIMIENTO DE OBJETIVOS Y EXTRACCIÓN DE INFORMACIÓN:
+Objetivos: ["Agendar consulta inicial", "Calificar urgencia del caso", "Recolectar datos de contacto"]
+Extraer: ["nombre_completo", "telefono", "email", "motivo_consulta", "urgencia"]
+
+INTEGRIDAD DEL PERSONAJE:
+- Mantén la confidencialidad: no discutas casos específicos
+- Si el cliente está emocional, muestra empatía sin comprometer el servicio
+- No prometas resultados legales
+- Agradece la confianza depositada en el bufete al finalizar
+```
+</CodeGroup>
+
+## Mejores prácticas para prompts efectivos
+
+<Tabs>
+<Tab title="Especificidad">
+<Callout kind="tip">
+**Sé específico, no genérico.** En lugar de "sé amable", define cómo se manifiesta esa amabilidad: "saluda siempre con un tono cálido, usa el nombre del cliente, pregunta cómo está antes de ir al grano".
+</Callout>
+</Tab>
+
+<Tab title="Límites claros">
+<Callout kind="warning">
+**Define límites explícitos.** Indica claramente lo que el agente NO debe hacer: "nunca inventes información", "no transfieras sin permiso del cliente", "no compartas datos de otros clientes".
+</Callout>
+</Tab>
+
+<Tab title="Consistencia">
+<Callout kind="info">
+**Mantén consistencia en el tono.** Revisa que todas las secciones del prompt reflejen la misma personalidad. Un agente no puede ser formal en una sección y coloquial en otra.
+</Callout>
+</Tab>
+
+<Tab title="Iteración">
+<Callout kind="success">
+**Itera basado en datos.** Revisa las transcripciones de las primeras llamadas y ajusta el prompt para corregir comportamientos no deseados. El prompt perfecto se construye con el tiempo.
+</Callout>
+</Tab>
+</Tabs>
+
+## Errores comunes al escribir prompts
+
+<ExpandableGroup>
+<Expandable title="Prompt demasiado corto" default-open="true">
+Un prompt de una o dos líneas no le da suficiente contexto al agente. El resultado será respuestas genéricas e impredecibles. **Solución**: Dedica al menos 15-20 líneas a definir cada sección del prompt.
+</Expandable>
+
+<Expandable title="Instrucciones contradictorias">
+Decir "sé muy breve" y luego pedir "explica cada detalle en profundidad" confunde al agente. **Solución**: Revisa que todas las instrucciones sean coherentes entre sí y con el objetivo de la llamada.
+</Expandable>
+
+<Expandable title="Falta de ejemplos concretos">
+Decir "maneja objeciones adecuadamente" sin dar ejemplos no es suficiente. **Solución**: Incluye frases textuales de ejemplo: "Si el cliente dice 'es muy caro', responde con 'Entiendo tu preocupación. ¿Te gustaría conocer nuestras opciones de financiamiento?'".
+</Expandable>
+
+<Expandable title="Ignorar el tono emocional">
+Un prompt puramente transaccional pierde oportunidades de conexión. **Solución**: Incluye instrucciones sobre cómo manejar emociones: "Si el cliente suena frustrado, primero valida su sentimiento antes de ofrecer una solución".
+</Expandable>
+
+<Expandable title="No actualizar el prompt periódicamente">
+<Callout kind="info">
+Los patrones de conversación cambian, los clientes hacen preguntas nuevas, y tu negocio evoluciona. **Recomendación**: Revisa y actualiza el prompt de tus agentes al menos una vez al mes, basándote en las transcripciones de las llamadas recientes.
+</Callout>
+</Expandable>
+</ExpandableGroup>
+
+## Preguntas frecuentes
+
+<ExpandableGroup>
+<Expandable title="¿Cada cuánto debo actualizar el prompt de mi agente?" default-open="true">
+Recomendamos revisar el prompt mensualmente o después de cualquier cambio significativo en tu negocio (nuevos servicios, cambios de horario, promociones, etc.). También es buena práctica ajustarlo si notas patrones de error recurrentes en las transcripciones.
+</Expandable>
+
+<Expandable title="¿Puedo tener prompts diferentes para distintos agentes?">
+Sí. Cada agente en E-SMART360 tiene su propio prompt independiente. Puedes tener un agente con tono formal para ventas B2B y otro con tono relajado para soporte técnico, cada uno con su personalidad y reglas específicas.
+</Expandable>
+
+<Expandable title="¿El agente puede aprender de llamadas anteriores?">
+Actualmente, el agente no aprende automáticamente de llamadas previas. El comportamiento se basa exclusivamente en el prompt activo y la base de conocimiento configurada. Por eso es importante revisar las transcripciones periódicamente y ajustar el prompt manualmente para mejorar el rendimiento.
+</Expandable>
+
+<Expandable title="¿Qué hago si el agente no sigue correctamente las instrucciones del prompt?">
+Primero, verifica que el prompt esté correctamente guardado en la configuración del agente. Luego, revisa si las instrucciones son claras y no contradictorias. Prueba con una llamada de ejemplo y ajusta el prompt según el comportamiento observado. Si el problema persiste, contacta a nuestro equipo de soporte para recibir asistencia personalizada.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda con la configuración de tu agente de voz?">
+<Callout kind="info">
+Si tienes dudas sobre cómo estructurar el prompt de tu agente o necesitas ejemplos más específicos para tu industria, nuestro equipo de soporte está listo para ayudarte. Escríbenos y te guiaremos paso a paso.
+</Callout>
+</Expandable>
+</ExpandableGroup>

@@ -1,0 +1,124 @@
+---
+title: "Cómo Encontrar la URL de tu Webhook en E-SMART360"
+description: "Guía paso a paso para localizar la URL única del webhook de tu agente de voz en E-SMART360. Aprende a acceder a la configuración avanzada, copiar el endpoint de webhook y mantenerlo seguro."
+---
+
+import { Callout } from 'nextra/components'
+import { Steps, Step } from 'nextra/components'
+import { CodeGroup } from 'nextra/components'
+import { Expandable, ExpandableGroup } from 'nextra/components'
+import { Image } from 'nextra/components'
+
+<Callout kind="info" emoji="🔗">
+Cada agente de voz en E-SMART360 genera automáticamente una URL de webhook única en el momento de su creación. Esta URL es el punto de entrada para que sistemas externos se comuniquen con tu agente y disparen llamadas de forma programática.
+</Callout>
+
+## ¿Qué es la URL del Webhook?
+
+La URL del webhook es un endpoint único que E-SMART360 asigna a cada agente de voz. Cuando envías una solicitud POST a esta URL con los datos de un contacto, el sistema inicia automáticamente una llamada saliente desde ese agente hacia el número indicado.
+
+<Callout kind="tip" emoji="💡">
+Piensa en la URL del webhook como la **dirección directa** de tu agente de voz. Es lo que necesitas compartir con tus sistemas de automatización, CRM o plataformas como Zapier y Make para que puedan disparar llamadas desde tu agente.
+</Callout>
+
+## Pasos para Encontrar tu URL de Webhook
+
+Sigue estos pasos para localizar la URL del webhook de tu agente en el panel de control de E-SMART360.
+
+<Steps>
+  <Step title="Navega a tu Agente" icon="user-circle">
+    Inicia sesión en tu panel de control de E-SMART360 y selecciona el agente de voz para el que deseas encontrar la URL del webhook. Si tienes varios agentes, asegúrate de elegir el correcto, ya que cada agente tiene una URL única.
+  </Step>
+
+  <Step title="Accede a la Configuración Avanzada" icon="cog">
+    Dentro de la página de configuración del agente, busca y haz clic en la pestaña **"Configuración Avanzada"** (Advanced Settings). Esta sección agrupa las opciones técnicas del agente, incluidos los webhooks, la configuración de llamadas y las integraciones.
+  </Step>
+
+  <Step title="Localiza la Gestión de Llamadas" icon="phone">
+    Desplázate dentro de la configuración avanzada hasta encontrar la sección **"Gestión de Llamadas"** (Call Management). Aquí es donde se centralizan todas las opciones relacionadas con el comportamiento de las llamadas entrantes y salientes de tu agente.
+  </Step>
+
+  <Step title="Copia tu URL de Webhook" icon="clipboard-copy">
+    La URL única del webhook de tu agente se mostrará en esta sección. Cópiala y guárdala en un lugar seguro. La URL tendrá un formato similar al siguiente:
+  </Step>
+</Steps>
+
+## Formato de la URL del Webhook
+
+La URL del webhook sigue esta estructura:
+
+```text
+https://api.e-smart360.com/webhooks/agents/webh_7ejvxjh9lq6bdgwo/trigger
+```
+
+<Callout kind="warning" emoji="🔒">
+**Importante:** Mantén esta URL segura. Cualquier persona o sistema que tenga acceso a esta URL puede disparar llamadas desde tu agente de voz. Trátala como una credencial sensible, al igual que una clave de API o una contraseña.
+</Callout>
+
+### Segmentos de la URL
+
+| Segmento | Descripción |
+|----------|-------------|
+| `https://api.e-smart360.com/webhooks/agents/` | Ruta base estándar para todos los webhooks de agentes |
+| `webh_7ejvxjh9lq6bdgwo` | Identificador único de tu agente (ejemplo ilustrativo) |
+| `/trigger` | Endpoint que dispara la llamada saliente |
+
+<Callout kind="tip" emoji="🔄">
+Si necesitas regenerar la URL del webhook por motivos de seguridad, puedes hacerlo desde la misma sección de **Gestión de Llamadas** en la configuración avanzada. Ten en cuenta que al regenerarla, la URL anterior dejará de funcionar inmediatamente, por lo que deberás actualizar cualquier integración que la esté utilizando.
+</Callout>
+
+## Usos Comunes de la URL del Webhook
+
+Una vez que tienes tu URL de webhook, puedes utilizarla en múltiples escenarios:
+
+<Callout kind="success" emoji="🚀">
+**Integraciones principales:**
+</Callout>
+
+- **Automatización con Zapier**: Conecta tu agente con cientos de aplicaciones sin escribir código. Cada vez que ocurra un evento en una app conectada, Zapier puede enviar una solicitud a tu URL de webhook para iniciar una llamada.
+- **Flujos en Make (antes Integromat)**: Crea automatizaciones visuales que integren tu agente de voz con CRMs, bases de datos, formularios y más.
+- **Solicitudes cURL directas**: Para pruebas rápidas o integraciones personalizadas, puedes enviar una solicitud POST directamente desde la terminal.
+- **Conexión con sistemas propietarios**: Si tu empresa tiene un CRM, ERP o plataforma interna, puedes programar llamadas HTTP desde tu backend hacia la URL del webhook.
+
+<Callout kind="info" emoji="📚">
+Para ver ejemplos completos de cómo estructurar el payload JSON que debes enviar a esta URL, consulta la guía de [Campos Esenciales de Datos para el Payload del Webhook](/recursos/campos-esenciales-webhook).
+</Callout>
+
+## Consideraciones de Seguridad
+
+La seguridad de tu URL de webhook es fundamental para evitar el uso no autorizado de tu agente de voz.
+
+- **Nunca compartas la URL públicamente**: No la incluyas en repositorios públicos de código, documentación abierta o foros.
+- **Usa variables de entorno**: Si estás desarrollando una integración, almacena la URL en variables de entorno o en un gestor de secretos.
+- **Regenera la URL si hay sospechas de compromiso**: Si crees que la URL ha sido expuesta, regenérala inmediatamente desde el panel de control.
+- **Monitorea el uso**: Revisa periódicamente el registro de llamadas de tu agente para identificar actividad inusual.
+
+<Callout kind="danger" emoji="⚠️">
+Si detectas llamadas que no reconoces o un volumen de actividad inusual, es posible que tu URL de webhook haya sido comprometida. Regenera la URL de inmediato y revisa los registros de actividad para identificar cualquier uso no autorizado.
+</Callout>
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+  <Expandable title="¿Puedo tener múltiples URLs de webhook para un mismo agente?" default-open="true">
+    No, cada agente de E-SMART360 tiene una **única URL de webhook** que se genera automáticamente. Sin embargo, puedes utilizar esa misma URL en múltiples integraciones y sistemas. Todos los sistemas que envíen solicitudes a esa URL dispararán llamadas desde el mismo agente. Si necesitas direcciones diferentes, considera crear agentes adicionales para distintos propósitos.
+  </Expandable>
+
+  <Expandable title="¿La URL del webhook cambia si modifico la configuración del agente?">
+    No, la URL del webhook **permanece estable** incluso si realizas cambios en la configuración del agente, como modificar el prompt, ajustar la voz o cambiar los ajustes de llamada. La URL solo cambia si tú decides regenerarla explícitamente desde la configuración avanzada. Esto garantiza que tus integraciones sigan funcionando sin interrupciones después de hacer ajustes en el agente.
+  </Expandable>
+
+  <Expandable title="¿Qué sucede si elimino el agente y creo uno nuevo?">
+    Si eliminas un agente y creates uno nuevo, el nuevo agente recibirá una **URL de webhook completamente diferente**. La URL anterior quedará obsoleta y cualquier solicitud enviada a ella será rechazada. Por esta razón, es importante que actualices todas tus integraciones con la nueva URL después de crear el agente de reemplazo.
+  </Expandable>
+
+  <Expandable title="¿Puedo probar mi webhook sin hacer una llamada real?">
+    Sí, E-SMART360 te permite probar la conectividad de tu webhook enviando solicitudes de prueba desde el panel de control o mediante herramientas como cURL y Postman. Sin embargo, ten en cuenta que una solicitud exitosa a la URL del webhook **iniciará una llamada real** si los datos del contacto son válidos. Para pruebas sin consumo de créditos, te recomendamos usar el entorno de pruebas o números de prueba que proporciona el sistema.
+  </Expandable>
+
+  <Expandable title="¿Necesitas ayuda para configurar tu webhook?">
+    <Callout kind="info" emoji="🎧">
+      Si tienes problemas para localizar la URL de tu webhook o necesitas asistencia para integrarla con tus sistemas, el equipo de soporte de E-SMART360 está disponible para ayudarte. Contáctanos a través del panel de control o escribiendo a soporte@e-smart360.com para recibir asistencia personalizada.
+    </Callout>
+  </Expandable>
+</ExpandableGroup>

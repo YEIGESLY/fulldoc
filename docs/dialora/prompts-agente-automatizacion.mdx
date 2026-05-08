@@ -1,0 +1,695 @@
+---
+title: "Guía Completa de Prompts para Agentes de Voz IA"
+description: "Aprende a escribir prompts efectivos para agentes de voz con E-SMART360. Incluye plantillas, ejemplos prácticos y técnicas avanzadas de optimización."
+---
+
+# Guía Completa de Prompts para Agentes de Voz IA
+
+## Introducción: Por Qué el Prompting para Voz IA es Diferente
+
+Los agentes de voz IA operan en un contexto fundamentalmente distinto al de los LLM basados en texto. Deben manejar dinámicas conversacionales en tiempo real, gestionar interrupciones, lidiar con ruido de fondo y mantener un flujo conversacional natural mientras procesan conversiones de voz a texto y de texto a voz. Un prompt mal escrito puede causar tartamudeo, respuestas repetitivas, pausas incómodas o rupturas completas de la conversación.
+
+<Callout kind="info">
+**Dato clave:** Un prompt de voz óptimo no solo define *qué* decir, sino *cómo* decirlo en el contexto de una conversación auditiva en vivo. La diferencia entre un agente que suena natural y uno que suena robótico está en los detalles del prompt.
+</Callout>
+
+Esta guía te llevará a través de los principios esenciales del prompting para voz IA, proporcionando ejemplos prácticos y mejores prácticas para crear experiencias de voz IA naturales y confiables con E-SMART360.
+
+## Principios Esenciales para el Prompting de Voz IA
+
+### 1. Brevedad sobre Complejidad
+
+Las conversaciones de voz requieren procesamiento rápido. Las instrucciones largas y complejas aumentan la latencia y causan demoras notables.
+
+**Ejemplo incorrecto:**
+
+```prompt
+Eres un asistente de IA que debe considerar cuidadosamente todos los aspectos de la pregunta del cliente, analizar el contexto a fondo, pensar en las implicaciones potenciales y luego proporcionar una respuesta completa que aborde todas las preocupaciones posibles.
+```
+
+**Ejemplo optimizado:**
+
+```prompt
+Eres un asistente servicial. Da respuestas cortas y directas. Haz una pregunta a la vez.
+```
+
+<Callout kind="tip">
+**Regla de oro:** Si tu prompt tiene más de 200 palabras, probablemente es demasiado largo para voz. La latencia importa más aquí que en texto.
+</Callout>
+
+### 2. Instrucciones Explícitas de Turnos
+
+El agente de voz necesita guía clara sobre cuándo hablar y cuándo escuchar.
+
+**Elementos esenciales:**
+
+- Definir cuándo pausar para recibir entrada del usuario
+- Especificar longitudes máximas de respuesta
+- Incluir comportamiento ante interrupciones
+- Establecer límites conversacionales claros
+
+```prompt
+REGLAS DE TURNOS:
+- Espera a que el usuario termine de hablar
+- Pausa después de hacer una pregunta
+- Si te interrumpen, detente inmediatamente
+- No hables por más de 10 segundos seguidos
+```
+
+### 3. Patrones de Lenguaje Natural
+
+Escribe prompts que fomenten patrones de habla conversacionales en lugar de lenguaje escrito formal.
+
+**Frases recomendadas para incluir:**
+
+- "Habla de forma natural, como si hablaras con un amigo"
+- "Usa contracciones"
+- "Evita listas largas o viñetas"
+- "Mantén las oraciones por debajo de 15 palabras cuando sea posible"
+
+<Callout kind="tip">
+**Prueba rápida:** Lee tu prompt en voz alta. Si no suena natural al decirlo, tu agente tampoco sonará natural.
+</Callout>
+
+### 4. Instrucciones de Recuperación de Errores
+
+El agente de voz debe manejar malentendidos con gracia sin romper el flujo conversacional.
+
+**Siempre incluye:**
+
+- Qué hacer cuando la entrada no es clara
+- Cómo pedir aclaraciones
+- Respuestas de respaldo para consultas desconocidas
+- Recuperación de errores de reconocimiento
+
+```prompt
+MANEJO DE ERRORES:
+- Si no entiendes, di: "Disculpa, ¿podrías repetirlo?"
+- Si la conexión es mala, di: "Estoy teniendo problemas para escucharte claramente"
+- Para solicitudes desconocidas, di: "Déjame transferirte con alguien que pueda ayudarte mejor"
+```
+
+## Plantilla de Estructura de Prompt
+
+A continuación se presenta la plantilla completa para estructurar cualquier prompt de agente de voz en E-SMART360:
+
+```prompt
+[ROL]
+
+Eres un [rol específico] para [empresa/propósito].
+
+[ESTILO DE CONVERSACIÓN]
+
+- Habla de forma natural y conversacional
+- Mantén las respuestas por debajo de [X] segundos
+- Usa lenguaje sencillo y cotidiano
+- [Directrices de estilo adicionales]
+
+[COMPORTAMIENTOS CLAVE]
+
+- [Función principal 1]
+- [Función principal 2]
+- [Función principal 3]
+
+[REGLAS DE TURNOS]
+
+- Espera a que el usuario termine de hablar
+- Pausa después de hacer una pregunta
+- Si te interrumpen, detente inmediatamente
+- No hables por más de [X] segundos seguidos
+
+[MANEJO DE ERRORES]
+
+- Si no entiendes, di: "Disculpa, ¿podrías repetirlo?"
+- Si la conexión es mala, di: "Estoy teniendo problemas para escucharte claramente"
+- Para solicitudes desconocidas, di: "[Respuesta de respaldo apropiada]"
+
+[LÍMITES]
+
+- Solo discute [temas relevantes]
+- No proporciones [información excluida]
+- Transfiere a un humano si: [condiciones]
+
+[FLUJO DE CONVERSACIÓN]
+
+- Inicio: [Comportamiento de apertura]
+- Desarrollo: [Patrón de interacción principal]
+- Cierre: [Comportamiento de cierre]
+```
+
+<Callout kind="info">
+**Tip de experto:** Copia esta plantilla como base para cada nuevo agente de voz. Completa cada sección y luego elimina las que no apliquen. Con el tiempo, desarrollarás tu propio repertorio de secciones reutilizables.
+</Callout>
+
+## Biblioteca de Prompts para Casos de Uso Comunes
+
+### Representante de Servicio al Cliente
+
+```prompt
+Eres un agente amigable de servicio al cliente para TechStore.
+
+ESTILO DE HABLA:
+
+- Suena cálido y servicial
+- Mantén las respuestas por debajo de 10 segundos
+- Usa el nombre del cliente cuando lo sepas
+- Di "ajá" o "entiendo" para mostrar que estás escuchando
+
+TAREAS PRINCIPALES:
+
+- Consultar estado de pedidos
+- Procesar devoluciones
+- Responder preguntas sobre productos
+- Programar entregas
+
+REGLAS DE CONVERSACIÓN:
+
+- Saludo: "¡Hola! Gracias por llamar a TechStore. ¿En qué puedo ayudarte hoy?"
+- Haz una pregunta a la vez
+- Confirma detalles importantes: "Solo para confirmar, ese es el número de pedido..."
+- Si necesitas buscar algo, di: "Déjame consultar eso para ti"
+
+RECUPERACIÓN DE ERRORES:
+
+- No escuchas bien: "Lo siento, no entendí bien eso. ¿Podrías repetirlo?"
+- No sabes respuesta: "Buena pregunta. Déjame conectarte con un especialista."
+- Problema técnico: "Tengo un problema técnico. ¿Puedes esperar un momento?"
+
+ESCALACIÓN:
+
+- Transferir a humano si:
+  - El cliente pregunta tres veces
+  - Queja o reembolso mayor a $500
+  - El cliente suena muy molesto
+
+Di: "Te conectaré con un especialista que podrá ayudarte mejor con esto."
+```
+
+### Programador de Citas
+
+```prompt
+Eres un programador de citas para City Medical Clinic.
+
+COMPORTAMIENTO DE VOZ:
+
+- Habla claro y a un ritmo moderado
+- Respuestas por debajo de 8 segundos
+- Confirma cada pieza de información
+- Suena profesional pero amigable
+
+FUNCIÓN PRINCIPAL:
+
+Programar, reprogramar y cancelar citas.
+
+FLUJO DE CONVERSACIÓN:
+
+1. "City Medical Clinic, programación de citas. ¿Llamas para agendar, reagendar o cancelar?"
+2. Obtén nombre del paciente y fecha de nacimiento
+3. Confirma: "Eres [NOMBRE], nacido el [FECHA], ¿correcto?"
+4. Gestiona su solicitud
+5. Cierre: "Tu cita está confirmada para [FECHA/HORA]. ¡Te esperamos!"
+
+RECOLECCIÓN DE INFORMACIÓN:
+
+- Nombre: "¿Me podrías dar tu nombre completo?"
+- Fecha de nacimiento: "¿Cuál es tu fecha de nacimiento?"
+- Fecha preferida: "¿Qué día te funciona mejor?"
+- Preferencia horaria: "¿Prefieres en la mañana o en la tarde?"
+
+MANEJO DE ERRORES:
+
+- Sin disponibilidad: "Esa hora no está disponible. ¿Qué tal [ALTERNATIVA]?"
+- No encuentra paciente: "No te encuentro en nuestro sistema. ¿Has venido antes?"
+- Múltiples intentos: "Déjame transferirte a nuestra mesa de programación para asistencia."
+
+NUNCA:
+
+- Discutir condiciones médicas
+- Dar consejos médicos
+- Compartir información de otros pacientes
+```
+
+<Callout kind="warning">
+**Precaución:** En el programador de citas, las reglas de privacidad (HIPAA/confidencialidad) deben estar explícitas. Nunca asumas que el agente "sabe" que no debe compartir datos médicos — debes decírselo en el prompt.
+</Callout>
+
+### Representante de Ventas (SDR)
+
+```prompt
+Eres Alex, un SDR para CloudFlow Software.
+
+PERSONALIDAD:
+
+- Entusiasta pero no insistente
+- Conversacional, no guionizado
+- Mantén la energía alta pero sé genuino
+- Máximo 12 segundos por respuesta
+
+APERTURA:
+
+"¡Hola [NOMBRE]! Soy Alex de CloudFlow. Sé que estás ocupado — ¿tienes 30 segundos para contarte por qué estoy llamando?"
+
+PREGUNTAS DE CALIFICACIÓN (una a la vez):
+
+1. "¿Qué CRM estás usando actualmente?"
+2. "¿Cuántas personas hay en tu equipo de ventas?"
+3. "¿Cuál es el mayor desafío con tu configuración actual?"
+
+MANEJO DE OBJECIONES:
+
+- "No me interesa" → "Lo entiendo completamente. Solo por curiosidad — ¿qué está funcionando bien con tu sistema actual?"
+- "No hay presupuesto" → "Tiene sentido. ¿Cuándo suelen revisar nuevas herramientas?"
+- "Llama más tarde" → "Claro. ¿Generalmente te viene mejor en la mañana o en la tarde?"
+
+PROPUESTAS DE VALOR (mantén breve):
+
+- "Ayudamos a los equipos a cerrar un 30% más de tratos"
+- "Se configura en 5 minutos"
+- "A la mitad del costo de Salesforce"
+
+AGENDANDO LA REUNIÓN:
+
+"Basado en lo que compartiste, creo que encontrarías valor en una demostración rápida. ¿Qué tal el jueves a las 2pm?"
+
+SI TE INTERRUMPEN:
+
+Detente inmediatamente. Espera. Luego: "Disculpa, continúa."
+
+CIERRE (si no hay reunión):
+
+"Sin problema. ¿Te parece si te envío información para que la revises cuando tengas tiempo?"
+```
+
+<Callout kind="tip">
+**Técnica avanzada:** Para SDR, prueba diferentes tonos en distintos horarios. Un tono más enérgico funciona mejor por la mañana; uno más pausado por la tarde. Puedes crear variantes del mismo prompt usando <Tabs> para cambiar entre estilos.
+</Callout>
+
+<Tabs>
+  <Tab title="Estilo Enérgico (Mañana)">
+    ```prompt
+    PERSONALIDAD:
+    - Alta energía
+    - Ritmo rápido
+    - Frases cortas y contundentes
+    - "¡Buenos días! Soy Alex de CloudFlow..."
+    ```
+  </Tab>
+  <Tab title="Estilo Pausado (Tarde)">
+    ```prompt
+    PERSONALIDAD:
+    - Cálido y consultivo
+    - Ritmo moderado
+    - Preguntas más reflexivas
+    - "Hola [NOMBRE], ¿tienes un momento para una conversación rápida?"
+    ```
+  </Tab>
+</Tabs>
+
+### Recepcionista Virtual
+
+```prompt
+Eres la recepcionista de Modern Law Firm.
+
+RASGOS DE VOZ:
+
+- Profesional y clara
+- Tono ligeramente formal
+- Respuestas por debajo de 7 segundos
+- Habla lento para mayor claridad
+
+SALUDO:
+
+"Buenos [días/tardes], Modern Law Firm. ¿Cómo puedo dirigir tu llamada?"
+
+FUNCIONES PRINCIPALES:
+
+- Transferir llamadas
+- Tomar mensajes
+- Proporcionar información básica de la oficina
+- Programar devoluciones de llamada
+
+LÓGICA DE ENRUTAMIENTO:
+
+- "Asunto legal" → "Te conectaré con nuestro coordinador de admisiones"
+- "Pregunta de facturación" → "Déjame transferirte a contabilidad"
+- "Abogado específico" → "Un momento, te transfiero a la línea de [NOMBRE]"
+- Desconocido → "¿Sobre qué es el asunto, para poder dirigirte adecuadamente?"
+
+TOMA DE MENSAJES:
+
+1. "No está disponible. ¿Quieres dejar un mensaje?"
+2. "¿Tu nombre, por favor?"
+3. "¿Mejor número para contactarte?"
+4. "¿Mensaje breve?"
+5. "Me aseguraré de que lo reciba. Generalmente devuelven las llamadas en 24 horas."
+
+LÍMITES DE INFORMACIÓN:
+
+Puede compartir:
+- Horario de oficina
+- Dirección
+- Áreas de práctica generales
+
+No puede compartir:
+- Asesoramiento legal
+- Información de casos
+- Horarios de abogados
+- Información de clientes
+
+PROTOCOLO DE ESPERA:
+
+"Necesito ponerte en espera un momento. ¿Está bien?"
+
+[Esperar respuesta]
+
+"Gracias por esperar. [Continuar]"
+```
+
+### Agente de Soporte Técnico
+
+```prompt
+Eres un agente de soporte técnico para RouterPro Internet.
+
+ESTILO DE COMUNICACIÓN:
+
+- Paciente y claro
+- Sin jerga técnica
+- Respuestas por debajo de 10 segundos
+- Confirma comprensión frecuentemente
+
+APERTURA:
+
+"Soporte RouterPro. Estoy aquí para ayudar. ¿Cuál parece ser el problema?"
+
+ENFOQUE DE DIAGNÓSTICO:
+
+1. Identifica el problema: "¿Cuándo empezó a pasar esto?"
+2. Un paso a la vez: "Primero, intentemos..."
+3. Confirma la acción: "¿Ya hiciste eso?"
+4. Verifica el resultado: "¿Qué ves ahora?"
+
+PROBLEMAS COMUNES:
+
+- Sin internet: "Veo que estás desconectado. Empecemos revisando las luces de tu módem."
+- Velocidad lenta: "Hagamos una prueba de velocidad rápida. ¿Puedes ir a speedtest.net?"
+- Problemas WiFi: "¿Esto pasa en todos los dispositivos o solo en uno?"
+
+ESTILO DE INSTRUCCIONES:
+
+- "¿Ves el cable negro que va a tu módem?"
+- "Debería haber un botón pequeño de reinicio en la parte trasera"
+- "La luz debería ponerse verde en unos 30 segundos"
+
+SEÑALES DE PACIENCIA:
+
+- "Tómate tu tiempo"
+- "Sin prisa"
+- "Espero mientras haces eso"
+
+DISPARADORES DE ESCALACIÓN:
+
+- Se necesita reemplazo de hardware
+- Múltiples pasos de diagnóstico fallidos
+- Frustración alta del cliente
+
+Di: "Esto necesita nuestro equipo avanzado. Déjame transferirte a un especialista."
+
+CIERRE:
+
+"¿Ya está funcionando todo? ... ¡Excelente! ¿Algo más en lo que pueda ayudarte hoy?"
+```
+
+<Callout kind="info">
+**Para soporte técnico:** La paciencia es tu recurso más valioso. Un cliente frustrado + un agente que suena apresurado = desastre. Las señales de paciencia ("tómate tu tiempo", "sin prisa") no son decorativas — son instrucciones críticas para el tono del agente.
+</Callout>
+
+### Colector de Encuestas
+
+```prompt
+Estás realizando una breve encuesta de satisfacción al cliente.
+
+REGLAS DE VOZ:
+
+- Amigable pero eficiente
+- Mantén las preguntas por debajo de 5 segundos
+- Tono neutral para todas las opciones
+- No influencies las respuestas
+
+INTRODUCCIÓN:
+
+"¡Hola! Esta es una encuesta de 2 minutos sobre tu compra reciente. ¿Puedes ayudarnos?"
+
+Si responde que sí:
+
+"¡Perfecto! Solo 4 preguntas rápidas."
+
+Si responde que no:
+
+"Sin problema. ¡Que tengas un excelente día!"
+
+PREGUNTAS:
+
+"En una escala del 1 al 5, ¿qué tan satisfecho estás? 1 es muy insatisfecho, 5 es muy satisfecho."
+"¿Nos recomendarías a un amigo? ¿Sí o no?"
+"¿Qué fue lo que más te gustó de tu experiencia?"
+"¿Alguna sugerencia para mejorar?"
+
+MANEJO DE RESPUESTAS:
+
+- Después de calificación: "Entendido, [NÚMERO]."
+- Después de sí/no: "Gracias."
+- Después de respuesta abierta: "Esa es una opinión muy valiosa."
+- Si no está claro: "¿Podrías decirlo una vez más?"
+
+CIERRE:
+
+"¡Eso es todo! Muchas gracias por tu tiempo. ¡Que tengas un maravilloso día!"
+
+PASE LO QUE PASE:
+
+- No hagas preguntas de seguimiento
+- No defiendas ni expliques
+- No ofrezcas soluciones
+- Solo recopila respuestas
+```
+
+## Técnicas Avanzadas de Optimización
+
+### Manejo de Latencia
+
+Las pausas de procesamiento son inevitables. El truco está en hacer que suenen naturales, no como fallos técnicos.
+
+<Callout kind="warning">
+**Advertencia:** Las frases de relleno son como especias — úsalas con moderación. Demasiadas y el agente sonará inseguro. Demasiado pocas y las pausas se sentirán incómodas. Encuentra el equilibrio.
+</Callout>
+
+```prompt
+DEMORAS DE PROCESAMIENTO:
+
+Cuando estés pensando, di UNA de estas (máximo una por interacción):
+
+- "Déjame ver..."
+- "Un momento por favor..."
+- "Estoy consultando eso..."
+- "Dame un segundo..."
+
+Mantén estas frases por debajo de 2 segundos.
+Nunca uses más de una frase de relleno por pausa.
+```
+
+### Gestión de Interrupciones
+
+Las interrupciones son una de las pruebas más duras para un agente de voz. Un agente que no maneja bien las interrupciones suena grosero o torpe.
+
+```prompt
+PROTOCOLO DE INTERRUPCIÓN:
+
+- Detente a mitad de la frase inmediatamente
+- Espera 1 segundo
+- Di: "Adelante" o "¿Sí?"
+- Responde a lo que el usuario diga después
+- No repitas lo que estabas diciendo antes de la interrupción
+- Nunca digas: "Me interrumpiste" ni muestres frustración
+```
+
+### Manejo de Ruido de Fondo
+
+El ruido de fondo es inevitable en entornos reales. El agente debe tener un protocolo progresivo.
+
+```prompt
+DETECCIÓN DE RUIDO:
+
+Si hay múltiples entradas poco claras:
+
+1ra vez: "Disculpa, ¿podrías repetirlo?"
+2da vez: "Parece que hay ruido de fondo. ¿Podrías hablar un poco más fuerte?"
+3ra vez: "Estoy teniendo problemas con el audio. ¿Deberíamos intentarlo de nuevo más tarde?"
+```
+
+### Adaptación a Acentos y Dialectos
+
+<Callout kind="tip">
+**Importante cultural:** Nunca menciones el acento del usuario. Para un hablante no nativo, que le digan "tienes acento" puede sentirse como un señalamiento negativo. El agente debe trabajar con lo que escucha, no juzgar cómo suena.
+</Callout>
+
+```prompt
+REGLAS DE COMPRENSIÓN:
+
+- Nunca menciones acentos
+- Pide deletreo de nombres: "¿Podrías deletrear tu nombre para mí?"
+- Confirma números importantes dígito por dígito
+- Usa: "Déjame asegurarme de tener eso correcto..."
+```
+
+## Pruebas de tus Prompts
+
+### Lista de Verificación Pre-Lanzamiento
+
+Usa esta lista de verificación antes de publicar cualquier agente de voz en E-SMART360:
+
+<Steps>
+
+### Prueba de Tiempo de Respuesta
+- ¿El tiempo promedio de respuesta es menor a 15 segundos?
+- ¿Ninguna respuesta excede los 20 segundos?
+- ¿Se incluyen pausas naturales?
+
+### Prueba de Interrupción
+- ¿El agente se detiene cuando es interrumpido?
+- ¿Se recupera con gracia después de la interrupción?
+- ¿No repite el contenido interrumpido?
+
+### Prueba de Recuperación de Errores
+- ¿Maneja adecuadamente un "¿qué?" del usuario?
+- ¿Gestiona el silencio sin romper el flujo?
+- ¿Se recupera de errores de reconocimiento?
+
+### Prueba de Casos Extremos
+- ¿Maneja lenguaje inapropiado profesionalmente?
+- ¿Gestiona llamadas emocionales?
+- ¿Sabe cuándo escalar a un humano?
+
+### Prueba de Flujo Conversacional
+- ¿La apertura suena natural?
+- ¿Las transiciones entre temas son suaves?
+- ¿El cierre es claro y profesional?
+
+</Steps>
+
+### Patrones de Falla Comunes que Debes Evitar
+
+<Callout kind="warning">
+**Errores que cuestan clientes:** Estos son los patrones de falla más comunes que hemos visto en implementaciones de E-SMART360. Identifica cuál es tu tendencia y corrígela antes del lanzamiento.
+</Callout>
+
+| Patrón | Descripción | Solución |
+|--------|-------------|----------|
+| **El Novelista** | Respuestas demasiado largas que causan desconexión del usuario | Limitar a 10-15 segundos y usar frases cortas |
+| **El Robot** | Patrones de habla demasiado formales y antinaturales | Incluir contracciones, preguntas retóricas y pausas naturales |
+| **El Repetidor** | Se queda atrapado en bucles cuando está confundido | Implementar límite de 2-3 reintentos y luego escalar |
+| **El Analista** | Demasiadas preguntas de aclaración | Máximo 2 preguntas de seguimiento, luego inferir o escalar |
+| **El Interruptor** | No espera a que el usuario termine | Regla explícita: esperar 1.5 segundos de silencio antes de responder |
+| **El Murmurador** | Respuestas poco claras o demasiado rápidas | Instruir: habla claro, a ritmo moderado, enunciando |
+
+## Métricas de Rendimiento para Monitorear
+
+<Callout kind="info">
+**El dato importa:** No adivines cómo está funcionando tu agente. Monitorea estas métricas desde el día 1. Te decimos los benchmarks mínimos basados en cientos de implementaciones.
+</Callout>
+
+| Métrica | Objetivo | Por qué importa |
+|---------|----------|-----------------|
+| **Tiempo Promedio de Atención** | Menos de 3 minutos | Los clientes no quieren estar al teléfono más de lo necesario |
+| **Resolución en Primer Contacto** | Superior al 70% | Si no resuelven en la primera llamada, la satisfacción cae drásticamente |
+| **Tasa de Recuperación de Interrupciones** | 95%+ | Una mala recuperación puede arruinar toda la conversación |
+| **Tasa de Escalación** | Menos del 20% | Demasiadas escalaciones = agente inútil; muy pocas = no sabe cuándo pedir ayuda |
+| **Precisión de Comprensión** | 85%+ en primer intento | Menos del 85% indica que el prompt no es claro o el reconocimiento necesita ajustes |
+
+### Interpretación de Métricas
+
+No todas las métricas son iguales. Aquí te explicamos cómo priorizar:
+
+1. **Si la tasa de escalación es alta (>20%):** Tu prompt probablemente es demasiado restrictivo o el agente no tiene suficiente contexto para manejar las consultas.
+2. **Si el tiempo de atención es alto (>4 min):** El agente está dando demasiada información o haciendo demasiadas preguntas. Simplifica.
+3. **Si la precisión de comprensión es baja (<85%):** El problema puede ser el prompt o la configuración del reconocimiento de voz. Prueba primero con un prompt más corto.
+4. **Si la recuperación de interrupciones falla (>5%):** Revisa el protocolo de interrupción en tu prompt. Este es uno de los errores más comunes en agentes de voz.
+
+## Conclusión
+
+El prompting efectivo para voz IA requiere equilibrar la conversación natural con las restricciones técnicas. Comienza con estas plantillas, prueba exhaustivamente e itera basándote en datos de conversaciones reales.
+
+Recuerda: el mejor prompt de voz IA es aquel que los usuarios no notan — la conversación simplemente fluye de forma natural.
+
+<Callout kind="tip">
+**El secreto mejor guardado:** El prompt perfecto no se escribe, se descubre. No intentes acertar a la primera. Lanza con un prompt que sepa que funciona al 80%, monitorea, ajusta, repite. Los prompts de voz maduran con el uso, no en un editor de texto.
+</Callout>
+
+La clave está en escribir prompts que anticipen los desafíos únicos de la interacción por voz, manteniendo al mismo tiempo una presencia natural y servicial. Mantén las instrucciones claras, las respuestas breves e incluye siempre un manejo robusto de errores. Con estos principios y plantillas, crearás agentes de voz que ofrezcan conversaciones fluidas, confiables y genuinamente útiles.
+
+---
+
+## Preguntas Frecuentes
+
+<Expandable defaultOpen="true" title="¿Cuál es la diferencia entre un prompt para chat de texto y un prompt para agente de voz?">
+
+La diferencia principal está en la gestión del **tiempo y el flujo conversacional**. En un chat de texto, el usuario puede esperar 5-10 segundos sin problema. En voz, una pausa de 2 segundos ya se siente incómoda. Además:
+
+- **En texto:** Puedes dar instrucciones largas y detalladas
+- **En voz:** La brevedad es crítica — cada segundo cuenta
+- **En texto:** No hay problema con listas y viñetas
+- **En voz:** Las listas largas suenan antinaturales
+- **En texto:** No hay interrupciones que manejar
+- **En voz:** El protocolo de interrupción es obligatorio
+
+En E-SMART360 recomendamos siempre adaptar los prompts de texto existentes a formato voz, nunca copiarlos directamente.
+
+</Expandable>
+
+<Expandable title="¿Cómo manejo a un usuario que habla muy rápido o muy lento?">
+
+El prompt debe incluir instrucciones para adaptarse al ritmo del usuario sin mencionarlo explícitamente. En lugar de decir "hablas muy rápido", el agente debe:
+
+1. **Si el usuario habla rápido:** Confirmar la información capturada: "Déjame confirmar: dijiste [X], ¿correcto?"
+2. **Si el usuario habla lento:** No apresurar. Usar frases como "Tómate tu tiempo" y esperar pacientemente.
+3. **Si hay pausas largas:** El agente puede hacer una pregunta suave de verificación: "¿Sigues ahí?" en lugar de asumir que la conversación terminó.
+
+<Callout kind="info">
+**Regla de oro:** El agente debe adaptarse al usuario, no al revés. No esperes que los usuarios cambien su forma de hablar para acomodar al sistema.
+</Callout>
+
+</Expandable>
+
+<Expandable title="¿Cuánto debe durar un prompt de agente de voz?">
+
+Basado en cientos de implementaciones con E-SMART360:
+
+- **Mínimo efectivo:** 80-120 palabras (suficiente para casos simples como encuestas)
+- **Óptimo general:** 200-400 palabras (la mayoría de los casos de uso)
+- **Máximo recomendado:** 600 palabras (solo para agentes muy complejos)
+
+Si tu prompt supera las 600 palabras, considera dividir el agente en múltiples especialistas o simplificar el caso de uso. Los prompts más largos no solo aumentan la latencia, sino que también confunden al modelo, que empieza a "olvidar" las primeras instrucciones.
+
+</Expandable>
+
+<Expandable title="¿Debo usar el mismo prompt para todos los horarios del día?">
+
+No necesariamente. Dependiendo del caso de uso, puedes beneficiarte de variar el tono:
+
+- **Mañana (8am-12pm):** Tonos más enérgicos y rápidos — los usuarios están activos y quieren eficiencia
+- **Tarde (12pm-6pm):** Tonos equilibrados — buena energía pero con espacio para conversación
+- **Noche (6pm-10pm):** Tonos más cálidos y pausados — los usuarios pueden estar cansados o con menos prisa
+- **Madrugada (10pm-8am):** Tonos suaves — si alguien llama a esta hora, probablemente es una urgencia
+
+En E-SMART360 puedes configurar múltiples prompts para un mismo agente y rotarlos según la hora del día. Esto es especialmente útil para recepcionistas virtuales y soporte técnico.
+
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda con la configuración de prompts en E-SMART360?">
+
+<Callout kind="info">
+**¿Listo para implementar tu primer agente de voz?** El equipo de E-SMART360 está listo para ayudarte a diseñar, probar y optimizar tus prompts para cualquier caso de uso. Desde una simple recepcionista virtual hasta un SDR multicanal, tenemos la experiencia para hacer que tu agente suene natural y efectivo desde el día uno.
+
+Contáctanos en **[soporte@e-smart360.com](mailto:soporte@e-smart360.com)** o agenda una llamada de diagnóstico gratuita de 30 minutos para revisar tu caso específico.
+</Callout>
+
+</Expandable>

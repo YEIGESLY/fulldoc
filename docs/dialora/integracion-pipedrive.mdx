@@ -1,0 +1,118 @@
+---
+title: "Cómo Configurar la Integración de Pipedrive con E-SMART360"
+description: "Conecta tu pipeline de ventas de Pipedrive con E-SMART360 en minutos. Sigue esta guía paso a paso para integrar tu clave API de Pipedrive y automatizar la sincronización de contactos, negocios y actividades."
+---
+
+import { Steps, Step } from "docs/components/Steps"
+import { Callout } from "docs/components/Callout"
+import { Image } from "docs/components/Image"
+import { Expandable, ExpandableGroup } from "docs/components/Expandable"
+
+¿Listo para optimizar tu pipeline de ventas? La integración de Pipedrive con E-SMART360 te permite sincronizar contactos, gestionar leads y automatizar seguimientos directamente desde tu agente de voz inteligente.
+
+<Callout kind="info">
+  **Antes de comenzar:** Asegúrate de tener una cuenta activa en E-SMART360 y acceso de administrador en tu cuenta de Pipedrive. El proceso completo toma aproximadamente **5 minutos**.
+</Callout>
+
+<Steps>
+  <Step icon="log-in" title="Inicia sesión en tu cuenta de E-SMART360">
+    Ingresa a tu panel de control de E-SMART360 usando tus credenciales. Si aún no tienes una cuenta, puedes registrarte desde la página principal.
+  </Step>
+
+  <Step icon="settings" title="Navega a la sección de Integraciones">
+    Dentro del panel de control, localiza la barra lateral izquierda y haz clic en la opción **Integraciones**. Allí verás todas las conexiones disponibles para tu cuenta.
+  </Step>
+
+  <Step icon="search" title="Localiza el campo de Pipedrive">
+    Desplázate hasta encontrar el campo etiquetado como **Clave API de Pipedrive**. Este campo es donde pegarás tu token de API en los pasos siguientes.
+  </Step>
+
+  <Step icon="external-link" title="Inicia sesión en tu cuenta de Pipedrive">
+    Abre una nueva pestaña en tu navegador y dirígete a [app.pipedrive.com](https://app.pipedrive.com/auth/login). Ingresa con las credenciales de tu cuenta de Pipedrive.
+  </Step>
+
+  <Step icon="user" title="Abre tu menú de perfil">
+    Una vez dentro de Pipedrive, haz clic en el **ícono de perfil** ubicado en la esquina superior derecha del tablero.
+  </Step>
+
+  <Step icon="building" title="Ve a Configuración de la empresa">
+    En el menú desplegable, selecciona la opción **Configuración de la empresa** para acceder a los ajustes generales de tu organización.
+  </Step>
+
+  <Step icon="sliders" title="Abre Preferencias personales">
+    Dentro del panel de configuración, selecciona la opción **Preferencias personales** para acceder a tu configuración individual.
+  </Step>
+
+  <Step icon="key" title="Copia tu token de API">
+    Haz clic en la pestaña **API**. Allí verás tu **Token de API** listado. Haz clic en **Copiar** para guardarlo en el portapapeles.
+  </Step>
+
+  <Step icon="check-circle" title="Pega el token en E-SMART360 y guarda">
+    Regresa al panel de control de E-SMART360. Pega el token de API en el campo de **Pipedrive** dentro de la sección de Integraciones y haz clic en **Guardar**.
+  </Step>
+</Steps>
+
+<Callout kind="success">
+  **¡Conexión exitosa!** Tu cuenta de Pipedrive ahora está conectada a E-SMART360. Los datos de tus contactos y negocios estarán disponibles para tus agentes de voz.
+</Callout>
+
+## Configuraciones adicionales recomendadas
+
+Una vez realizada la conexión básica, puedes ajustar las siguientes configuraciones para maximizar el valor de la integración:
+
+<Callout kind="tip">
+  **Sincronización automática:** E-SMART360 sincroniza automáticamente los contactos y negocios de Pipedrive. No necesitas realizar ninguna acción manual después de la conexión inicial.
+</Callout>
+
+### Campos personalizados
+
+Si utilizas campos personalizados en Pipedrive, estos también estarán disponibles en E-SMART360. Tu agente de voz podrá leer y escribir en estos campos durante las interacciones con los clientes.
+
+### Automatización de seguimientos
+
+Con la integración activa, puedes configurar flujos automatizados como:
+
+- **Registro de llamadas:** Cada llamada realizada desde E-SMART360 queda registrada como una actividad en el negocio correspondiente de Pipedrive.
+- **Actualización de etapas:** El agente puede avanzar automáticamente un negocio a la siguiente etapa del pipeline cuando se detecta una intención de compra.
+- **Creación de contactos:** Los nuevos leads capturados por el agente telefónico se crean directamente como contactos en Pipedrive.
+
+## Validación de la integración
+
+Para verificar que la integración funciona correctamente:
+
+1. Crea un contacto de prueba en Pipedrive con un número de teléfono.
+2. Realiza una llamada de prueba desde E-SMART360 a ese contacto.
+3. Verifica que la actividad de la llamada aparezca en el historial del contacto en Pipedrive.
+
+<Callout kind="warning">
+  **Solución de problemas comunes:**
+  - Si el token no se guarda, verifica que tenga el formato correcto (debe comenzar con caracteres alfanuméricos).
+  - Si los contactos no se sincronizan, asegúrate de que el token de API tenga permisos de lectura y escritura.
+  - Si la conexión se pierde, repite el proceso de copia del token desde Pipedrive.
+</Callout>
+
+## Preguntas frecuentes
+
+<ExpandableGroup>
+  <Expandable title="¿Puedo conectar múltiples cuentas de Pipedrive?" default-open="true">
+    Sí, E-SMART360 permite conectar varias cuentas de Pipedrive desde diferentes organizaciones. Solo debes repetir el proceso de integración para cada cuenta adicional desde la sección de Integraciones.
+  </Expandable>
+
+  <Expandable title="¿Qué permisos necesita el token de API?">
+    El token de API debe tener permisos de **lectura y escritura** sobre contactos, negocios y actividades. E-SMART360 no requiere permisos de administrador global ni acceso a facturación.
+  </Expandable>
+
+  <Expandable title="¿La integración funciona con Pipedrive Plus, Professional o Enterprise?">
+    Sí, la integración es compatible con todos los planes de Pipedrive, incluyendo Plus, Professional y Enterprise. El proceso de obtención del token de API es el mismo en todos los planes.
+  </Expandable>
+
+  <Expandable title="¿Con qué frecuencia se sincronizan los datos?">
+    La sincronización ocurre en tiempo real durante las llamadas y operaciones activas. Además, E-SMART360 realiza una sincronización programada cada 15 minutos para mantener los datos actualizados.
+  </Expandable>
+
+  <Expandable title="¿Necesitas ayuda con la integración de Pipedrive?">
+    <Callout kind="info">
+      Si encuentras algún problema durante la configuración o necesitas asistencia personalizada, contacta a nuestro equipo de soporte. Estamos disponibles para ayudarte a optimizar tu flujo de ventas con E-SMART360 y Pipedrive.
+    </Callout>
+  </Expandable>
+</ExpandableGroup>

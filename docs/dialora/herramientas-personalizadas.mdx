@@ -1,0 +1,405 @@
+---
+title: "API de Herramientas Personalizadas para Integración con Terceros"
+description: "Conecta cualquier API de terceros directamente con tu agente de voz en E-SMART360. Consulta bases de datos en tiempo real, actualiza CRMs, gestiona reservas, envía notificaciones y mucho más usando herramientas personalizadas configurables desde el panel."
+---
+
+<Callout kind="info" default-open="true">
+**¿Qué son las herramientas personalizadas?**  
+Las herramientas personalizadas (Custom Tools) son la puerta de entrada para que tu agente de voz de E-SMART360 interactúe con sistemas externos durante las conversaciones. Pueden consultar datos, escribir registros, gestionar citas y ejecutar lógica de negocio en tiempo real, todo sin intervención humana.
+</Callout>
+
+## Visión General
+
+La API de herramientas personalizadas permite que tus agentes de E-SMART360 se conecten con sistemas externos. Tu agente puede realizar las siguientes operaciones:
+
+- **Consultar bases de datos**: Obtener registros de clientes, inventario, precios e historial
+- **Actualizar CRMs**: Crear leads, modificar contactos, registrar interacciones
+- **Gestionar reservas**: Verificar disponibilidad y confirmar citas
+- **Enviar notificaciones**: Activar SMS, correos electrónicos o notificaciones push
+- **Recuperar datos**: Extraer información desde cualquier API REST
+
+## Casos de Uso
+
+<Card title="Sistemas de Reservas" icon="calendar">
+  Verifica disponibilidad, reserva horarios y envía confirmaciones automáticas durante la llamada.
+</Card>
+
+<Card title="Integración CRM" icon="database">
+  Actualiza Salesforce, HubSpot o cualquier CRM personalizado con los datos extraídos de la conversación.
+</Card>
+
+<Card title="Consultas a Bases de Datos" icon="search">
+  Obtén el historial del cliente, estado de cuenta, pólizas vigentes o cualquier registro en tiempo real.
+</Card>
+
+<Card title="Disparadores SMS/Email" icon="mail">
+  Envía mensajes de seguimiento, recordatorios de citas o confirmaciones inmediatamente después de la llamada.
+</Card>
+
+<Card title="Procesamiento de Pagos" icon="credit-card">
+  Valida métodos de pago, procesa reembolsos o consulta estados de facturación durante la conversación.
+</Card>
+
+<Card title="Gestión de Inventario" icon="package">
+  Consulta niveles de stock, reserva artículos y verifica disponibilidad de productos en tiempo real.
+</Card>
+
+## Información Básica de la Herramienta
+
+Cada herramienta personalizada requiere la siguiente información fundamental:
+
+<ParamField body="name" type="string" required>
+  Nombre descriptivo que se muestra en la interfaz de E-SMART360 y se referencia en los flujos. Elige un nombre único y descriptivo (por ejemplo, `ConsultarDisponibilidad` en lugar de `Obtener`).
+</ParamField>
+
+<ParamField body="description" type="string" required>
+  Explicación concisa del propósito de la herramienta. Este campo es crítico porque el LLM utiliza la descripción para decidir cuándo activar la herramienta. Sé específico sobre los escenarios de uso.
+</ParamField>
+
+<ParamField body="pre_call_message" type="string" default="Opcional">
+  Mensaje que dirá el agente mientras la herramienta se ejecuta. Por ejemplo: _"Un momento mientras consulto esa información."_ Esto mantiene la conversación natural incluso mientras se espera la respuesta de la API.
+</ParamField>
+
+## Configuración de la API
+
+Configura cómo se comunica la herramienta con los servicios externos:
+
+<ParamField body="api_url" type="string" required>
+  La URL del endpoint que se llamará (ej. `https://api.tusistema.com/consultar-cliente`).
+</ParamField>
+
+<ParamField body="http_method" type="string" required>
+  El tipo de solicitud HTTP: GET, POST, PUT o DELETE.
+</ParamField>
+
+<ParamField body="api_token" type="string" default="Opcional">
+  Detalles de autenticación como tokens Bearer o cabeceras personalizadas.
+</ParamField>
+
+<Callout kind="warning">
+  **Nunca** hardcodees secretos en los prompts del agente. Utiliza siempre la configuración de autenticación de E-SMART360 para almacenar las claves API de forma segura.
+</Callout>
+
+## Configuración de Parámetros
+
+Los parámetros permiten que tu herramienta capture y utilice información dinámica obtenida del usuario durante la conversación. En lugar de valores fijos, los parámetros hacen que las llamadas API sean flexibles, reutilizables y personalizadas.
+
+Piénsalos como campos de entrada que el LLM llenará con valores proporcionados por el usuario (como `fechaInicio` o `horaFin`).
+
+### Cómo configurar los parámetros
+
+<Steps>
+<Step title="Asigna un nombre">
+  Ejemplo: `fechaInicio`, `horaFin`, `nombreCliente`.
+</Step>
+
+<Step title="Elige un tipo de dato">
+  Puede ser `string` (cadena de texto), `number` (número), `boolean` (booleano), `integer` (entero), etc.
+</Step>
+
+<Step title="Agrega una descripción">
+  Explica qué representa el parámetro para que el LLM sepa cómo y cuándo recopilarlo. Sé descriptivo.
+</Step>
+
+<Step title="Establece si es requerido u opcional">
+  Marca como requeridos aquellos parámetros que siempre deben recogerse (ej. fecha de reserva) y como opcionales aquellos que no son estrictamente necesarios (ej. notas adicionales).
+</Step>
+</Steps>
+
+**Ejemplo de parámetros:**
+
+```
+fechaInicio (String, Requerido) → "Fecha de inicio de la reserva en formato YYYY-MM-DD"
+horaFin (String, Requerido) → "Hora de finalización en formato HH:MM (24h)"
+```
+
+Durante una llamada, el agente preguntará por estos valores si el usuario no los ha proporcionado y luego los insertará dinámicamente en la solicitud API.
+
+<Callout kind="tip">
+  **Consejo:** Comienza con un endpoint de prueba simple. Una vez que funcione, agrega complejidad y lógica de negocio adicional.
+</Callout>
+
+## Definición de Herramienta Usando JSON
+
+Puedes configurar la herramienta directamente usando JSON. Aquí tienes la estructura completa:
+
+<CodeGroup tabs="Definición Básica,Reserva de Citas,Búsqueda de Vuelos">
+```json
+{
+  "key": "custom_task",
+  "name": "Tarea de Prueba",
+  "description": "Ejecuta una llamada API de prueba durante la conversación.",
+  "pre_call_message": "Un momento, enseguida vuelvo.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "properties": {
+      "fechaInicio": {
+        "type": "string",
+        "description": "Fecha de inicio para la tarea"
+      },
+      "horaFin": {
+        "type": "string",
+        "description": "Hora de finalización para la tarea"
+      }
+    }
+  },
+  "value": {
+    "method": "GET",
+    "param": {
+      "fechaInicio": "%(fechaInicio)s",
+      "horaFin": "%(horaFin)s"
+    },
+    "url": "https://api.ejemplo.com/prueba",
+    "api_token": "Bearer TU_API_TOKEN"
+  }
+}
+```
+
+```json
+{
+  "key": "custom_task",
+  "name": "Reservar Cita",
+  "description": "Programa una nueva cita para el usuario con los detalles proporcionados.",
+  "pre_call_message": "Déjame agendar esa cita para ti...",
+  "parameters": {
+    "type": "object",
+    "required": [
+      "nombreCliente",
+      "fechaCita",
+      "horaInicio",
+      "horaFin",
+      "tipoServicio"
+    ],
+    "properties": {
+      "nombreCliente": {
+        "type": "string",
+        "description": "Nombre completo del cliente que reserva la cita."
+      },
+      "fechaCita": {
+        "type": "string",
+        "description": "Fecha de la cita en formato YYYY-MM-DD."
+      },
+      "horaInicio": {
+        "type": "string",
+        "description": "Hora de inicio de la cita en formato HH:MM (24h)."
+      },
+      "horaFin": {
+        "type": "string",
+        "description": "Hora de finalización de la cita en formato HH:MM (24h)."
+      },
+      "tipoServicio": {
+        "type": "string",
+        "description": "Tipo de servicio para la cita (ej. consulta, fotografía, peluquería)."
+      },
+      "notas": {
+        "type": "string",
+        "description": "Notas adicionales opcionales o solicitudes especiales para la cita."
+      }
+    }
+  },
+  "value": {
+    "method": "POST",
+    "url": "https://api.ejemplo.com/citas",
+    "api_token": "Authorization: Bearer TU_API_TOKEN",
+    "param": {
+      "nombreCliente": "%(nombreCliente)s",
+      "fechaCita": "%(fechaCita)s",
+      "horaInicio": "%(horaInicio)s",
+      "horaFin": "%(horaFin)s",
+      "tipoServicio": "%(tipoServicio)s",
+      "notas": "%(notas)s"
+    }
+  }
+}
+```
+
+```json
+{
+  "key": "buscar_vuelos",
+  "name": "Buscar Vuelos",
+  "description": "Obtiene vuelos disponibles según origen, destino, fecha de viaje y pasajeros.",
+  "pre_call_message": "Déjame buscar los vuelos disponibles...",
+  "parameters": {
+    "type": "object",
+    "required": ["origen", "destino", "fechaSalida", "pasajeros"],
+    "properties": {
+      "origen": {
+        "type": "string",
+        "description": "Código del aeropuerto de salida (ej. JFK, LAX, MEX)."
+      },
+      "destino": {
+        "type": "string",
+        "description": "Código del aeropuerto de llegada (ej. LHR, CDG, BCN)."
+      },
+      "fechaSalida": {
+        "type": "string",
+        "description": "Fecha de salida del vuelo en formato YYYY-MM-DD."
+      },
+      "fechaRegreso": {
+        "type": "string",
+        "description": "Fecha opcional de regreso para vuelos redondos en formato YYYY-MM-DD."
+      },
+      "pasajeros": {
+        "type": "integer",
+        "description": "Número de pasajeros."
+      },
+      "clase": {
+        "type": "string",
+        "description": "Clase de viaje (ej. Económica, Ejecutiva, Primera)."
+      }
+    }
+  },
+  "value": {
+    "method": "GET",
+    "url": "https://api.ejemplo.com/vuelos/buscar",
+    "api_token": "Bearer TU_API_TOKEN",
+    "param": {
+      "origen": "%(origen)s",
+      "destino": "%(destino)s",
+      "fechaSalida": "%(fechaSalida)s",
+      "fechaRegreso": "%(fechaRegreso)s",
+      "pasajeros": "%(pasajeros)s",
+      "clase": "%(clase)s"
+    }
+  }
+}
+```
+</CodeGroup>
+
+### Explicación Detallada de Cada Sección
+
+<Tabs>
+<Tab title="name">
+  <ResponseField name="name" field-type="string" required>
+    Etiqueta legible para humanos. **Ejemplo:** "Reservar Cita" aparecerá en la interfaz y en los registros.
+  </ResponseField>
+</Tab>
+
+<Tab title="description">
+  <ResponseField name="description" field-type="string" required>
+    Explica qué hace la herramienta. **Ejemplo:** "Programa una nueva cita para el usuario con los detalles proporcionados." Esta descripción es esencial para que el LLM decida cuándo invocar la herramienta.
+  </ResponseField>
+</Tab>
+
+<Tab title="pre_call_message">
+  <ResponseField name="pre_call_message" field-type="string">
+    Mensaje que dice el agente antes de hacer la llamada API. **Ejemplo:** "Déjame agendar esa cita para ti..."
+  </ResponseField>
+</Tab>
+
+<Tab title="parameters">
+  <ResponseField name="parameters" field-type="object" required>
+    Define qué entradas se requieren de la conversación:
+    - `type`: "object" significa que las entradas se pasan como JSON estructurado
+    - `required`: lista de campos que deben estar presentes
+    - `properties`: definición detallada de cada entrada (nombre, tipo, descripción)
+  </ResponseField>
+</Tab>
+
+<Tab title="value">
+  <ResponseField name="value" field-type="object" required>
+    Define cómo se realiza la llamada API:
+    - `method`: "POST", "GET", "PUT" o "DELETE"
+    - `url`: El endpoint (reemplázalo con tu backend real)
+    - `api_token`: Autenticación estándar JSON API
+    - `param`: Payload real enviado a la API, usando `%(nombre)s` como marcadores de posición que se reemplazan dinámicamente
+  </ResponseField>
+</Tab>
+</Tabs>
+
+## Referencia Rápida de Campos
+
+| Campo | Propósito |
+|-------|-----------|
+| `key` | Identificador único para referencia interna |
+| `name` | Nombre mostrado en el constructor de flujos |
+| `description` | Describe la intención de la herramienta (crítico para la activación por LLM) |
+| `pre_call_message` | Mensaje de voz durante la ejecución |
+| `parameters` | Variables de entrada mediante esquema JSON |
+| `value` | Detalles de ejecución HTTP para la llamada API |
+
+<Callout kind="success">
+  **Buenas prácticas:**
+  - **Nombres descriptivos:** Evita verbos demasiado genéricos como "llamar" u "obtener" que podrían entrar en conflicto con acciones integradas. Elige nombres claros que representen de forma única el propósito de la herramienta.
+  - **Descripción precisa:** Describe cuidadosamente los casos de uso. El LLM solo invocará la herramienta cuando los escenarios descritos coincidan con la conversación.
+  - **Parámetros bien definidos:** Define claramente qué parámetros son requeridos y cuáles opcionales. Asegúrate de que estén correctamente mapeados si los referencias en manejadores de respuesta.
+  - **Seguridad:** Almacena los tokens API de forma segura usando la configuración de autenticación de E-SMART360, no incrustes credenciales en la documentación o en capturas de pantalla.
+</Callout>
+
+## Guía de Navegación en el Panel
+
+<Steps>
+<Step title="Inicia sesión en E-SMART360">
+  Accede a tu cuenta en el panel de E-SMART360.
+</Step>
+
+<Step title="Navega a Integración de Datos y Herramientas">
+  Ve a **Agente** → **Agente** → **Configuración avanzada** → **Integración de datos y herramientas**.
+</Step>
+
+<Step title="Agrega una herramienta personalizada">
+  Haz clic en **Agregar herramienta personalizada** para acceder a la configuración.
+</Step>
+
+<Step title="Elige tu método de configuración">
+  Puedes agregar tu herramienta de dos formas:
+  - **Vista de formulario**: Configura la herramienta usando el formulario visual
+  - **Configuración JSON**: Conecta tu herramienta usando un archivo JSON (método recomendado)
+</Step>
+
+<Step title="Configura la herramienta">
+  - Ingresa un nombre para la herramienta (ej. "Consulta de Cliente")
+  - Pega la URL de tu endpoint API
+  - Selecciona el método de solicitud: **POST** o **GET**
+  - Agrega el token API para la autenticación
+</Step>
+
+<Step title="Define los parámetros y guarda">
+  Especifica los datos que tu agente debe enviar y haz clic en **Guardar**.
+</Step>
+</Steps>
+
+## Requisitos del Endpoint API
+
+Tu API debe cumplir con los siguientes requisitos:
+
+<Columns cols="2">
+<Card title="Formato" icon="check-circle">
+  - Aceptar solicitudes POST con datos JSON
+  - Devolver respuestas en formato JSON
+  - Incluir autenticación adecuada (API key, OAuth, etc.)
+  - Completar la respuesta en menos de 5 segundos
+</Card>
+
+<Card title="URL de ejemplo" icon="code">
+  `https://api.tusistema.com/consultar-cliente`
+</Card>
+</Columns>
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+<Expandable title="¿Qué tipo de APIs puedo conectar con las herramientas personalizadas?" default-open="true">
+  Puedes conectar cualquier API REST que acepte solicitudes HTTP (GET, POST, PUT, DELETE) con formato JSON. Esto incluye CRMs como Salesforce y HubSpot, sistemas de reservas como Cal.com y TidyCal, pasarelas de pago, bases de datos, servicios de mensajería y prácticamente cualquier servicio que exponga un endpoint REST.
+</Expandable>
+
+<Expandable title="¿Cómo maneja el LLM los parámetros que no están definidos en la herramienta?">
+  El LLM solo puede recopilar y enviar los parámetros que están explícitamente definidos en la configuración de la herramienta. Si un usuario proporciona información que no corresponde a ningún parámetro definido, el agente indicará amablemente que no puede procesar ese dato. Por eso es importante definir todos los parámetros que puedas necesitar, incluso los opcionales.
+</Expandable>
+
+<Expandable title="¿Qué sucede si la API externa tarda más de 5 segundos en responder?">
+  La herramienta tiene un tiempo máximo de espera de 5 segundos. Si la API no responde dentro de ese período, la llamada fallará y el agente informará al usuario que hubo un problema. Para evitarlo, asegúrate de que tu endpoint responda rápidamente o considera optimizar la consulta. Si necesitas procesamiento más largo, implementa un patrón de solicitud asíncrona.
+</Expandable>
+
+<Expandable title="¿Es seguro almacenar tokens API en la configuración de la herramienta?">
+  Sí, E-SMART360 almacena los tokens API de forma segura en su configuración de autenticación, no en los prompts del agente. Esto significa que los tokens nunca quedan expuestos en las conversaciones ni en los registros. Eso sí, evita incrustar credenciales directamente en descripciones de parámetros o ejemplos de código.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda para configurar tu primera herramienta personalizada?">
+  <Callout kind="danger">
+    **¿Necesitas ayuda con las herramientas personalizadas?**  
+    Si tienes dudas sobre la configuración, la integración con tu API específica o encuentras errores al probar tu herramienta, contacta a nuestro equipo de soporte técnico. Estamos listos para ayudarte a conectar tus sistemas con E-SMART360 y sacar el máximo provecho de tus agentes de voz.
+  </Callout>
+</Expandable>
+</ExpandableGroup>

@@ -1,0 +1,200 @@
+---
+title: "Campaña Saliente No Progresa: Diagnóstico y Solución"
+description: "Guía de solución de problemas para campañas salientes en E-SMART360 que no realizan llamadas o se quedan atascadas. Aprende a diagnosticar errores de formato CSV, validar números telefónicos y reanudar tus campañas paso a paso."
+---
+
+<Callout kind="warning" title="Problema común">
+Tu campaña saliente no está realizando llamadas o se ha quedado atascada sin avanzar en la lista de contactos. No te preocupes — en la mayoría de los casos la solución es simple y directa.
+</Callout>
+
+## Síntomas
+
+Si estás experimentando alguno de estos síntomas, esta guía te ayudará a resolverlo:
+
+- La campaña muestra **"En Progreso"** pero no se realiza ninguna llamada
+- El contador de llamadas **no aumenta** incluso después de esperar varios minutos
+- La campaña fue pausada y **no se reanuda** al hacer clic en "Iniciar"
+- Se intentan contactar algunos números, pero **la mayoría se saltan**
+- Aparece el error **"Número de teléfono inválido"** para múltiples contactos
+- La campaña lleva **horas "procesando"** sin hacer llamadas
+
+<Callout kind="info">
+Si tu campaña muestra "En Progreso" pero lleva más de 5 minutos sin actividad, es muy probable que el problema esté en el formato de los números telefónicos de tu archivo CSV. Este es el error más frecuente.
+</Callout>
+
+## Causas Comunes
+
+<Callout kind="tip" title="Diagnóstico rápido">
+Revisa estos puntos en orden. El 90 % de los casos se resuelven con el primero.
+</Callout>
+
+1. **Formato incorrecto del CSV** — Los números telefónicos no incluyen el prefijo de código de país (+1 para EE.UU.) o contienen caracteres de formato como guiones o espacios.
+2. **Números telefónicos inválidos** — Números que no existen, están desconectados o no tienen el formato correcto para la región.
+3. **Campaña atascada en estado de procesamiento** — Los metadatos de la campaña están corruptos o bloqueados por una operación anterior.
+4. **Encabezados de columna incorrectos** — Los encabezados del CSV no coinciden con el formato esperado por E-SMART360.
+
+### Solución Rápida
+
+Los números de EE.UU. **deben** usar el formato `+12125551234` (código de país + número, sin guiones ni espacios). Este único cambio soluciona la mayoría de errores de "Número de teléfono inválido".
+
+<Callout kind="success" title="Ejemplo de formato correcto">
+```
+❌ Incorrecto: 2125551234, (212) 555-1234, +1-212-555-1234
+✅ Correcto:   +12125551234
+```
+</Callout>
+
+## Cómo Solucionarlo
+
+Sigue estos pasos en orden para diagnosticar y resolver el problema.
+
+<Steps>
+
+### Paso 1: Revisa el Formato de los Números en tu CSV
+
+1. Abre tu archivo CSV de contactos en Excel, Google Sheets o un editor de texto.
+2. **Verifica el formato de los números telefónicos:**
+   - **Números de EE.UU.:** Deben tener el formato `+12125551234` (código de país +1, luego 10 dígitos, sin guiones ni espacios).
+   - **Internacionales:** Código de país + código de área + número, todo sin caracteres especiales.
+   - **NO uses:** `(212) 555-1234`, `212-555-1234`, `2125551234` (sin código de país).
+3. **Busca estos errores comunes:**
+   - Números sin código de país: `2125551234` → Debe ser `+12125551234`
+   - Números con guiones: `+1-212-555-1234` → Debe ser `+12125551234`
+   - Números con espacios: `+1 212 555 1234` → Debe ser `+12125551234`
+   - Ceros iniciales faltantes para números internacionales
+
+<Callout kind="warning">
+El formato del número telefónico es **la causa principal** de que las campañas no progresen. Dedica tiempo a revisar esta sección antes de continuar.
+</Callout>
+
+### Paso 2: Reformatea tu CSV
+
+1. Abre tu CSV en una hoja de cálculo (Excel, Google Sheets, etc.).
+2. Usa **Buscar y Reemplazar** para estandarizar todos los números:
+   - **Buscar:** Cualquier número sin el prefijo `+` (ej. `2125551234`)
+   - **Reemplazar:** Agrega el prefijo `+1` para números de EE.UU. (ej. `+12125551234`)
+   - Elimina guiones, espacios y paréntesis
+3. Guarda el archivo CSV limpio.
+4. **Ejemplo de formato correcto:**
+
+<CodeGroup tabs="Formato correcto, Formato incorrecto">
+
+```csv
+phone_number,name,email
++12125551234,John Smith,john@example.com
++12015559876,Jane Doe,jane@example.com
++447911123456,James Murphy,james@example.co.uk
+```
+
+```csv
+phone_number,name,email
+2125551234,Juan Pérez,juan@ejemplo.com
+(201) 555-9876,María García,maria@ejemplo.com
++44 7911 123456,Carlos López,carlos@ejemplo.com
+```
+
+</CodeGroup>
+
+<Callout kind="tip" title="Google Sheets">
+En Google Sheets puedes usar la fórmula `="+"&TEXTO(A1;"0")` para agregar el símbolo `+` automáticamente a una columna de números. Luego copia y pega los valores en tu CSV.
+</Callout>
+
+### Paso 3: Valida los Números Telefónicos
+
+1. Después de reformatear, verifica una muestra de números:
+   - Cada número debe tener entre **10 y 15 dígitos** (incluyendo el código de país)
+   - Asegúrate de que ningún número sea claramente inválido (todo ceros, todos el mismo dígito, etc.)
+   - Confirma que los números sean líneas telefónicas reales y activas
+2. Elimina cualquier **número de prueba** que hayas agregado
+3. Elimina **entradas duplicadas**
+
+<Callout kind="info" title="Validador de números">
+E-SMART360 valida automáticamente los números durante la importación. Si ves el error "número inválido" para un contacto específico, revisa ese número manualmente. Puedes usar herramientas gratuitas como **libphonenumber** de Google para verificar formatos internacionales.
+</Callout>
+
+### Paso 4: Limpia el Bloqueo de la Campaña y Vuelve a Subir
+
+1. Ve a **Campañas** → Selecciona la campaña atascada
+2. Haz clic en **Detener** o **Pausar** si aún está en ejecución
+3. **Elimina la campaña** (esto limpia el bloqueo de procesamiento)
+4. **Crea una Nueva Campaña** con tu CSV reformateado
+5. Durante la configuración:
+   - Mapea cuidadosamente las columnas del CSV a los campos de E-SMART360
+   - Asegúrate de que la columna de número telefónico esté correctamente identificada
+   - Verifica que el agente esté asignado correctamente
+6. Haz clic en **Iniciar Campaña**
+7. Monitorea los primeros **5 minutos** para asegurarte de que las llamadas se están iniciando
+
+<Callout kind="warning" title="No edites campañas atascadas">
+No intentes modificar o reemplazar el archivo CSV de una campaña que ya está atascada. El bloqueo de procesamiento persistirá. Es mejor eliminar la campaña y crear una nueva desde cero.
+</Callout>
+
+### Paso 5: Monitorea el Progreso de la Campaña
+
+1. Observa el **Registro de Llamadas** en el panel de tu campaña
+2. **La primera llamada debería iniciarse entre 1 y 2 minutos** después de lanzar la campaña
+
+<Callout kind="success" title="Indicadores de funcionamiento normal">
+- El contador de llamadas aumenta de manera constante
+- Los contactos cambian de estado "Pendiente" a "Llamado"
+- El registro de llamadas muestra intentos con resultados (contestada, no contestada, etc.)
+- Los agentes aparecen como "En llamada" durante las conversaciones activas
+</Callout>
+
+</Steps>
+
+## Si Aún No Progresa
+
+<Callout kind="danger" title="Verificaciones adicionales">
+Si después de seguir todos los pasos la campaña sigue sin progresar, revisa estos puntos:
+</Callout>
+
+- Verifica que tu **cuenta tenga créditos disponibles**
+- Confirma que tu agente esté en estado **Activo**
+- Asegúrate de que tu número telefónico esté **vinculado y verificado**
+- Revisa que el agente asignado a la campaña tenga **acceso al número** configurado
+- Comprueba que **no haya restricciones** de horario en la configuración de la campaña
+- Contacta al soporte si el problema persiste
+
+## Consejos de Prevención
+
+<Callout kind="tip" title="Buenas prácticas">
+Sigue estos consejos para evitar problemas con futuras campañas. La preparación del archivo CSV es el paso más importante.
+</Callout>
+
+- **Valida siempre los archivos CSV antes de subirlos** usando las funciones de ordenar y filtrar de tu hoja de cálculo
+- **Usa una plantilla CSV** proporcionada por E-SMART360 para asegurar encabezados de columna correctos
+- **Prueba con un lote pequeño primero** (5–10 contactos) antes de lanzar campañas completas
+- **Mantén los números en un formato estandarizado** — establece un estándar empresarial con el prefijo +1 para todos los números de EE.UU.
+- **Elimina números de prueba/internos** de los CSVs de campaña antes de subirlos
+- **Revisa el saldo de la cuenta y el estado del agente** antes de lanzar campañas
+- **Supervisa el progreso de la campaña regularmente** — no asumas que funciona si no has revisado el registro de llamadas
+- **Documenta los errores recurrentes** — si detectas un patrón de números con formato incorrecto, crea una guía interna para tu equipo
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+
+<Expandable title="¿Por qué mi campaña muestra 'En Progreso' pero no hace llamadas?" default-open="true">
+Esto ocurre con mayor frecuencia cuando los números telefónicos en tu CSV no tienen el formato correcto. El sistema detecta que hay contactos por llamar, pero al encontrar números inválidos o con formato incorrecto (sin código de país, con guiones o espacios), se bloquea y no puede iniciar las llamadas. Revisa el **Paso 1** de esta guía para corregir el formato.
+</Expandable>
+
+<Expandable title="¿Puedo editar el CSV de una campaña que ya está en curso?">
+No recomendamos editar el archivo CSV de una campaña que ya está corriendo o atascada. El sistema almacena una copia de los datos al momento de la importación, y modificarlos después puede causar inconsistencias. Es más seguro **eliminar la campaña**, corregir el CSV y **crear una nueva**.
+</Expandable>
+
+<Expandable title="¿Cuánto tiempo debe pasar antes de considerar que la campaña está atascada?">
+Si después de **5 minutos** de haber iniciado la campaña no se ha realizado ninguna llamada, es señal de que algo anda mal. En condiciones normales, la primera llamada debería iniciarse entre 1 y 2 minutos después de lanzar la campaña. Si ves que el contador de llamadas no aumenta en 5 minutos, procede con los pasos de solución de esta guía.
+</Expandable>
+
+<Expandable title="¿El formato de los números internacionales es diferente al de EE.UU.?">
+Sí. Aunque el principio es el mismo (código de país + número, sin espacios ni guiones), los números internacionales tienen longitudes variables. Por ejemplo: Reino Unido usa `+44` seguido de 10 dígitos (`+447911123456`), mientras que México usa `+52` seguido de 10 dígitos (`+525512345678`). Lo importante es que el número comience con `+` seguido del código de país y el número completo sin caracteres especiales.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda con tu campaña saliente?">
+<Callout kind="info" title="Contacta a soporte">
+Si después de seguir todos los pasos de esta guía tu campaña saliente sigue sin funcionar, nuestro equipo de soporte está listo para ayudarte. Envíanos los detalles de tu campaña (nombre, fecha de creación, y una captura de pantalla del registro de llamadas) para que podamos diagnosticar el problema más rápido.
+</Callout>
+</Expandable>
+
+</ExpandableGroup>

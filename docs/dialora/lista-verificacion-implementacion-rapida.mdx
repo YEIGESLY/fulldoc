@@ -1,0 +1,121 @@
+---
+title: "Lista de Verificación para Implementación Rápida"
+description: "Checklist paso a paso para implementar automatizaciones con E-SMART360 en minutos. Guía para usuarios de Zapier y Make.com con tiempos estimados y configuración detallada."
+---
+
+<Callout kind="success" title="Implementación en menos de 30 minutos">
+Con esta lista de verificación podrás tener tu primera automatización funcionando en menos de media hora. Sigue los pasos en orden y marca cada tarea al completarla.
+</Callout>
+
+## Para usuarios de Zapier
+
+<Callout kind="tip" title="Requisito previo">
+Antes de comenzar, asegúrate de tener una cuenta activa en Zapier y acceso al panel de configuración de E-SMART360 con la URL de tu webhook visible.
+</Callout>
+
+### 1. Configuración inicial (5 minutos)
+
+<Steps>
+<Step icon="copy" title="Copiar URL del webhook">
+Obtén la URL del webhook desde la configuración de tu agente en E-SMART360. Esta URL es el puente entre Zapier y tus agentes de voz.
+</Step>
+<Step icon="settings" title="Agregar en configuración de E-SMART360">
+Pega la URL del webhook en el campo correspondiente dentro de la configuración de automatizaciones de tu agente.
+</Step>
+<Step icon="test-tube" title="Probar con payload de muestra">
+Envía una solicitud de prueba desde Zapier con datos simulados para verificar que la comunicación funciona correctamente.
+</Step>
+<Step icon="map" title="Mapear campos correctamente">
+Verifica que cada campo del formulario de origen (nombre, teléfono, email, etc.) esté correctamente mapeado al payload del webhook.
+</Step>
+</Steps>
+
+### 2. Autenticación (10 minutos)
+
+<Callout kind="warning" title="Conexiones necesarias">
+Cada servicio que quieras integrar requiere su propia conexión. Ten a mano las credenciales de cada plataforma antes de empezar.
+</Callout>
+
+| Servicio | Acción | Tiempo estimado |
+|----------|--------|-----------------|
+| Google Calendar | Conectar y autorizar acceso a calendarios | 3 min |
+| Servicio de correo | Conectar Gmail, Outlook u otro proveedor | 2 min |
+| Servicio SMS | Conectar Twilio o TextMagic | 3 min |
+| CRM | Conectar HubSpot, Salesforce u otro CRM | 2 min |
+
+### 3. Personalización (15 minutos)
+
+- [ ] **Actualizar plantillas de correo electrónico**: Revisa y personaliza los mensajes que se enviarán automáticamente a los leads.
+- [ ] **Configurar reglas de disponibilidad**: Define los horarios en los que el agente puede hacer llamadas y agendar citas.
+- [ ] **Configurar consentimiento SMS**: Agrega el texto legal necesario para el envío de mensajes de texto.
+- [ ] **Configurar notificaciones al equipo**: Define qué miembros del equipo reciben alertas cuando un lead es contactado.
+
+<Callout kind="info" title="Consejo profesional">
+Personaliza las plantillas con variables dinámicas como `{{nombre}}`, `{{empresa}}` y `{{producto}}` para que cada comunicación se sienta única y personalizada.
+</Callout>
+
+## Para usuarios de Make.com
+
+### 1. Importación del blueprint (3 minutos)
+
+| Paso | Descripción | Tiempo |
+|------|-------------|--------|
+| Importar escenario | Usa el blueprint proporcionado por E-SMART360 para crear el escenario base | 1 min |
+| Actualizar URL del webhook | Reemplaza la URL de ejemplo con la URL real de tu agente | 1 min |
+| Configurar conexiones | Autoriza el acceso a los servicios que utilizarás (Google, CRM, etc.) | 1 min |
+
+### 2. Configuración avanzada (20 minutos)
+
+- [ ] **Configurar almacenes de datos**: Crea almacenes para gestionar el historial de contactos y evitar llamadas duplicadas.
+- [ ] **Configurar routers para lógica condicional**: Define reglas como "si el lead es de tipo VIP → llamar inmediatamente", "si es de tipo estándar → esperar 5 minutos".
+- [ ] **Agregar manejadores de errores**: Configura rutas alternativas para cuando un módulo falle (por ejemplo, intentar con otro servicio o notificar al equipo).
+- [ ] **Configurar webhooks de monitoreo**: Activa notificaciones que te alerten cuando un escenario falle o se comporte de forma inesperada.
+
+### Comparativa rápida: Zapier vs Make.com
+
+<Tabs>
+<Tab title="Zapier">
+**Ventajas:**
+- Curva de aprendizaje mínima
+- Interfaz visual intuitiva
+- Gran cantidad de integraciones preconstruidas
+- Ideal para automatizaciones simples y medianas
+
+**Ideal para:** Equipos pequeños, automatizaciones de hasta 10 pasos, usuarios sin experiencia técnica.
+</Tab>
+<Tab title="Make.com">
+**Ventajas:**
+- Lógica condicional avanzada (routers, filtros)
+- Almacenes de datos persistentes
+- Manejo de errores granular
+- Escenarios complejos con cientos de módulos
+
+**Ideal para:** Automatizaciones complejas, empresas con requerimientos específicos, usuarios técnicos.
+</Tab>
+</Tabs>
+
+<Callout kind="tip" title="¿No sabes cuál elegir?">
+Si tu automatización es simple (un formulario → una llamada), usa Zapier. Si necesitas lógica condicional, bases de datos intermedias o múltiples rutas de acción, Make.com es la mejor opción.
+</Callout>
+
+## Preguntas frecuentes
+
+<ExpandableGroup>
+<Expandable title="¿Qué hago si el webhook no recibe los datos?" defaultOpen="true">
+Primero verifica que la URL del webhook esté correctamente copiada. Luego revisa que el payload enviado coincida con el formato esperado por E-SMART360. Puedes usar herramientas como Webhook.site para inspeccionar las solicitudes que envía tu automatización. Si el problema persiste, consulta la guía de solución de problemas.
+</Expandable>
+<Expandable title="¿Puedo usar varias automatizaciones al mismo tiempo?">
+Sí. Puedes tener múltiples Zaps o escenarios activos simultáneamente, cada uno apuntando a diferentes agentes de voz o usando diferentes disparadores. E-SMART360 maneja la concurrencia de forma transparente.
+</Expandable>
+<Expandable title="¿Los campos mapeados deben llamarse exactamente igual?">
+No necesariamente. Puedes transformar y renombrar campos durante el mapeo. Lo importante es que los valores esperados por E-SMART360 (principalmente el número de teléfono) lleguen correctamente en el payload.
+</Expandable>
+<Expandable title="¿Cuánto tiempo toma implementar una automatización compleja?">
+Una automatización básica se configura en 15-30 minutos. Las automatizaciones avanzadas con lógica condicional, múltiples rutas y almacenes de datos pueden tomar de 1 a 3 horas, dependiendo de la complejidad.
+</Expandable>
+<Expandable title="¿Necesitas ayuda con tu implementación?">
+<Callout kind="info" title="Soporte técnico">
+Si encuentras dificultades durante la implementación o necesitas asistencia personalizada, nuestro equipo de soporte está disponible para ayudarte. Contáctanos a través del panel de ayuda en tu cuenta de E-SMART360.
+</Callout>
+</Expandable>
+</ExpandableGroup>

@@ -1,0 +1,154 @@
+---
+title: "Configuración de API Key de Sarvam AI en E-SMART360"
+description: "Guía completa para conectar tu cuenta de Sarvam AI con E-SMART360. Aprende paso a paso cómo generar y configurar tu API key de Sarvam para potenciar tus agentes de voz con capacidades multilingüe."
+---
+
+La integración con **Sarvam AI** permite a E-SMART360 aprovechar modelos de lenguaje avanzados especializados en lenguas indias y procesamiento de voz multilingüe. Esta guía te llevará por cada paso para establecer la conexión entre tu cuenta de Sarvam y tu agente de voz.
+
+<Callout type="info" title="¿Qué necesitas antes de empezar?">
+  Una cuenta activa en Sarvam AI (puedes registrarte en dashboard.sarvam.ai) y acceso al panel de administración de E-SMART360.
+</Callout>
+
+## Paso 1: Inicia sesión en tu cuenta de E-SMART360
+
+Accede a [E-SMART360](/) e inicia sesión con tus credenciales de administrador.
+
+<Callout type="tip" title="¿No tienes cuenta aún?">
+  Si aún no tienes una cuenta, contacta a nuestro equipo de soporte para recibir tu enlace de registro y credenciales de acceso.
+</Callout>
+
+## Paso 2: Navega a la sección de Integraciones
+
+1. Desde el panel principal de E-SMART360, localiza la barra lateral izquierda.
+2. Haz clic en la opción **Integraciones**.
+3. Se abrirá la página con todas las integraciones disponibles.
+
+![Panel de integraciones de E-SMART360](/recursos/integraciones/panel-integraciones.png)
+
+## Paso 3: Localiza el campo de Sarvam AI
+
+Dentro de la página de integraciones, busca la sección de **Sarvam AI**. Verás un campo de texto etiquetado como **Sarvam AI API Key** donde deberás ingresar tu clave.
+
+![Campo de API Key de Sarvam en E-SMART360](/recursos/integraciones/campo-sarvam-api-key.png)
+
+<Callout type="warning" title="Seguridad de tu API Key">
+  Nunca compartas tu API Key de Sarvam con terceros ni la expongas en código frontend. E-SMART360 almacena tu clave de forma segura y encriptada.
+</Callout>
+
+## Paso 4: Inicia sesión en tu cuenta de Sarvam AI
+
+1. Abre una nueva pestaña en tu navegador.
+2. Ve a [https://dashboard.sarvam.ai](https://dashboard.sarvam.ai/).
+3. Inicia sesión con las credenciales de tu cuenta de Sarvam AI.
+
+<Callout type="tip" title="Registro en Sarvam">
+  Si no tienes una cuenta en Sarvam AI, puedes crear una directamente desde su panel de registro. Sarvam ofrece pruebas gratuitas con crédito inicial para que puedas evaluar sus modelos.
+</Callout>
+
+## Paso 5: Navega a la sección de API Keys
+
+Desde el panel principal de Sarvam AI, localiza y haz clic en la sección **API Keys** en el menú de navegación.
+
+![Sección de API Keys en Sarvam AI](/recursos/integraciones/sarvam-api-keys-section.png)
+
+### Tipos de API Keys en Sarvam
+
+| Tipo de Key | Propósito | Recomendación |
+|-------------|-----------|---------------|
+| **Test Key** | Para desarrollo y pruebas | Ideal para entorno de staging |
+| **Production Key** | Para despliegue en producción | Usa esta para agentes en vivo |
+
+## Paso 6: Crea una nueva API Key
+
+1. Haz clic en el botón **Create API Key**.
+2. Completa los detalles solicitados, como el nombre descriptivo de la clave (ej. "integración-e-smart360-prod").
+3. Selecciona los permisos adecuados si Sarvam ofrece distintos niveles de acceso.
+
+![Creación de API Key en Sarvam AI](/recursos/integraciones/sarvam-create-api-key.png)
+
+### Buenas prácticas para nombrar tus API Keys
+
+<Callout type="success" title="Convención de nombres recomendada">
+```
+[entorno]-[plataforma]-[fecha]
+Ejemplo: produccion-e-smart360-2025-01
+```
+</Callout>
+
+## Paso 7: Genera y copia la API Key
+
+1. Haz clic en **Create** para generar tu API key.
+2. **Cópiala inmediatamente** — Sarvam AI solo la mostrará una vez por razones de seguridad.
+
+<Callout type="danger" title="¡No pierdas tu API Key!">
+  Si cierras la ventana sin copiar la clave, deberás generar una nueva. Te recomendamos guardarla temporalmente en un gestor de contraseñas como 1Password, Bitwarden o LastPass.
+</Callout>
+
+![API Key generada en Sarvam AI](/recursos/integraciones/sarvam-api-key-generated.png)
+
+## Paso 8: Pega la clave en E-SMART360 y guarda
+
+1. Regresa al panel de administración de E-SMART360.
+2. En la sección de Integraciones, pega la API Key de Sarvam AI en el campo correspondiente.
+3. Haz clic en **Guardar**.
+
+<Tabs>
+  <Tab title="Éxito">
+    <Callout type="success" title="Conexión establecida">
+      Tu cuenta de Sarvam AI ahora está conectada exitosamente con E-SMART360. Ya puedes usar los modelos de Sarvam en tus agentes de voz.
+    </Callout>
+  </Tab>
+  <Tab title="Error común">
+    <Callout type="warning" title="La clave no se guarda">
+      Si el sistema no guarda la clave, verifica que no tenga espacios adicionales al copiarla. Prueba copiando nuevamente desde Sarvam o genera una clave nueva.
+    </Callout>
+  </Tab>
+</Tabs>
+
+## Verificación de la integración
+
+Una vez configurada la API Key, puedes verificar que la integración funciona correctamente:
+
+1. Ve a la sección de **Agentes** en E-SMART360.
+2. Selecciona un agente existente o crea uno nuevo.
+3. En la configuración del modelo de lenguaje, selecciona **Sarvam AI** como proveedor.
+4. Prueba el agente con una frase de ejemplo.
+
+<Callout type="info" title="Modelos disponibles de Sarvam AI">
+  Sarvam ofrece modelos optimizados para lenguas indias como hindi, tamil, telugu, bengalí y más. Consulta la documentación oficial de Sarvam para conocer los modelos específicos disponibles según tu plan.
+</Callout>
+
+## Capacidades que desbloquea Sarvam AI en E-SMART360
+
+| Capacidad | Descripción | Beneficio Clave |
+|-----------|-------------|-----------------|
+| **ASR Multilingüe** | Reconocimiento de voz con acento indio | Mayor precisión en el reconocimiento |
+| **TTS en lenguas indias** | Síntesis de voz natural | Experiencia nativa para usuarios |
+| **Modelos LLM bilingües** | Comprensión y generación de texto en inglés e hindi | Soporte conversacional híbrido |
+| **Procesamiento de audio optimizado** | Menor latencia en tareas de voz | Respuestas más rápidas |
+
+## Preguntas frecuentes
+
+<ExpandableGroup>
+  <Expandable title="¿Puedo usar Sarvam AI y otro proveedor al mismo tiempo?" default-open="true">
+    Sí, E-SMART360 te permite configurar múltiples proveedores de IA simultáneamente. Puedes asignar diferentes agentes a diferentes proveedores según tus necesidades. Por ejemplo, usar Sarvam para agentes que atienden en hindi y OpenAI para agentes en inglés.
+  </Expandable>
+
+  <Expandable title="¿Qué planes de Sarvam AI funcionan con E-SMART360?">
+    Cualquier plan de Sarvam AI que incluya acceso a API es compatible. Desde el plan gratuito con créditos iniciales hasta los planes empresariales. El rendimiento dependerá del límite de tasa (rate limit) de tu plan.
+  </Expandable>
+
+  <Expandable title="¿Cuánto tiempo tarda en reflejarse el cambio después de guardar la API Key?">
+    La integración es inmediata. Una vez que guardas la API Key, tu agente de E-SMART360 puede empezar a usar Sarvam AI en la siguiente interacción sin necesidad de reiniciar el sistema.
+  </Expandable>
+
+  <Expandable title="¿Cómo sé si mi API Key de Sarvam ha expirado?">
+    Sarvam AI notifica por correo electrónico cuando una API Key está próxima a expirar. En E-SMART360, si una clave expira, el sistema intentará usar el proveedor y fallará; recibirás un error en el panel y en los logs del agente indicando "authentication failed" o "invalid API key".
+  </Expandable>
+
+  <Expandable title="¿Necesitas ayuda con la integración de Sarvam AI?">
+    <Callout type="alert" title="Soporte técnico">
+      Si encuentras algún problema durante la configuración o necesitas ayuda adicional, nuestro equipo de soporte técnico está disponible para asistirte. Contáctanos a través del panel de E-SMART360 en la sección de Ayuda o escribe a nuestro equipo de integraciones.
+    </Callout>
+  </Expandable>
+</ExpandableGroup>

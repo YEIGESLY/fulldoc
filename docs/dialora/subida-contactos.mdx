@@ -1,0 +1,219 @@
+---
+title: "Subida de Contactos en Formato CSV"
+description: "Aprende a subir contactos en formato CSV a E-SMART360 siguiendo una estructura específica que garantiza una importación limpia, rápida y sin errores. Incluye pasos detallados, formato obligatorio, campos personalizados y buenas prácticas."
+---
+
+La subida de contactos es una de las operaciones más frecuentes al configurar campañas de comunicación automatizada. Para que el proceso sea fluido y los datos se integren correctamente, tu archivo CSV debe seguir un formato específico.
+
+<Callout kind="info">
+  Asegúrate de que tu archivo CSV esté codificado en **UTF-8** y que los separadores sean comas (`,`). Esto evita problemas de caracteres especiales como tildes, eñes o símbolos.
+</Callout>
+
+## Formato CSV — Primeros 4 Campos Obligatorios
+
+Las primeras cuatro columnas de tu archivo CSV deben tener esta estructura exacta, **sin espacios adicionales**:
+
+| Columna | Campo | Descripción |
+|---------|-------|-------------|
+| 1 | `name` | Nombre completo del contacto |
+| 2 | `phone` | Número telefónico en formato internacional |
+| 3 | `email` | Correo electrónico |
+| 4 | `company` | Nombre de la empresa o entidad |
+
+<Callout kind="tip">
+  El orden de las columnas debe respetarse estrictamente. No agregues espacios antes o después de las comas. Un formato incorrecto puede provocar errores en la importación.
+</Callout>
+
+<Image alt="Ejemplo de formato CSV con los primeros 4 campos obligatorios" />
+
+### Ejemplo de CSV Mínimo
+
+```csv
+name,phone,email,company
+Carlos Martínez,+521234567890,carlos@ejemplo.com,InnovaTech
+Ana Gómez,+34911223344,ana.gomez@empresa.es,GlobalCorp
+Luis Fernández,+525598765432,luis@negocio.mx,TuCasa Inmobiliaria
+```
+
+### Campos Adicionales (Opcionales)
+
+Después de los 4 campos obligatorios, puedes agregar columnas extra para enriquecer tus datos:
+
+| Campo | Tipo | Ejemplo |
+|-------|------|---------|
+| `tags` | texto | `cliente-vip, campaña-marzo` |
+| `notes` | texto | `Prefiere llamadas en la mañana` |
+| `city` | texto | `Ciudad de México` |
+| `custom_field_1` | texto | Cualquier etiqueta personalizada |
+
+Puedes añadir tantos campos adicionales como necesites. La plataforma los reconocerá automáticamente como metadatos del contacto.
+
+<Callout kind="success">
+  Los campos adicionales se almacenan como atributos del contacto y pueden usarse posteriormente para segmentar campañas, personalizar mensajes o filtrar resultados en reportes.
+</Callout>
+
+### Ejemplo de CSV Completo
+
+```csv
+name,phone,email,company,tags,notes,city
+María Torres,+525511223344,maria@demo.mx,EducaPlus,interesado-curso,"Prefiere WhatsApp",Guadalajara
+Pedro Sánchez,+525533445566,pedro@servicios.com,Asistencia Total,cliente-recurrente,Llamar después de las 4pm,Monterrey
+Lucía Ramírez,+525577889900,lucia@tienda.mx,TiendaOnline,nueva-alta,ninguna,Cancún
+```
+
+<Callout kind="warning">
+  Si usas comillas dobles (`"`) para rodear valores que contengan comas, asegúrate de escapar cualquier comilla interna duplicándola. Por ejemplo: `"Nota con ""comillas"" internas"`.
+</Callout>
+
+## Pasos para Subir Contactos
+
+Sigue estos pasos para importar tus contactos de forma correcta en E-SMART360.
+
+<Steps>
+  <Step icon="1" title="Accede al Módulo de Contactos">
+    Inicia sesión en tu **panel de E-SMART360** y haz clic en la sección **Contactos** del menú lateral.
+    
+    <Callout kind="info">
+      Si no ves la sección Contactos, verifica que tu rol de usuario tenga los permisos adecuados. Contacta a tu administrador si es necesario.
+    </Callout>
+  </Step>
+
+  <Step icon="2" title="Crea un Grupo de Contactos">
+    Dentro de la pestaña **Grupos**, haz clic en **Crear Grupo**.
+    
+    Ponle un nombre descriptivo, por ejemplo: `Clientes-PrimerTrimestre`.
+    
+    <Callout kind="tip">
+      Usa nombres de grupo que te ayuden a identificar la campaña, región o segmento. Por ejemplo: `Campana-Verano-2025`, ` Leads-CDMX` o `Clientes-VIP-Soporte`.
+    </Callout>
+    
+    Los grupos te permiten organizar tus contactos y aplicar campañas específicas a cada segmento.
+  </Step>
+
+  <Step icon="3" title="Selecciona el Método de Subida">
+    En el panel derecho encontrarás dos opciones:
+    
+    - **Agregar Manualmente** — ideal para añadir uno o dos contactos.
+    - **Subir Contactos** — para importación masiva mediante archivo CSV.
+    
+    Haz clic en **Subir Contactos**.
+  </Step>
+
+  <Step icon="4" title="Sube tu Archivo CSV">
+    Aparecerá una ventana emergente solicitando que selecciones tu archivo CSV desde el sistema.
+    
+    <Callout kind="warning">
+      Verifica que el archivo no exceda el tamaño máximo permitido (generalmente 10 MB) y que la codificación sea UTF-8. Archivos con BOM (Byte Order Mark) pueden causar errores silenciosos en los primeros registros.
+    </Callout>
+    
+    Haz clic en **Seleccionar Archivo** y elige el CSV correctamente formateado.
+  </Step>
+
+  <Step icon="5" title="Confirma la Importación">
+    Una vez seleccionado el archivo, confirma la operación. El sistema validará el formato, procesará los registros y los asignará al grupo que elegiste.
+    
+    Recibirás una notificación cuando la importación haya finalizado, junto con un resumen de:
+    
+    - **Contactos importados** exitosamente
+    - **Registros omitidos** por errores de formato o duplicados
+    - **Tiempo total** de procesamiento
+    
+    <Callout kind="success">
+      Si hay errores, el sistema genera un archivo de log descargable con los detalles de cada registro problemático para que puedas corregirlos fácilmente.
+    </Callout>
+  </Step>
+</Steps>
+
+## Buenas Prácticas para la Subida de Contactos
+
+### Preparación del Archivo
+
+<Tabs>
+  <Tab title="Antes de Subir">
+    1. Limpia datos duplicados en tu hoja de cálculo.
+    2. Normaliza los números telefónicos al formato internacional (ej. +521234567890).
+    3. Verifica que todas las direcciones de correo tengan formato válido.
+    4. Elimina espacios invisibles o caracteres de control.
+    5. Guarda el archivo con codificación UTF-8.
+  </Tab>
+  <Tab title="Después de Subir">
+    1. Revisa el resumen de importación para verificar que todos los contactos se procesaron.
+    2. Navega al grupo creado y confirma que los datos se vean correctos.
+    3. Si hay errores, descarga el log, corrige los registros y vuelve a subir solo los fallidos.
+    4. Asigna etiquetas personalizadas si necesitas filtros adicionales.
+  </Tab>
+</Tabs>
+
+### Tamaño Recomendado de Lotes
+
+<Columns cols="3">
+  <Card title="Pequeño" description="Hasta 500 contactos por lote. Ideal para pruebas y segmentos piloto." />
+  <Card title="Mediano" description="De 500 a 10,000 contactos. Balance óptimo entre velocidad y control de calidad." />
+  <Card title="Grande" description="Más de 10,000 contactos. Recomendado dividir en lotes de 10,000 para mejor rendimiento." />
+</Columns>
+
+## Personalización de Metadatos
+
+Los campos adicionales en tu CSV se convierten automáticamente en etiquetas o atributos personalizados. Esto permite:
+
+- **Segmentación avanzada**: filtra contactos por ciudad, interés o cualquier campo extra.
+- **Personalización en campañas**: usa etiquetas como `{city}` o `{tags}` en tus guiones o mensajes.
+- **Reportes detallados**: agrupa resultados por metadatos específicos.
+
+<Callout kind="info">
+  Puedes tener hasta **50 campos personalizados** por contacto. Si necesitas más, contacta a nuestro equipo de soporte para habilitar planes extendidos.
+</Callout>
+
+### Uso de Etiquetas en Guiones
+
+Si has subido contactos con el campo `tags`, puedes referenciarlo en tus guiones de llamada:
+
+<!-- code example (no ejecutable) -->
+```
+El sistema reconoce que {tags} contiene las preferencias del cliente.
+```
+
+Esto permite que cada llamada o mensaje use la información específica de cada contacto.
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+  <Expandable title="¿Qué hago si la importación falla?" default-open="true">
+    Lo primero es revisar el archivo de log que el sistema genera automáticamente. Los errores más comunes son:
+    
+    - **Formato de número inválido**: asegúrate de incluir el código de país (ej. +52 para México, +34 para España).
+    - **Columnas desordenadas**: verifica que las primeras 4 columnas sigan el orden `name, phone, email, company`.
+    - **Espacios adicionales**: elimina espacios al inicio o final de los valores.
+    - **Archivo corrupto**: abre el CSV en un editor de texto plano para confirmar que se vea correcto.
+    
+    <Callout kind="tip">
+      Una herramienta útil es abrir tu CSV con un editor como Visual Studio Code o Notepad++ para inspeccionar los caracteres invisibles.
+    </Callout>
+  </Expandable>
+
+  <Expandable title="¿Puedo subir contactos desde Excel (XLSX)?">
+    No directamente. El sistema acepta únicamente archivos **CSV con separación por comas**. Sin embargo, puedes exportar tu hoja de Excel a CSV fácilmente:
+    
+    1. En Excel, ve a **Archivo → Guardar Como**.
+    2. Selecciona **CSV UTF-8 (delimitado por comas)** como tipo de archivo.
+    3. Confirma el guardado y luego súbelo a E-SMART360.
+    
+    <Callout kind="warning">
+      No uses "CSV (delimitado por tabulaciones)" porque el tabulador no es un separador válido en E-SMART360.
+    </Callout>
+  </Expandable>
+
+  <Expandable title="¿Los contactos duplicados se importan dos veces?">
+    Por defecto, el sistema **omite los duplicados** basándose en el número telefónico. Si dos registros tienen el mismo `phone`, solo se conserva el primero. Puedes configurar este comportamiento desde la gestión de grupos si necesitas sobrescribir contactos existentes.
+  </Expandable>
+
+  <Expandable title="¿Puedo subir contactos mediante API en lugar de CSV?">
+    Sí. E-SMART360 expone un endpoint REST para la creación masiva de contactos. Consulta la [documentación de la API de Contactos](/recursos/api-contactos) para más detalles sobre el formato JSON y los límites de tasa.
+  </Expandable>
+
+  <Expandable title="¿Necesitas ayuda con la subida de contactos?">
+    <Callout kind="info" title="Contacta a Soporte">
+      Si después de revisar estos pasos aún tienes problemas para subir tus contactos, nuestro equipo de soporte técnico está disponible para ayudarte. Escríbenos desde el panel de ayuda o envía un correo detallando el error que recibes para que podamos asistirte rápidamente.
+    </Callout>
+  </Expandable>
+</ExpandableGroup>

@@ -1,0 +1,219 @@
+---
+title: "Integración de Deepgram con E-SMART360 — Transcripción de Voz con IA"
+description: "Guía completa para conectar tu API Key de Deepgram con E-SMART360. Configura la transcripción de voz en tiempo real para tus agentes de IA paso a paso, desde la creación de la API Key en Deepgram Console hasta su conexión en el panel de integraciones."
+---
+
+Deepgram ofrece servicios de transcripción y reconocimiento de voz (Speech-to-Text) impulsados por IA, con capacidades de procesamiento en tiempo real, baja latencia y alta precisión. Al integrar Deepgram con E-SMART360, tus agentes de voz pueden transcribir conversaciones telefónicas completas, detectar intenciones del hablante, identificar momentos clave y habilitar búsquedas dentro del contenido de las llamadas.
+
+Esta guía te llevará por cada paso de la configuración, desde la obtención de tu API Key hasta su conexión exitosa en el panel de integraciones.
+
+<Callout kind="info">
+  **¿Qué necesitas para empezar?** Una cuenta activa en E-SMART360 y una cuenta en [Deepgram](https://console.deepgram.com/). Deepgram ofrece un plan gratuito para comenzar con créditos iniciales sin costo.
+</Callout>
+
+---
+
+## Iniciar sesión en tu cuenta de E-SMART360
+
+El primer paso es acceder a tu cuenta en el panel principal.
+
+1. Ve al portal de [E-SMART360](https://e-smart360.com/) e inicia sesión con tus credenciales.
+2. Una vez dentro del dashboard, ubica la barra lateral izquierda que contiene las secciones de navegación.
+
+---
+
+## Navegar a la sección de integraciones
+
+Desde el panel principal, dirígete a la sección donde se gestionan las conexiones con servicios externos.
+
+1. En la barra lateral izquierda del dashboard, localiza y haz clic en **Integraciones**.
+2. Se abrirá el panel de integraciones con los campos para conectar distintos proveedores de servicios de voz.
+
+---
+
+## Localizar el campo de Deepgram
+
+Dentro del panel de integraciones, cada proveedor tiene su propio campo de configuración.
+
+<Steps>
+  <Step icon="search">
+    ### Identificar el campo de API Key de Deepgram
+
+    Busca el campo etiquetado como **Deepgram API Key**. Es aquí donde pegarás tu clave de API una vez que la hayas generado.
+
+    <Callout kind="tip">
+      Si tienes varios proveedores de transcripción configurados, asegúrate de estar editando el campo correcto de Deepgram y no el de otro servicio como Whisper o Google STT.
+    </Callout>
+  </Step>
+</Steps>
+
+---
+
+## Iniciar sesión en la consola de Deepgram
+
+Ahora necesitas acceder a tu cuenta de Deepgram para generar la API Key.
+
+1. Abre una nueva pestaña en tu navegador y dirígete a la [Deepgram Console](https://console.deepgram.com/).
+2. Inicia sesión con las credenciales de tu cuenta de Deepgram. Si aún no tienes una, puedes crearla gratuitamente desde el mismo enlace.
+
+---
+
+## Crear una nueva API Key
+
+Dentro de la consola de Deepgram, deberás generar una clave de API específica para esta integración.
+
+1. En la esquina superior derecha de la Deepgram Console, haz clic en el botón **Create a New API Key**.
+
+<Callout kind="info">
+  Si no ves el botón inmediatamente, asegúrate de estar en la vista de **API Keys** dentro de la sección de configuración de tu proyecto en Deepgram.
+</Callout>
+
+---
+
+## Completar los detalles de la API Key
+
+Deepgram te solicitará completar varios campos para personalizar tu nueva clave de API.
+
+<Columns cols="2">
+  <Card title="Campos requeridos" icon="document-text">
+    - **Friendly Name** — asígnale un nombre reconocible, por ejemplo: "Integración E-SMART360"
+    - **Permissions** — selecciona el nivel de acceso adecuado (recomendado: al menos permisos de transcripción)
+    - **Expiration** — elige cuándo debe expirar la clave (recomendado: sin expiración o el máximo permitido)
+    - **Tag** — añade una etiqueta para organizar tus claves, ej: "e-smart360-integration"
+  </Card>
+  <Card title="Documentación oficial" icon="book-open">
+    Para información más detallada sobre cada campo y las opciones de permisos disponibles, consulta la guía oficial: [Crear claves de API adicionales](https://developers.deepgram.com/docs/create-additional-api-keys)
+  </Card>
+</Columns>
+
+<Callout kind="warning">
+  **Seguridad de la API Key:** La API Key de Deepgram es una credencial sensible. Trátala como una contraseña. No la compartas en repositorios públicos, archivos de configuración expuestos o mensajes no cifrados.
+</Callout>
+
+---
+
+## Generar la API Key
+
+1. Una vez que hayas completado todos los campos, haz clic en **Create** para generar tu API Key.
+2. Deepgram mostrará la clave generada. **Cópiala inmediatamente**, ya que por razones de seguridad muchas plataformas no vuelven a mostrar la clave completa después de cerrar el diálogo.
+
+---
+
+## Conectar Deepgram con E-SMART360
+
+Ahora que tienes tu API Key de Deepgram, es momento de conectarla con tu cuenta de E-SMART360.
+
+1. Vuelve a la pestaña donde tienes abierto el dashboard de E-SMART360.
+2. En la sección de **Integraciones**, pega la API Key de Deepgram en el campo correspondiente.
+3. Haz clic en **Guardar** para confirmar la conexión.
+
+<Callout kind="success">
+  **¡Conexión exitosa!** Tu cuenta de Deepgram ya está conectada con E-SMART360. A partir de este momento, tus agentes de voz podrán utilizar los servicios de transcripción de Deepgram en todas las conversaciones.
+</Callout>
+
+---
+
+## Verificar la integración
+
+Para confirmar que la integración funciona correctamente:
+
+1. Realiza una llamada de prueba con uno de tus agentes de voz configurados.
+2. Revisa el registro de transcripciones en el panel de E-SMART360.
+3. Verifica que las transcripciones se generen en tiempo real con la calidad esperada.
+
+---
+
+## Casos de uso avanzados con Deepgram
+
+<Columns cols="2">
+  <Card title="Transcripción en tiempo real" icon="play">
+    Deepgram procesa el audio de las llamadas mientras ocurren, permitiendo a tu agente interpretar el contexto de la conversación al instante.
+  </Card>
+  <Card title="Detección de intenciones" icon="light-bulb">
+    Configura palabras clave y frases para que Deepgram detecte automáticamente cuándo un cliente está interesado, confundido o listo para comprar.
+  </Card>
+  <Card title="Análisis posterior a la llamada" icon="chart">
+    Revisa transcripciones completas de llamadas anteriores para entrenar a tu agente, identificar oportunidades de mejora o resolver disputas.
+  </Card>
+  <Card title="Búsqueda en conversaciones" icon="search">
+    Busca términos específicos, nombres de productos o preguntas frecuentes dentro de miles de transcripciones almacenadas.
+  </Card>
+</Columns>
+
+---
+
+## Configuración recomendada para Deepgram
+
+Para obtener el mejor rendimiento con E-SMART360, te recomendamos los siguientes ajustes en tu cuenta de Deepgram:
+
+<Tabs>
+  <Tab title="Reconocimiento de voz">
+    ```json
+    {
+      "model": "nova-2",
+      "language": "es",
+      "smart_format": true,
+      "punctuate": true,
+      "utterances": true,
+      "diarize": true,
+      "encoding": "linear16",
+      "sample_rate": 8000
+    }
+    ```
+  </Tab>
+  <Tab title="Transcripción resumida">
+    ```json
+    {
+      "model": "nova-2",
+      "language": "es",
+      "summarize": true,
+      "smart_format": true,
+      "punctuate": true,
+      "paragraphs": true
+    }
+    ```
+  </Tab>
+  <Tab title="Detección de temas">
+    ```json
+    {
+      "model": "nova-2",
+      "language": "es",
+      "detect_topics": true,
+      "smart_format": true,
+      "punctuate": true
+    }
+    ```
+  </Tab>
+</Tabs>
+
+<Callout kind="tip">
+  El modelo **Nova-2** de Deepgram ofrece la mejor relación precisión-velocidad para llamadas telefónicas. Si trabajas con audios de mayor calidad o necesitas transcripciones en múltiples idiomas, considera **Nova-2 Multilingual**.
+</Callout>
+
+---
+
+## Preguntas frecuentes
+
+<ExpandableGroup>
+  <Expandable title="¿Es obligatorio tener una cuenta de Deepgram para usar E-SMART360?" default-open="true">
+    No, no es obligatorio. E-SMART360 ofrece opciones de transcripción integradas. Sin embargo, Deepgram proporciona capacidades avanzadas de transcripción en tiempo real con baja latencia, detección de intenciones y análisis de sentimiento que mejoran significativamente la experiencia del agente de voz. Recomendamos Deepgram para casos de uso que requieran transcripción de alta precisión o análisis posterior de conversaciones.
+  </Expandable>
+
+  <Expandable title="¿Deepgram cobra adicionalmente por la transcripción?">
+    Sí. Deepgram tiene su propio modelo de precios independiente de E-SMART360. Cada segundo de audio transcrito se factura según el plan de Deepgram que hayas contratado. Deepgram ofrece un plan gratuito con créditos iniciales para que puedas probar el servicio antes de comprometerte con un plan de pago. Te recomendamos revisar los precios actualizados en el sitio oficial de Deepgram.
+  </Expandable>
+
+  <Expandable title="¿Puedo cambiar de proveedor de transcripción más adelante?">
+    Sí, absolutamente. Puedes cambiar entre Deepgram y otros proveedores de transcripción (como Whisper, Google STT, Azure Speech, etc.) en cualquier momento desde la sección de Integraciones de E-SMART360. Solo necesitas guardar la nueva API Key y el sistema comenzará a usar el nuevo proveedor en las siguientes llamadas. No hay períodos de compromiso.
+  </Expandable>
+
+  <Expandable title="¿Qué permisos debe tener mi API Key de Deepgram para funcionar con E-SMART360?">
+    La API Key debe tener al menos permisos de **transcripción** (usage:usage) para que E-SMART360 pueda enviar el audio de las llamadas a Deepgram. Si planeas utilizar funcionalidades adicionales como resúmenes, detección de temas o análisis de sentimiento, asegúrate de que tu plan de Deepgram incluya esos servicios y que la API Key esté configurada con alcance suficiente. En caso de duda, selecciona "Full Access" durante la creación de la API Key.
+  </Expandable>
+
+  <Expandable title="¿Necesitas ayuda con la integración de Deepgram?">
+    <Callout kind="alert">
+      **¿Tienes problemas con la configuración?** Si encuentras errores al guardar la API Key, la transcripción no se activa o la calidad no es la esperada, contacta a nuestro equipo de soporte técnico. Te ayudaremos a verificar la conexión, revisar los permisos de tu API Key y optimizar la configuración para tu caso de uso específico. También puedes consultar nuestra [documentación de solución de problemas](/recursos/solucion-problemas-integraciones).
+    </Callout>
+  </Expandable>
+</ExpandableGroup>

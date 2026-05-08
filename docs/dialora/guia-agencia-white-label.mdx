@@ -1,0 +1,324 @@
+---
+title: "Guía de Configuración de Agencia — Portal White-Label de E-SMART360"
+description: "Aprende a configurar tu cuenta de agencia en E-SMART360, personalizar la marca, configurar el correo SMTP y crear subcuentas de clientes bajo tu portal white-label."
+---
+
+<Callout type="info">
+Esta guía está diseñada para agencias que han contratado los Planes Tier 3 o Tier 4 de E-SMART360. Te permite operar una plataforma completa de agentes de voz con tu propia marca, gestionando múltiples clientes desde un solo panel de control.
+</Callout>
+
+## Acceso al Panel de Agencia
+
+Una vez que te suscribas al Plan de Agencia, aparecerá un Panel de Agencia dedicado en tu cuenta.
+
+<Steps>
+<Step title="Localiza el Panel de Agencia">
+En la esquina superior izquierda de tu cuenta de E-SMART360, encontrarás un menú desplegable. Selecciona la opción **Agency Dashboard** para cambiar al panel de agencia.
+</Step>
+
+<Step title="Verifica tu suscripción">
+Asegúrate de que tu plan activo sea Tier 3 o Tier 4. Estos son los únicos planes que incluyen el portal white-label completo con todas las funcionalidades descritas en esta guía.
+</Step>
+</Steps>
+
+<Callout type="tip">
+Si no ves el Panel de Agencia después de suscribirte, espera unos minutos y recarga la página. En caso de que persista, contacta a soporte para verificar la activación correcta de tu plan.
+</Callout>
+
+## Paso 1 — Personalización de Marca
+
+Tu primera tarea es aplicar tu propia identidad visual a la plataforma. El proceso de white-labeling reemplazará todos los elementos gráficos de E-SMART360 por los de tu agencia.
+
+<Steps>
+<Step title="Abrir Personalización de Marca" icon="paintbrush">
+Dentro del Panel de Agencia, haz clic en el botón **Update Branding** ubicado en la esquina superior derecha.
+</Step>
+
+<Step title="Completar los campos de marca">
+En la ventana emergente, proporciona la siguiente información:
+
+- **Nombre de Agencia/Empresa**: El nombre comercial que verán tus clientes.
+- **Logo de Marca**: Sigue las guías de tamaño y proporción de píxeles recomendadas para asegurar una visualización óptima.
+- **Icono de Marca**: Un ícono cuadrado que se usará en el favicon y elementos pequeños de la interfaz.
+</Step>
+
+<Step title="Guardar cambios">
+Haz clic en **Save Branding**. El panel de agencia y todos los portales de tus clientes reflejarán ahora tu identidad de marca.
+</Step>
+</Steps>
+
+<Callout type="success">
+Una vez guardada la marca, tanto tu panel interno como los dashboards de tus clientes mostrarán tu logotipo, nombre e icono. La experiencia será completamente white-label.
+</Callout>
+
+### Especificaciones recomendadas para imágenes de marca
+
+| Elemento | Formato recomendado | Tamaño máximo | Proporción |
+|----------|---------------------|---------------|------------|
+| Logo | PNG con fondo transparente | 2 MB | 4:1 (ancho:alto) |
+| Icono | PNG cuadrado | 1 MB | 1:1 |
+| Favicon | ICO o PNG | 256 KB | 32×32 px |
+
+## Paso 2 — Configuración de Correo Electrónico (SMTP)
+
+La configuración SMTP garantiza que todos los correos enviados a tus clientes (creación de cuenta, detalles de inicio de sesión, notificaciones) se envíen desde el dominio de tu agencia y no desde E-SMART360.
+
+<Steps>
+<Step title="Acceder a Configuración de Email" icon="envelope">
+Navega a **Email Settings (SMTP)** dentro del Panel de Agencia.
+</Step>
+
+<Step title="Ingresar parámetros SMTP">
+Completa los siguientes campos:
+
+- **Host**: Ejemplo: `smtp.gmail.com`
+- **Puerto**: Generalmente `465` (SSL) o `587` (TLS)
+- **Usuario**: Tu dirección de correo electrónico completa
+- **Contraseña**: La contraseña de tu correo o una contraseña específica de aplicación
+- **Desde (From Email)**: La dirección de remitente que verán tus clientes
+</Step>
+
+<Step title="Probar la conexión">
+Antes de guardar, utiliza la opción de prueba para verificar que los datos SMTP sean correctos y que el servidor de correo acepte la conexión.
+</Step>
+
+<Step title="Guardar configuración">
+Haz clic en **Save** para activar el envío de correos con tu propia infraestructura de email.
+</Step>
+</Steps>
+
+### Proveedores SMTP compatibles
+
+<Tabs>
+<Tab title="Gmail">
+- **Host**: smtp.gmail.com
+- **Puerto**: 587 (TLS) o 465 (SSL)
+- **Requisito**: Usar contraseña de aplicación (App Password) desde la configuración de seguridad de Google
+</Tab>
+<Tab title="Zoho">
+- **Host**: smtp.zoho.com
+- **Puerto**: 587 (TLS)
+- **Requisito**: Cuenta Zoho Mail activa
+</Tab>
+<Tab title="Outlook / Office 365">
+- **Host**: smtp.office365.com
+- **Puerto**: 587 (TLS)
+- **Requisito**: Autenticación SMTP habilitada en el portal de administración
+</Tab>
+<Tab title="SendGrid">
+- **Host**: smtp.sendgrid.net
+- **Puerto**: 587 (TLS)
+- **Requisito**: API Key de SendGrid con permisos de envío de correo
+</Tab>
+<Tab title="GoDaddy / Ionos">
+- **Host**: Depende del proveedor (consultar documentación del hosting)
+- **Puerto**: 465 o 587
+- **Requisito**: Cuenta de correo configurada en el panel de hosting
+</Tab>
+</Tabs>
+
+<Callout type="warning">
+Si utilizas Gmail con verificación en dos pasos, **debes** generar una contraseña de aplicación específica. No uses tu contraseña principal de Google, ya que será rechazada por las políticas de seguridad.
+</Callout>
+
+## Paso 3 — Creación de Subcuentas de Clientes
+
+Las subcuentas te permiten incorporar clientes bajo el sistema white-label de tu agencia. Cada subcuenta funciona como un workspace independiente con su propio límite de recursos.
+
+<Steps>
+<Step title="Acceder a Sub-Accounts" icon="users">
+En el Panel de Agencia, haz clic en **Sub-Accounts** (ubicado arriba de Update Branding).
+</Step>
+
+<Step title="Crear nueva subcuenta">
+Selecciona **Create Sub-Account** y completa los siguientes datos del cliente:
+
+- **Nombre del Cliente/Negocio**
+- **Correo Electrónico**
+- **Nombre del Plan** (puedes crear uno nuevo personalizado)
+- **Asignación de Créditos** (hasta el límite disponible en tu cuenta)
+- **Límites de Recursos**: Base de conocimiento, número de agentes, miembros del equipo, llamadas concurrentes
+- **Acceso a Funcionalidades**: Activa o desactiva: Campañas, Colaboración en Equipo, Integraciones con Make.com, Integraciones con Zapier
+</Step>
+
+<Step title="Finalizar creación">
+Haz clic en **Create Sub-Account**. El cliente recibirá un correo de invitación. Una vez que acepte, su workspace aparecerá bajo Shared Workspaces.
+</Step>
+</Steps>
+
+### Asignación de recursos recomendada por tamaño de cliente
+
+<Tabs>
+<Tab title="Cliente Pequeño">
+- Créditos: 500 - 1,000
+- Agentes: 3 - 5
+- Miembros del equipo: 2 - 3
+- Llamadas concurrentes: 2 - 5
+- Base de conocimiento: 1 - 3 archivos
+</Tab>
+<Tab title="Cliente Mediano">
+- Créditos: 1,000 - 5,000
+- Agentes: 5 - 15
+- Miembros del equipo: 5 - 10
+- Llamadas concurrentes: 5 - 15
+- Base de conocimiento: 5 - 10 archivos
+</Tab>
+<Tab title="Cliente Grande">
+- Créditos: 5,000 - 20,000
+- Agentes: 15 - 50+
+- Miembros del equipo: 10 - 25
+- Llamadas concurrentes: 15 - 50
+- Base de conocimiento: 10 - 30+ archivos
+</Tab>
+</Tabs>
+
+<Callout type="tip">
+Puedes ajustar los límites de recursos de una subcuenta en cualquier momento desde el panel de administración. Los cambios se aplican de inmediato sin necesidad de que el cliente reinicie sesión.
+</Callout>
+
+## Agencia vs. Workspaces Compartidos
+
+Es importante entender la diferencia entre los espacios de trabajo disponibles:
+
+| Espacio de Trabajo | Propósito | ¿Quién accede? |
+|--------------------|-----------|-----------------|
+| **My Workspace** | Espacio interno de tu agencia para gestionar tus propios agentes de E-SMART360 | Solo tu equipo de agencia |
+| **Shared Workspace** | Subcuentas de clientes. Cada una es el dashboard independiente de un cliente | El cliente y su equipo |
+
+### Acciones disponibles en Shared Workspaces
+
+Desde un workspace compartido puedes:
+
+- **Monitorear actividad**: Revisa agentes, llamadas y campañas de cada cliente.
+- **Ver historial de llamadas**: Accede a grabaciones y transcripciones desde Call History.
+- **Bloquear un cliente**: Acción irreversible que desactiva completamente la subcuenta.
+
+<Callout type="alert">
+La acción de bloquear un cliente es **permanente e irreversible**. Antes de bloquear, asegúrate de haber descargado cualquier información importante y haber notificado al cliente. Para confirmar, el sistema te pedirá escribir "block" explícitamente.
+</Callout>
+
+## Paso 4 — Gestión de Planes y Precios Personalizados
+
+Al crear una subcuenta, tienes control total sobre el nombre del plan, la asignación de créditos y el precio que cobrarás a tu cliente.
+
+<Columns cols="2">
+<Card title="Ejemplo: Plan Clínica Dental" icon="teeth">
+- Créditos: 1,000
+- Usuarios: 15
+- Agentes: 10
+- Precio al cliente: $97/mes
+- Funcionalidades: Campañas, Colaboración
+</Card>
+
+<Card title="Ejemplo: Plan Inmobiliaria" icon="building">
+- Créditos: 2,500
+- Usuarios: 20
+- Agentes: 15
+- Precio al cliente: $149/mes
+- Funcionalidades: Campañas, Colaboración, Integraciones
+</Card>
+
+<Card title="Ejemplo: Plan Consultorio Médico" icon="hospital">
+- Créditos: 750
+- Usuarios: 5
+- Agentes: 5
+- Precio al cliente: $67/mes
+- Funcionalidades: Solo agentes y base de conocimiento
+</Card>
+
+<Card title="Ejemplo: Plan Empresa" icon="briefcase">
+- Créditos: 5,000
+- Usuarios: 50
+- Agentes: 25
+- Precio al cliente: $297/mes
+- Funcionalidades: Todo incluido
+</Card>
+</Columns>
+
+<Callout type="info">
+La facturación recurrente y la emisión de facturas a clientes deben gestionarse de forma independiente por cada agencia. E-SMART360 no procesa pagos entre agencias y sus clientes. Puedes utilizar Stripe, PayPal u otros procesadores de pago. La integración directa con Stripe estará disponible próximamente en la plataforma.
+</Callout>
+
+## Opcional: Solicitar un Dominio Personalizado
+
+Para hospedar tu portal de agencia en tu propio dominio:
+
+<Steps>
+<Step title="Ir a Solicitud de Dominio" icon="globe">
+Dentro del Panel de Agencia, selecciona **Request Custom Domain**.
+</Step>
+
+<Step title="Enviar tu dominio">
+Ingresa tu dominio personalizado (ejemplo: `app.tuagencia.com`) y proporciona los detalles de la solicitud.
+</Step>
+
+<Step title="Configuración por soporte técnico">
+El equipo de E-SMART360 configurará manualmente el mapeo del dominio. Una vez completado, tu portal será accesible desde tu propia URL.
+</Step>
+</Steps>
+
+<Callout type="tip">
+Antes de solicitar un dominio personalizado, asegúrate de tener acceso a la configuración DNS de tu dominio. Necesitarás agregar un registro CNAME o A apuntando a los servidores de E-SMART360. El equipo de soporte te proporcionará los valores exactos durante el proceso de configuración.
+</Callout>
+
+### Requisitos técnicos para dominio personalizado
+
+| Requisito | Detalle |
+|-----------|---------|
+| Registro DNS | CNAME apuntando al subdominio proporcionado por E-SMART360 |
+| Certificado SSL | Se emite automáticamente (Let's Encrypt) |
+| Propagación DNS | 5-30 minutos, puede tardar hasta 48 horas |
+| Subdominios permitidos | Cualquier subdominio del dominio principal |
+
+<Callout type="info">
+Las versiones futuras de la plataforma incluirán la capacidad de configurar el dominio personalizado directamente desde el panel sin necesidad de intervención del equipo de soporte.
+</Callout>
+
+## Gestión de Usuarios
+
+### Cómo bloquear un usuario
+
+1. Navega a **Users** dentro de la subcuenta del cliente.
+2. Selecciona **Cancel Subscription**.
+3. Escribe "block" para confirmar la acción.
+4. Una vez confirmado, el acceso del cliente queda desactivado permanentemente.
+
+### Cómo monitorear llamadas
+
+1. Desde la subcuenta del cliente, accede a **Call History**.
+2. Podrás ver el registro completo de llamadas.
+3. Accede a las grabaciones y transcripciones disponibles.
+
+### Cómo agregar usuarios a una subcuenta
+
+Los clientes pueden agregar miembros adicionales a su equipo directamente desde su propio workspace, sin necesidad de intervención de la agencia. Esto les da autonomía para gestionar su equipo interno.
+
+<Callout type="success">
+Con la marca personalizada, el correo SMTP configurado y las subcuentas creadas, tu Portal de Agencia de E-SMART360 está listo para operar como tu propia plataforma white-label completa. Tus clientes experimentarán un servicio con tu identidad visual, tu dominio y tu infraestructura de correo.
+</Callout>
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+<Expandable title="¿Puedo tener múltiples agencias bajo una misma cuenta?" defaultOpen={true}>
+Actualmente cada cuenta de E-SMART360 puede tener un único portal de agencia. Si necesitas operar múltiples agencias con marcas y configuraciones distintas, deberás crear cuentas separadas para cada una. Estamos evaluando la funcionalidad de multi-agencia para futuras versiones.
+</Expandable>
+
+<Expandable title="¿Qué sucede si un cliente agota sus créditos antes de fin de mes?">
+El cliente podrá seguir accediendo a su dashboard y consultando información, pero no podrá realizar nuevas llamadas hasta que se le asignen más créditos. Como agencia, puedes recargar créditos desde el panel de administración de la subcuenta en cualquier momento. Te recomendamos configurar alertas automáticas cuando el saldo esté por debajo del 20%.
+</Expandable>
+
+<Expandable title="¿Los clientes ven el nombre de E-SMART360 en algún lugar?">
+No. Con la personalización de marca completa (logo, icono, SMTP y dominio personalizado), la experiencia del cliente es 100% white-label. Todos los correos, páginas y notificaciones mostrarán únicamente la identidad de tu agencia.
+</Expandable>
+
+<Expandable title="¿Puedo migrar una cuenta existente a una subcuenta de agencia?">
+Actualmente las subcuentas se crean desde cero. Si un cliente ya tiene una cuenta independiente, deberás crear una nueva subcuenta y migrar la configuración manualmente. Te recomendamos planificar la migración con anticipación para minimizar el tiempo de inactividad del cliente.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda con la configuración de tu agencia?">
+<Callout type="info">
+Si encuentras dificultades durante la configuración de tu portal de agencia, la personalización de marca o la creación de subcuentas, nuestro equipo de soporte está disponible para ayudarte. Escríbenos a través del chat en plataforma o consulta nuestra documentación adicional sobre dominios personalizados y planes.
+</Callout>
+</Expandable>
+</ExpandableGroup>

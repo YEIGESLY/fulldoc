@@ -1,0 +1,221 @@
+---
+title: "Configuración de la Integración de Google Calendar"
+description: "Aprende a integrar Google Calendar con E-SMART360 para gestionar la disponibilidad de reservas, programar citas automáticamente y recibir notificaciones de llamadas directamente en tu calendario."
+---
+
+<Callout kind="info">
+  Esta guía te muestra paso a paso cómo conectar tu Google Calendar a la plataforma
+  E-SMART360, permitiendo que tu agente de voz gestione citas, bloquee horarios
+  ocupados y programe reuniones de forma totalmente automatizada.
+</Callout>
+
+## Requisitos Previos
+
+Antes de comenzar, asegúrate de contar con lo siguiente:
+
+- Una cuenta activa en **E-SMART360**
+- Una cuenta de **Google** con acceso a Google Calendar
+- Permisos de administrador en la cuenta de E-SMART360 para gestionar integraciones
+
+## Paso 1: Inicia Sesión en tu Cuenta de E-SMART360
+
+1. Accede a [E-SMART360](https://e-smart360.com/) desde tu navegador.
+2. Ingresa tus credenciales de inicio de sesión.
+3. Serás redirigido al panel de control principal.
+
+<Callout kind="tip">
+  Si tienes problemas para iniciar sesión, verifica que tu correo electrónico y
+  contraseña sean correctos. Puedes usar la opción "¿Olvidaste tu contraseña?" para
+  restablecerla.
+</Callout>
+
+## Paso 2: Accede a la Configuración de Calendario
+
+<Steps>
+  <Step icon="1">
+    Abre el panel de control de E-SMART360 y localiza la barra lateral izquierda.
+  </Step>
+  <Step icon="2">
+    Haz clic en **Integración**.
+  </Step>
+  <Step icon="3">
+    Selecciona **Google Calendar** de las integraciones disponibles.
+  </Step>
+  <Step icon="4">
+    Haz clic en **Conectar Google Calendar** para iniciar el proceso de vinculación.
+  </Step>
+</Steps>
+
+## Paso 3: Autoriza el Acceso a Google Calendar
+
+Al hacer clic en "Conectar Google Calendar", se abrirá una ventana de inicio de sesión de Google.
+
+<Tabs>
+  <Tab label="Instrucciones">
+    1. Inicia sesión con la cuenta de Google que contiene el calendario que deseas usar.
+    2. Revisa los permisos solicitados por E-SMART360.
+    3. Haz clic en **Permitir** para otorgar acceso a tu calendario.
+    4. Serás redirigido automáticamente de vuelta a E-SMART360 tras la autorización exitosa.
+  </Tab>
+  <Tab label="Permisos Solicitados">
+    - **Ver eventos del calendario** — Lectura de eventos existentes
+    - **Crear y modificar eventos** — Capacidad de programar citas
+    - **Consultar disponibilidad** — Verificar horarios libres y ocupados
+  </Tab>
+</Tabs>
+
+<Callout kind="warning">
+  Asegúrate de usar la cuenta de Google correcta. Si tienes múltiples cuentas
+  (personal y laboral), elige aquella cuyo calendario quieras sincronizar con
+  el agente de E-SMART360.
+</Callout>
+
+## Paso 4: Agrega Google Calendar al Agente
+
+Una vez autorizada la conexión, debes vincular el calendario a tu agente de voz:
+
+<Steps>
+  <Step icon="1">
+    Navega a **Agentes** → **Configuración Avanzada** → **Integración y Herramientas de Datos**.
+  </Step>
+  <Step icon="2">
+    Haz clic en **Seleccionar Herramientas de la Biblioteca**.
+  </Step>
+  <Step icon="3">
+    Selecciona **Google Calendar** de la lista de herramientas disponibles.
+  </Step>
+</Steps>
+
+## Paso 5: Configura los Detalles del Calendario
+
+En la pantalla de configuración de Google Calendar, completa los siguientes campos:
+
+<Columns cols="2">
+  <Card title="Campo" icon="settings">
+    | Campo | Descripción |
+    |-------|-------------|
+    | **Descripción** | Breve descripción de cómo se usará el calendario |
+    | **Acciones del Calendario** | Acciones que el agente puede realizar (crear, consultar, modificar) |
+    | **Seleccionar Calendario** | El calendario de Google que deseas utilizar |
+    | **Duración de Reunión** | Duración predeterminada de las citas |
+    | **Zona Horaria** | Zona horaria para la programación |
+    | **Horario Laboral** | Ventana de tiempo en la que el agente puede agendar |
+  </Card>
+  <Card title="Ejemplo de Configuración" icon="file-text">
+    - **Descripción**: "Calendario de citas para atención al cliente"
+    - **Acciones**: Crear, consultar disponibilidad, cancelar
+    - **Duración**: 30 minutos
+    - **Zona Horaria**: America/Mexico_City
+    - **Horario**: Lunes a viernes, 9:00 AM — 6:00 PM
+  </Card>
+</Columns>
+
+<Callout kind="success">
+  Una vez configurados todos los parámetros, haz clic en **Guardar**. ¡Tu Google Calendar
+  ya está conectado y listo para usarse con E-SMART360!
+</Callout>
+
+## Ejemplos de Uso
+
+<Columns cols="2">
+  <Card title="Confirmación Automática de Citas" icon="calendar-check">
+    Un cliente llama para agendar una consulta. El agente de voz consulta Google
+    Calendar, encuentra un horario disponible y confirma la cita en tiempo real,
+    registrándola automáticamente en el calendario.
+  </Card>
+  <Card title="Bloqueo por Disponibilidad" icon="clock">
+    El agente verifica el calendario antes de ofrecer horarios. Si hay un
+    conflicto con otro evento, sugiere alternativas inmediatamente sin
+    intervención humana.
+  </Card>
+  <Card title="Recordatorios Automáticos" icon="bell">
+    Las citas programadas pueden generar recordatorios automáticos que se
+    sincronizan con Google Calendar, notificando tanto al agente como al
+    cliente antes de la cita.
+  </Card>
+  <Card title="Reagendamiento Inteligente" icon="refresh-cw">
+    Si un cliente necesita cambiar su cita, el agente puede cancelar el evento
+    original y buscar nuevas opciones disponibles en tiempo real.
+  </Card>
+</Columns>
+
+## Solución de Problemas de Autenticación
+
+<Callout kind="danger">
+  **Problema:** Mensaje de "Credenciales inválidas" o "No se puede conectar" al
+  intentar vincular Google Calendar.
+</Callout>
+
+<Steps>
+  <Step icon="🔍">
+    **Verifica la cuenta de Google** — Asegúrate de estar usando la cuenta correcta,
+    especialmente si tienes múltiples cuentas personales o laborales.
+  </Step>
+  <Step icon="🔄">
+    **Desconecta y reconecta** — Ve a la configuración de integración, desconecta
+    Google Calendar y vuelve a conectarlo siguiendo los pasos anteriores.
+  </Step>
+  <Step icon="🔑">
+    **Revisa los permisos de Google** — Es posible que Google haya revocado los
+    permisos. Vuelve a autorizar la aplicación desde la pantalla de conexión.
+  </Step>
+  <Step icon="🛡️">
+    **Verifica restricciones de la organización** — Si usas una cuenta corporativa,
+    tu administrador de TI puede tener restricciones que impidan la conexión.
+  </Step>
+</Steps>
+
+## Buenas Prácticas
+
+<Callout kind="tip">
+  **Recomendaciones para un uso óptimo:**
+</Callout>
+
+- **Usa un calendario dedicado** para E-SMART360 en lugar de tu calendario personal, así mantienes separadas las citas del agente de tus eventos personales.
+- **Define horarios laborales realistas** para evitar que el agente agende citas fuera del horario de atención.
+- **Revisa periódicamente la conexión** para asegurarte de que la integración sigue activa y funcionando correctamente.
+- **Configura la duración predeterminada** según el tipo de servicio que ofreces (15 min para consultas rápidas, 60 min para sesiones completas).
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+  <Expandable title="¿Puedo conectar múltiples calendarios de Google?" default-open="true">
+    Sí, puedes conectar varios calendarios de Google a diferentes agentes de
+    E-SMART360. Cada agente puede tener su propio calendario vinculado para
+    gestionar citas de forma independiente. Solo debes repetir el proceso de
+    integración para cada agente y seleccionar el calendario correspondiente en
+    la configuración.
+  </Expandable>
+
+  <Expandable title="¿Qué tipo de eventos puede crear el agente en Google Calendar?">
+    El agente puede crear eventos estándar con título, descripción, fecha, hora
+    de inicio y fin, zona horaria y recordatorios. Actualmente no soporta eventos
+    recurrentes ni invitaciones a otros asistentes, pero puede gestionar eventos
+    de una sola ocurrencia de forma eficiente.
+  </Expandable>
+
+  <Expandable title="¿La integración funciona con Google Workspace (anteriormente G Suite)?">
+    Sí, la integración es totalmente compatible con cuentas de Google Workspace.
+    Sin embargo, si tu organización tiene políticas de seguridad restrictivas, es
+    posible que el administrador de TI deba autorizar explícitamente la conexión
+    de E-SMART360 en la consola de administración de Google Workspace.
+  </Expandable>
+
+  <Expandable title="¿Qué sucede si se revoca el acceso desde Google?">
+    Si el acceso se revoca (por cambio de contraseña, políticas de seguridad o
+    acción manual), el agente perderá la capacidad de consultar y modificar el
+    calendario. Recibirás una notificación en el panel de E-SMART360 indicando
+    que la integración necesita reconectarse. Simplemente sigue los pasos del
+    Paso 3 para volver a autorizar el acceso.
+  </Expandable>
+
+  <Expandable title="¿Necesitas ayuda con Google Calendar y E-SMART360?">
+    <Callout kind="alert">
+      Si encuentras algún problema durante la configuración o el uso de la
+      integración de Google Calendar, nuestro equipo de soporte está listo para
+      ayudarte. Contáctanos a través del panel de ayuda en la plataforma o
+      escribe a nuestro equipo de soporte técnico para recibir asistencia
+      personalizada.
+    </Callout>
+  </Expandable>
+</ExpandableGroup>

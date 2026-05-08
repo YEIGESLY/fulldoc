@@ -1,0 +1,165 @@
+---
+title: "Patrones avanzados de integración"
+description: "Patrones de integración avanzados para agentes de voz IA: orquestación multicanal, workflows de escalación, enrutamiento inteligente y analíticas potenciadas por IA."
+---
+
+<Callout kind="info">
+Los patrones de integración avanzados te permiten ir más allá de las llamadas individuales y construir sistemas complejos de automatización que orquestan múltiples canales, equipos y procesos de negocio.
+</Callout>
+
+## Orquestación multicanal
+
+La capacidad de coordinar múltiples canales de comunicación en un solo flujo de trabajo es donde los agentes de voz realmente brillan.
+
+### Recorrido del cliente omnicanal
+
+Un cliente puede comenzar su interacción por un canal y continuar por otro sin perder contexto:
+
+1. **Voz**: el agente realiza la primera llamada de calificación
+2. **SMS**: envía un resumen de la conversación con enlace a más información
+3. **Correo electrónico**: llega una propuesta detallada con documentos adjuntos
+4. **Notificación de app**: recordatorio de seguimiento programado
+
+<Callout kind="tip">
+Cada canal debe mantener el contexto de la conversación. El cliente no debería tener que repetir información que ya proporcionó en la llamada telefónica.
+</Callout>
+
+### Flujos de escalación
+
+No todas las interacciones pueden ser resueltas por el agente de IA. Define workflows claros de escalación:
+
+```
+Agente IA → Agente IA Senior → Humano → Especialista
+```
+
+| Nivel | Quién | Cuándo |
+|---|---|---|
+| Nivel 1 | Agente IA | Consultas estándar, información general |
+| Nivel 2 | Agente IA Senior | Casos más complejos que requieren razonamiento avanzado |
+| Nivel 3 | Humano | El cliente lo solicita, quejas, decisiones importantes |
+| Nivel 4 | Especialista | Temas técnicos muy específicos o escalaciones internas |
+
+### Asignación round-robin
+
+Distribuye leads y tareas entre los miembros de tu equipo de forma equitativa:
+
+1. El agente de IA califica al lead
+2. Determina el mejor representante según disponibilidad y especialidad
+3. Asigna la siguiente llamada o tarea al siguiente miembro del equipo en la rotación
+4. Envía una notificación con el contexto completo de la interacción
+
+### Enrutamiento consciente de zona horaria
+
+Para negocios globales, el agente detecta la zona horaria del contacto y:
+
+- Programa llamadas en el horario laboral local
+- Enruta a equipos regionales si están disponibles
+- Envía mensajes asíncronos (SMS/correo) si la llamada no es apropiada a esa hora
+- Registra la mejor hora para contacto futuro basado en el historial
+
+### Detección y enrutamiento por idioma
+
+El agente detecta automáticamente el idioma del cliente y:
+
+- Selecciona el agente de IA adecuado para ese idioma
+- Enruta la llamada al equipo humano que habla ese idioma
+- Ajusta la configuración de reconocimiento de voz y síntesis
+
+<Callout kind="success">
+La detección automática de idioma permite atender clientes en múltiples idiomas sin necesidad de que el cliente seleccione una opción en un menú de IVR.
+</Callout>
+
+## Analíticas potenciadas por IA
+
+### Acciones basadas en análisis de sentimiento
+
+El agente analiza el tono emocional del cliente en tiempo real y toma acciones:
+
+| Sentimiento detectado | Acción automática |
+|---|---|
+| Cliente enojado o frustrado | Programar devolución de llamada de un gerente |
+| Cliente interesado | Enviar oferta personalizada por SMS |
+| Cliente confundido | Ofrecer transferencia a un especialista humano |
+| Cliente indiferente | Preguntas de seguimiento para identificar objeciones |
+| Cliente satisfecho | Solicitar reseña o referido |
+
+### Llamadas de predicción de abandono
+
+Identifica clientes en riesgo de abandonar y activa campañas de retención proactivas:
+
+1. El sistema analiza patrones de comportamiento (llamadas perdidas, quejas, inactividad)
+2. Identifica clientes con alta probabilidad de abandono
+3. El agente de IA realiza llamadas de retención personalizadas
+4. Ofrece incentivos o soluciones basadas en el historial del cliente
+5. Escala a un agente humano si se detecta interés en retenerlo
+
+### Detección de oportunidades de upselling
+
+El agente identifica señales de compra durante las conversaciones:
+
+- **Señales explícitas**: el cliente pregunta por productos/servicios adicionales
+- **Señales implícitas**: el cliente menciona necesidades que otros productos podrían resolver
+- **Patrones de comportamiento**: historial de compras que sugiere necesidad de actualización
+
+### Automatización de aseguramiento de calidad
+
+Revisa automáticamente las llamadas para garantizar la calidad del servicio:
+
+1. El agente graba y transcribe todas las llamadas
+2. El sistema analiza las transcripciones contra criterios de calidad predefinidos
+3. Marca las llamadas que requieren revisión humana
+4. Genera reportes de cumplimiento y áreas de mejora
+5. Identifica patrones exitosos para replicarlos en otros agentes
+
+### Programación predictiva
+
+Anticipa períodos de alta demanda y ajusta la disponibilidad:
+
+1. Analiza datos históricos de llamadas por hora, día y temporada
+2. Predice volúmenes de llamadas futuros
+3. Sugiere ajustes de personal y horarios
+4. Activa agentes de IA adicionales durante picos de demanda
+5. Optimiza la distribución de recursos en tiempo real
+
+## Tabla resumen de patrones
+
+| Patrón | Complejidad | Impacto | Tiempo de implementación |
+|---|---|---|---|
+| Omnicanal | Alta | Muy alto | 2-4 semanas |
+| Escalación | Media | Alto | 1-2 semanas |
+| Round-robin | Baja | Medio | 2-3 días |
+| Zona horaria | Media | Alto | 1 semana |
+| Detección de idioma | Alta | Alto | 2-3 semanas |
+| Sentimiento en tiempo real | Alta | Muy alto | 2-4 semanas |
+| Predicción de abandono | Alta | Muy alto | 3-4 semanas |
+| Upselling automático | Media | Alto | 1-2 semanas |
+| Aseguramiento de calidad | Media | Alto | 1-2 semanas |
+| Programación predictiva | Alta | Alto | 2-3 semanas |
+
+## Preguntas frecuentes
+
+<ExpandableGroup>
+
+<Expandable title="¿Qué tan complejo es implementar la orquestación multicanal?" default-open="true">
+La complejidad depende de los canales que quieras integrar. Voz + SMS es el más simple y puede implementarse en días. Agregar correo electrónico y notificaciones de app requiere integraciones adicionales pero es totalmente factible con las APIs de E-SMART360 y herramientas como Make o Zapier.
+</Expandable>
+
+<Expandable title="¿Los análisis de sentimiento funcionan en tiempo real?">
+Sí, el análisis de sentimiento se procesa durante la llamada, no después. Esto permite que el agente tome acciones inmediatas (como escalar a un humano) en el momento en que se detecta un cambio emocional significativo.
+</Expandable>
+
+<Expandable title="¿Puedo combinar múltiples patrones en un solo flujo?">
+Sí, de hecho ese es el objetivo. Por ejemplo, un flujo avanzado puede incluir: detección de idioma → enrutamiento por zona horaria → análisis de sentimiento → escalación si es necesario → actualización del CRM con el resultado. La plataforma está diseñada para componer estos patrones.
+</Expandable>
+
+<Expandable title="¿Necesito conocimientos de programación para implementar estos patrones?">
+Algunos patrones (como omnicanal o detección de idioma) pueden requerir asistencia técnica inicial. Sin embargo, E-SMART360 ofrece plantillas preconfiguradas para los patrones más comunes. Para patrones muy específicos, nuestro equipo de soporte puede guiarte en la implementación.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda para implementar patrones avanzados?">
+<Callout kind="alert">
+Si quieres implementar alguno de estos patrones avanzados y necesitas orientación, contacta a nuestro equipo de soporte. Podemos revisar tu caso de uso actual y recomendarte el mejor patrón de integración para empezar, incluyendo ejemplos de configuración paso a paso.
+</Callout>
+</Expandable>
+
+</ExpandableGroup>

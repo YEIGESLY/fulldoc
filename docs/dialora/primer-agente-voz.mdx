@@ -1,0 +1,343 @@
+---
+title: "Cómo Configurar tu Primer Agente de Voz con IA en E-SMART360"
+description: "Guía completa paso a paso para crear, configurar y lanzar tu primer agente de voz con inteligencia artificial en E-SMART360. Cubre desde el registro hasta los ajustes avanzados para que puedas tener tu asistente de llamadas funcionando en minutos."
+---
+
+import { Callout } from 'nextra/components'
+import { Steps, Step } from 'nextra/components'
+import { Tabs, Tab } from 'nextra/components'
+import { Columns, Card } from 'nextra/components'
+import { Expandable, ExpandableGroup } from 'nextra/components'
+import { CodeGroup } from 'nextra/components'
+
+<Callout kind="info" emoji="🚀">
+Configurar tu primer agente de voz con inteligencia artificial en E-SMART360 es un proceso simple y directo. Tanto si gestionas una clínica, un servicio de atención al cliente o simplemente quieres experimentar con flujos de voz automatizados, esta guía te llevará de la mano desde cero hasta tener tu agente funcionando.
+</Callout>
+
+## Requisitos Previos
+
+Antes de comenzar, asegúrate de tener lo siguiente:
+
+- Una **cuenta activa** en E-SMART360 (si aún no tienes una, el registro es gratuito y rápido)
+- Un **número de teléfono disponible** en tu cuenta para asignar al agente
+- **Objetivos claros** sobre lo que quieres que tu agente de voz haga (responder preguntas, agendar citas, hacer recordatorios, etc.)
+- Acceso a internet estable para gestionar la configuración desde el panel de control
+
+<Callout kind="tip" emoji="💡">
+Si es la primera vez que trabajas con agentes de voz, te recomendamos empezar con un caso de uso simple, como un agente que responda preguntas frecuentes. Una vez que te familiarices con el sistema, podrás añadir funcionalidades más complejas como integraciones con CRM o campañas salientes.
+</Callout>
+
+## Paso 1: Regístrate e Inicia Sesión en E-SMART360
+
+El primer paso es crear tu cuenta y acceder al panel de control.
+
+<Steps>
+  <Step title="Accede a la plataforma" icon="globe">
+    Dirígete al sitio web de E-SMART360. En la esquina superior derecha de la página de inicio encontrarás las opciones de **Registro** (Sign Up) y **Inicio de Sesión** (Log In).
+  </Step>
+
+  <Step title="Crea tu cuenta" icon="user-plus">
+    Haz clic en **Registro** y completa el formulario con tus datos básicos: nombre, correo electrónico y una contraseña segura. Si ya tienes una cuenta, simplemente inicia sesión.
+  </Step>
+
+  <Step title="Accede al Dashboard" icon="dashboard">
+    Una vez que hayas iniciado sesión, serás redirigido automáticamente a tu **Panel de Control** (Dashboard). Desde aquí podrás gestionar todos tus agentes, campañas, historial de llamadas y configuraciones.
+  </Step>
+</Steps>
+
+<Callout kind="success" emoji="✅">
+¡Listo! Ya estás dentro del ecosistema E-SMART360. El dashboard es tu centro de comando: desde aquí podrás crear, monitorear y optimizar todos tus agentes de voz.
+</Callout>
+
+## Paso 2: Navega al Botón de Crear Agente
+
+En el menú lateral izquierdo del dashboard encontrarás varias opciones: **Flujos de Trabajo**, **Campañas**, **Historial de Llamadas**, entre otras.
+
+<Steps>
+  <Step title="Localiza el botón Crear Agente" icon="search">
+    Para crear tu agente de voz, busca y haz clic en el botón **Crear Agente** (Create Agent). Este botón suele estar ubicado en una posición destacada dentro del dashboard para facilitar el acceso.
+  </Step>
+
+  <Step title="Explora las opciones disponibles" icon="list">
+    Una vez que hagas clic, el sistema te presentará las diferentes formas en las que puedes crear tu agente de IA. Tómate un momento para revisar cada opción y elegir la que mejor se adapte a tus necesidades.
+  </Step>
+</Steps>
+
+## Elige Cómo Crear tu Agente de IA
+
+E-SMART360 te ofrece tres enfoques principales para crear tu agente de voz. La elección depende de tu nivel de experiencia, el tiempo disponible y la complejidad de tu caso de uso.
+
+<Tabs items={["Desde Cero", "Plantilla Predefinida", "Tipo de Agente"]}>
+  <Tab>
+    <Callout kind="tip" emoji="🎨">
+      **Agente Personalizado (Desde Cero)**
+    </Callout>
+    Crea un agente de voz completamente personalizado basado en las necesidades únicas de tu negocio. Esta opción te da control total sobre cada aspecto del agente, desde el prompt inicial hasta el comportamiento en llamada.
+
+    **Ideal para:** Empresas con flujos de trabajo específicos que requieren personalización profunda.
+  </Tab>
+  <Tab>
+    <Callout kind="success" emoji="⚡">
+      **Plantillas Predefinidas**
+    </Callout>
+    Ahorra tiempo seleccionando entre plantillas listas para usar de diversas industrias. Entre las plantillas disponibles se incluyen:
+
+    - **Agente de Reservas para Restaurantes**
+    - **Agente de Citas para Salones de Belleza**
+    - **Agente de Ventas de Tarjetas de Crédito**
+    - **Agente de Reservas para Fisioterapia**
+    - Y muchas más, dependiendo de tu tipo de negocio
+
+    **Ideal para:** Negocios que quieren lanzar rápidamente sin necesidad de configuración avanzada.
+  </Tab>
+  <Tab>
+    <Callout kind="info" emoji="📞">
+      **Tipo de Agente: Entrante o Saliente**
+    </Callout>
+    Selecciona el tipo de agente según la dirección de las llamadas:
+
+    - **Agente Entrante (Incoming):** Gestiona las llamadas que reciben tus clientes (por ejemplo, solicitudes de citas, preguntas frecuentes, soporte).
+    - **Agente Saliente (Outgoing):** Realiza llamadas salientes (por ejemplo, recordatorios, seguimiento de clientes, prospección de leads).
+
+    <Callout kind="warning" emoji="⚠️">
+      Puedes cambiar el tipo de agente más adelante, pero es recomendable definirlo desde el principio para configurar correctamente el flujo de conversación.
+    </Callout>
+  </Tab>
+</Tabs>
+
+<Callout kind="info" emoji="👉">
+Para este ejemplo, seleccionaremos la opción de **agente personalizado desde cero** con tipo **entrante**, que es la configuración más común para empezar.
+</Callout>
+
+## Paso 3: Ingresa los Datos Básicos del Agente
+
+En esta pantalla, personalizarás la identidad y los objetivos de tu agente de voz.
+
+<Steps>
+  <Step title="Asigna un nombre al agente" icon="tag">
+    Dale un nombre descriptivo a tu agente. Por ejemplo: *"Clínica Dental KD"*. Este nombre te ayudará a identificar el agente rápidamente si tienes varios configurados.
+  </Step>
+
+  <Step title="Ingresa el nombre de la empresa" icon="building">
+    Introduce el nombre de tu empresa. Puede ser el mismo que el nombre del agente o uno diferente si gestionas múltiples marcas.
+  </Step>
+
+  <Step title="Define los objetivos del agente" icon="bullseye">
+    Establece metas claras y medibles. Por ejemplo:
+    - Responder consultas generales sobre horarios, servicios y opciones de tratamiento
+    - Gestionar llamadas con al menos un 90% de precisión
+    - Escalar llamadas urgentes o complejas a un agente humano
+  </Step>
+</Steps>
+
+<Callout kind="info" emoji="📝">
+**Ejemplo de objetivos para una clínica dental:**
+
+> *"Atender consultas de pacientes sobre horarios de atención, servicios odontológicos disponibles, costos aproximados de tratamientos comunes y agendar citas. Escalar al personal de recepción cualquier solicitud urgente o fuera del alcance del agente."*
+</Callout>
+
+Haz clic en **Siguiente (Next)** para continuar con la configuración.
+
+## Paso 4: Conecta un Número de Teléfono e Integraciones Opcionales
+
+Ahora es el momento de darle a tu agente un número de teléfono desde el cual realizará y recibirá llamadas.
+
+<Steps>
+  <Step title="Selecciona un número disponible" icon="phone">
+    El sistema te mostrará una lista de los números de teléfono disponibles en tu cuenta. Selecciona el que deseas asignar a este agente. Si no tienes números disponibles, puedes adquirir uno nuevo directamente desde el panel de control.
+  </Step>
+
+  <Step title="Conecta integraciones de terceros (opcional)" icon="plug">
+    Si lo deseas, puedes integrar plataformas externas para potenciar las capacidades de tu agente:
+    - **Make.com** — Automatiza flujos de trabajo visuales
+    - **Zapier** — Conecta con cientos de aplicaciones sin código
+    - **Pipedrive** — Sincroniza con tu CRM de ventas
+  </Step>
+
+  <Step title="Omite si no es necesario" icon="skip-forward">
+    Si no necesitas integraciones en este momento, puedes omitir este paso sin problema. Siempre podrás añadirlas más adelante desde la configuración del agente.
+  </Step>
+</Steps>
+
+<Callout kind="tip" emoji="💡">
+Las integraciones son especialmente útiles si quieres que tu agente de voz se comunique con otras herramientas de tu negocio. Por ejemplo, puedes configurar una integración con Make.com para que cada vez que el agente agende una cita, se cree automáticamente un evento en tu calendario.
+</Callout>
+
+Haz clic en **Siguiente** para avanzar.
+
+## Paso 5: Define los Datos que Quieres Recopilar
+
+Este paso consiste en capturar información relevante de los usuarios durante las llamadas. Definir correctamente estos campos te permitirá obtener datos estructurados de cada interacción.
+
+<Columns cols="2">
+  <Card title="Campos Comunes" icon="check-circle">
+    - Nombre completo
+    - Fecha de nacimiento
+    - Número de teléfono de contacto
+    - Correo electrónico
+    - Motivo de la llamada
+  </Card>
+  <Card title="Campos Especializados" icon="star">
+    - Número de tarjeta de salud
+    - Historial de citas previas
+    - Preferencia de horario
+    - Tipo de servicio solicitado
+    - Notas adicionales
+  </Card>
+</Columns>
+
+<Callout kind="warning" emoji="🔒">
+**Privacidad de datos:** Asegúrate de que los campos que recopiles cumplan con las regulaciones de privacidad aplicables (GDPR, CCPA, etc.). E-SMART360 procesa los datos de forma segura, pero eres responsable de definir qué información es necesaria para tu operación.
+</Callout>
+
+Haz clic en **Siguiente** después de completar los campos.
+
+## Paso 6: Vista Previa y Creación del Agente
+
+Antes de lanzar tu agente, E-SMART360 te muestra un resumen completo de toda la configuración realizada.
+
+<Steps>
+  <Step title="Revisa el resumen" icon="eye">
+    El sistema mostrará una tarjeta de resumen con:
+    - **Nombre** del agente y la empresa
+    - **Objetivos** definidos
+    - **Número de teléfono** conectado
+    - **Campos de datos** a recopilar
+    - **Tipo de agente** (entrante/saliente)
+  </Step>
+
+  <Step title="Verifica cada sección" icon="check-double">
+    Tómate un momento para revisar que todos los datos sean correctos. Si necesitas cambiar algo, puedes regresar a los pasos anteriores usando el botón **Atrás**.
+  </Step>
+
+  <Step title="Confirma la creación" icon="rocket">
+    Haz clic en **Crear Agente** (Create Agent) para completar la configuración. El sistema generará automáticamente un prompt de bienvenida y un flujo de conversación base.
+  </Step>
+</Steps>
+
+<Callout kind="success" emoji="🎉">
+**¡Felicidades!** Tu agente de voz ha sido creado. En este punto, E-SMART360 ya ha generado una estructura base de conversación que puedes probar de inmediato o personalizar en los pasos siguientes.
+</Callout>
+
+## Paso 7: Ajusta la Configuración Básica del Agente
+
+Antes de lanzar tu agente al mundo, es esencial configurar los ajustes básicos para que coincidan con el tono, el idioma y el estilo de comunicación de tu marca.
+
+<Steps>
+  <Step title="Accede a Configuración Básica" icon="sliders">
+    En el dashboard de tu agente, navega a la sección **"Configuración Básica"** (Basic Settings).
+  </Step>
+
+  <Step title="Selecciona el idioma" icon="globe">
+    Elige el idioma que mejor se adapte a tu base de clientes. E-SMART360 soporta múltiples idiomas, incluyendo español, inglés, portugués, entre otros. Puedes configurar el agente para que opere en un idioma principal o detecte automáticamente el idioma del interlocutor.
+  </Step>
+
+  <Step title="Elige el tono y la personalidad" icon="microphone">
+    Selecciona el tono de voz que represente a tu marca:
+    - **Profesional** — Ideal para servicios financieros, legales o médicos
+    - **Amigable** — Perfecto para atención al cliente general
+    - **Formal** — Para comunicaciones corporativas
+    - **Casual** — Para negocios informales o startups
+  </Step>
+
+  <Step title="Escribe un saludo inicial" icon="wave">
+    Redacta un saludo cálido para iniciar las conversaciones con tus clientes. Por ejemplo:
+
+    > *"¡Hola! Gracias por llamar a Clínica Dental KD. Soy tu asistente virtual y estoy aquí para ayudarte. ¿En qué puedo ayudarte hoy?"*
+  </Step>
+
+  <Step title="Define el estilo de interacción" icon="comment">
+    Establece cómo debe interactuar el agente con el usuario:
+    - "¿Cómo puedo ayudarte hoy?"
+    - "¿Te gustaría agendar una cita?"
+    - "¿Prefieres que te llame más tarde?"
+  </Step>
+
+  <Step title="Prueba la interacción" icon="flask">
+    Utiliza la función de prueba del sistema para escuchar cómo suena tu agente y hacer ajustes si es necesario. Puedes modificar el saludo, el tono o la velocidad del habla hasta que se sienta natural.
+  </Step>
+
+  <Step title="Asigna el número de teléfono" icon="phone-call">
+    Conecta el número de teléfono que quieres asignar a este agente. Si ya seleccionaste uno en el paso 4, debería aparecer preconfigurado. Si no, selecciona uno de los disponibles.
+  </Step>
+</Steps>
+
+<Callout kind="tip" emoji="🎯">
+**Consejo profesional:** Dedica tiempo a afinar el prompt del agente. Un buen prompt es la diferencia entre un agente que resuelve problemas eficientemente y uno que confunde a los clientes. Sé específico sobre lo que el agente debe y no debe hacer.
+</Callout>
+
+## Paso 8: Configura los Ajustes Avanzados
+
+A menos que tengas una razón convincente para modificar los ajustes avanzados, recomendamos mantener los valores predeterminados. E-SMART360 viene preconfigurado con parámetros óptimos para la mayoría de los casos de uso.
+
+Los siguientes ajustes pueden ser modificados si consideras que es necesario:
+
+<Columns cols="2">
+  <Card title="Comportamiento de Llamada" icon="phone-forwarded">
+    - **Tiempo máximo de llamada:** Define cuánto tiempo puede durar una llamada antes de que el agente intente finalizarla cortésmente.
+    - **Tiempo de espera para respuesta:** Cuánto tiempo espera el agente antes de repetir o escalar.
+    - **Número de reintentos:** Intentos de llamada en caso de que el cliente no conteste.
+  </Card>
+  <Card title="Calidad y Rendimiento" icon="gauge">
+    - **Modelo de IA:** Selecciona entre los modelos disponibles (OpenAI, Deepgram, ElevenLabs, etc.)
+    - **Precisión de transcripción:** Ajusta la sensibilidad del reconocimiento de voz.
+    - **Límite de tokens:** Controla la longitud máxima de las respuestas del agente.
+  </Card>
+</Columns>
+
+<Callout kind="info" emoji="⚙️">
+La sección de **Ajustes Avanzados** también incluye opciones para:
+- Configurar webhooks y endpoints personalizados
+- Definir reglas de escalamiento a humanos
+- Establecer horarios de operación del agente
+- Activar el modo de solo escucha (monitoreo)
+</Callout>
+
+## Siguientes Pasos
+
+Una vez que tu agente esté configurado y probado, puedes explorar funcionalidades adicionales:
+
+<Columns cols="2">
+  <Card title="📞 Campañas Salientes" icon="outbound">
+    Configura campañas de llamadas salientes para recordatorios, seguimiento de leads o notificaciones masivas. Aprende más en la [guía de campañas salientes](/recursos/campanas-salientes).
+  </Card>
+  <Card title="🔄 Transferencia de Llamadas" icon="transfer">
+    Configura la transferencia inteligente de llamadas a agentes humanos cuando el asistente de IA no pueda resolver la solicitud. Consulta la [guía de transferencia de llamadas](/recursos/transferencia-llamadas).
+  </Card>
+  <Card title="🧠 Base de Conocimientos" icon="brain">
+    Enriquece a tu agente con una base de conocimientos personalizada para que pueda responder preguntas específicas de tu negocio con precisión. Revisa la [guía de base de conocimientos](/recursos/base-conocimientos).
+  </Card>
+  <Card title="🔌 Integraciones Avanzadas" icon="puzzle">
+    Conecta tu agente con Make.com, Zapier, Pipedrive y otras herramientas para automatizar flujos de trabajo completos. Explora las [integraciones disponibles](/recursos/integraciones).
+  </Card>
+</Columns>
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+  <Expandable title="¿Cuánto tiempo se tarda en configurar un agente de voz desde cero?" default-open="true">
+    El proceso completo de configuración básica toma aproximadamente **15 a 30 minutos** para un usuario nuevo. Esto incluye el registro, la creación del agente, la configuración de los ajustes básicos y una prueba de funcionamiento. Si utilizas una plantilla predefinida, el tiempo puede reducirse a menos de 10 minutos. Los ajustes avanzados y las integraciones pueden añadir tiempo adicional dependiendo de la complejidad.
+  </Expandable>
+
+  <Expandable title="¿Puedo cambiar el tipo de agente de entrante a saliente después de crearlo?">
+    Sí, E-SMART360 te permite cambiar el tipo de agente en cualquier momento desde la configuración avanzada. Sin embargo, ten en cuenta que al cambiar el tipo, es posible que necesites ajustar el prompt y el flujo de conversación, ya que la dinámica de una llamada entrante es muy diferente a la de una saliente. Por ejemplo, un agente entrante espera a que el cliente hable primero, mientras que uno saliente debe iniciar la conversación con un guión específico.
+  </Expandable>
+
+  <Expandable title="¿Qué modelos de IA puedo usar para mi agente de voz?">
+    E-SMART360 es compatible con múltiples proveedores de IA, incluyendo **OpenAI**, **Deepgram**, **ElevenLabs**, **Groq** y **Sarvam AI**, entre otros. Puedes seleccionar el modelo que mejor se adapte a tus necesidades desde la sección de Ajustes Avanzados. Cada proveedor ofrece diferentes características en cuanto a velocidad, precisión, costo y calidad de voz. Te recomendamos probar diferentes combinaciones para encontrar la que funcione mejor para tu caso de uso específico.
+  </Expandable>
+
+  <Expandable title="¿Puedo tener múltiples agentes en una misma cuenta?">
+    Sí, no hay límite en la cantidad de agentes de voz que puedes crear en una misma cuenta de E-SMART360. Cada agente puede tener su propio número de teléfono, configuración, prompt y propósitos diferentes. Esto es especialmente útil si gestionas múltiples marcas, departamentos o servicios que requieren agentes con personalidades y objetivos distintos. Todos los agentes se gestionan desde un mismo panel de control.
+  </Expandable>
+
+  <Expandable title="¿Cómo puedo probar mi agente antes de ponerlo en producción?">
+    E-SMART360 incluye un **entorno de pruebas** integrado donde puedes simular llamadas y escuchar cómo responde tu agente en tiempo real. También puedes usar la función de prueba desde el panel de configuración básica para verificar el saludo, el tono y el flujo de la conversación. Para pruebas más avanzadas, puedes enviar solicitudes de prueba a la URL del webhook de tu agente utilizando herramientas como cURL o Postman.
+  </Expandable>
+
+  <Expandable title="¿Necesitas ayuda para configurar tu primer agente de voz?">
+    <Callout kind="info" emoji="🎧">
+      Si encuentras dificultades durante el proceso de configuración o necesitas asistencia personalizada, el equipo de soporte de E-SMART360 está listo para ayudarte. Puedes contactarnos a través del chat en el panel de control, enviando un correo a soporte@e-smart360.com, o consultando nuestra documentación completa. ¡Estamos aquí para asegurarnos de que tu agente de voz funcione perfectamente!
+    </Callout>
+  </Expandable>
+</ExpandableGroup>

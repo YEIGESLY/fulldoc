@@ -1,0 +1,174 @@
+---
+title: "Plantillas de Automatización para Agentes de Voz IA"
+description: "Descarga e implementa plantillas plug-and-play de automatización para tus agentes de voz en E-SMART360. Arquitectura voice-to-action, estructura de webhooks, integraciones con Zapier, Make y más. Ahorra horas de desarrollo con estos templates probados."
+---
+
+<Callout kind="info" emoji="🤖">
+Este documento forma parte de la serie de **Plantillas de Automatización** de E-SMART360. Aquí encontrarás la arquitectura central y la estructura de los webhooks. Las plantillas específicas para cada plataforma (Zapier, Make, manejo de errores, pruebas y optimización) se encuentran en sus respectivas guías.
+</Callout>
+
+## Arquitectura de Automatización Voz-a-Acción
+
+Las plantillas que encontrarás a continuación están diseñadas para implementarse de forma inmediata en tus flujos de trabajo con agentes de voz. Cubren los casos de uso más comunes y están optimizadas para mantener la fluidez de la conversación mientras gestionan restricciones en tiempo real.
+
+<Callout kind="tip" emoji="⚡">
+**¿Por qué usar estas plantillas?** Están basadas en cientos de implementaciones reales con diferentes plataformas de automatización. Cada template ha sido probado y ajustado para minimizar latencia y errores en producción.
+</Callout>
+
+### Capacidades Cubiertas
+
+<Tabs>
+  <Tab title="Generación de Leads">
+    - Captura datos del lead desde la llamada
+    - Envío automático a tu CRM
+    - Asignación a representante de ventas
+    - Secuencia de seguimiento personalizada
+  </Tab>
+  <Tab title="Soporte al Cliente">
+    - Clasificación de tickets por categoría
+    - Priorización por urgencia detectada
+    - Enrutamiento al departamento correcto
+    - Registro automático en helpdesk
+  </Tab>
+  <Tab title="Agendamiento">
+    - Confirmación de citas en tiempo real
+    - Consulta de disponibilidad en calendario
+    - Bloqueo automático de horarios
+    - Recordatorios pre y post cita
+  </Tab>
+  <Tab title="Campañas Salientes">
+    - Secuencias de llamadas progresivas
+    - Timezone-aware scheduling
+    - Gestión de rebotes y no contacto
+    - Reportes de efectividad por lote
+  </Tab>
+</Tabs>
+
+## Arquitectura de Integración Central
+
+El núcleo de la automatización de E-SMART360 es el **webhook bidireccional**. Cada vez que un agente de voz completa una acción significativa —como agendar una cita, calificar un lead o registrar una solicitud de soporte—, envía un payload estructurado a la plataforma de automatización que hayas configurado.
+
+### Estructura del Webhook: E-SMART360 → Plataforma de Automatización
+
+<CodeGroup>
+  ```json
+  {
+    "event_type": "voice_action_triggered",
+    "session_id": "{{session_id}}",
+    "action": "{{action_type}}",
+    "timestamp": "{{timestamp}}",
+    "caller_data": {
+      "phone": "{{caller_phone}}",
+      "name": "{{caller_name}}",
+      "email": "{{caller_email}}"
+    },
+    "action_payload": {
+      "{{dynamic_fields}}": "{{based_on_action}}"
+    },
+    "conversation_context": "{{transcript_segment}}"
+  }
+  ```
+</CodeGroup>
+
+<Callout kind="warning" emoji="🔑">
+**Campos dinámicos:** El campo `action_payload` varía según el `event_type`. Por ejemplo, si la acción es `appointment_scheduled`, recibirás campos como `date`, `time` y `service_type`. Consulta la [guía de payloads dinámicos](/recursos/payloads-dinamicos) para ver todos los tipos de eventos disponibles.
+</Callout>
+
+### Descripción de Campos
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| `event_type` | string (enum) | Tipo de evento: `voice_action_triggered`, `call_completed`, `voicemail_left`, `human_intervention_requested` |
+| `session_id` | string | Identificador único de la sesión de llamada |
+| `action` | string | Acción específica que detonó el webhook |
+| `timestamp` | string (ISO 8601) | Momento exacto en que ocurrió el evento |
+| `caller_data.phone` | string | Número telefónico del contacto (formato E.164) |
+| `caller_data.name` | string | Nombre del contacto (si fue capturado durante la llamada) |
+| `caller_data.email` | string | Correo electrónico del contacto (si aplica) |
+| `action_payload` | object | Contenedor flexible con datos específicos de la acción |
+| `conversation_context` | string | Fragmento relevante de la transcripción (últimos 200 caracteres) |
+
+<Callout kind="info" emoji="📡">
+**Tiempo de entrega:** Los webhooks se envían en menos de 500ms después de que el agente completa la acción. Si tu plataforma de automatización requiere confirmación de recepción, asegúrate de responder con un código HTTP `200 OK` dentro de los primeros 3 segundos. Caso contrario, E-SMART360 reintentará el envío hasta 3 veces con un intervalo de 5 segundos.
+</Callout>
+
+## Flujo de Trabajo Típico
+
+<Steps>
+  <Step title="El agente de voz identifica una acción">
+    Durante la conversación, el agente detecta una intención del usuario: agendar una cita, solicitar información o transferir a un agente humano.
+  </Step>
+  <Step title="Se construye el payload del webhook">
+    El sistema recopila los datos relevantes de la sesión, los campos del contacto y el contexto de la conversación en un payload JSON estructurado.
+  </Step>
+  <Step title="Se envía a tu plataforma de automatización">
+    El webhook se dispara hacia la URL configurada (Zapier, Make, n8n, o tu propio endpoint HTTP). La plataforma recibe el payload y ejecuta las acciones definidas en tu receta o escenario.
+  </Step>
+  <Step title="Se ejecuta la acción automatizada">
+    Tu automatización procesa los datos: crear un lead en CRM, enviar un email de confirmación, actualizar una hoja de cálculo, o cualquier otra acción configurada.
+  </Step>
+  <Step title="Confirmación y cierre del ciclo">
+    La plataforma de automatización confirma la recepción y el agente de voz puede continuar con la conversación o finalizar la llamada según corresponda.
+  </Step>
+</Steps>
+
+## Consideraciones Importantes
+
+<Callout kind="warning" emoji="🚨">
+**Latencia:** Mantén la cadena de automatización lo más ligera posible. Cada paso adicional (Zapier → CRM → Email → SMS) suma latencia al ciclo completo. Recomendamos no superar los 5 segundos totales desde que se dispara el webhook hasta que se completa la última acción.
+</Callout>
+
+<Callout kind="success" emoji="✅">
+**Mejores prácticas:**
+- **Idempotencia:** Diseña tus automatizaciones para que ejecutar el mismo webhook dos veces no genere duplicados. Usa `session_id` como clave única.
+- **Logging:** Registra cada webhook recibido para facilitar la depuración.
+- **Fallbacks:** Si tu plataforma de automatización falla, idealmente el agente de voz debería poder continuar la conversación sin interrupción.
+- **Rate limiting:** No dispares más de 10 webhooks por segundo desde un mismo agente. Si necesitas más, escala horizontalmente.
+</Callout>
+
+## Próximos Pasos
+
+<Tabs>
+  <Tab title="Zapier">
+    Plantillas listas para importar en Zapier con disparadores de webhook y acciones preconfiguradas para los CRMs más populares.
+    [Ver plantillas de Zapier →](/recursos/plantillas-zapier)
+  </Tab>
+  <Tab title="Make (Integromat)">
+    Escenarios completos para Make con manejo de errores, transformación de datos y múltiples rutas condicionales.
+    [Ver plantillas de Make →](/recursos/plantillas-make)
+  </Tab>
+  <Tab title="Otras Plataformas">
+    Guías de integración para n8n, Workato, Power Automate y endpoints personalizados.
+    [Ver integraciones alternativas →](/recursos/integracion-otras-plataformas)
+  </Tab>
+</Tabs>
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+  <Expandable title="¿Qué plataformas de automatización son compatibles con E-SMART360?" defaultOpen="true">
+    E-SMART360 es compatible con cualquier plataforma que pueda recibir webhooks HTTP. Esto incluye **Zapier**, **Make** (antes Integromat), **n8n**, **Workato**, **Microsoft Power Automate**, **Pabbly Connect**, y endpoints personalizados. Cada plataforma tiene su propia guía de implementación en nuestra sección de plantillas de automatización.
+  </Expandable>
+
+  <Expandable title="¿Puedo usar múltiples plataformas de automatización al mismo tiempo?">
+    Sí, absolutamente. Puedes configurar múltiples URLs de webhook para un mismo agente de voz. Esto es útil cuando necesitas, por ejemplo, enviar datos a tu CRM vía Zapier y simultáneamente actualizar una hoja de cálculo en Google Sheets. Solo ten en cuenta que cada webhook adicional suma latencia, así que úsalos con moderación.
+  </Expandable>
+
+  <Expandable title="¿Qué hago si mi webhook no llega a la plataforma de automatización?">
+    Primero, verifica que tu URL de webhook esté correctamente configurada en el panel de E-SMART360. Luego, asegúrate de que tu plataforma de automatización esté escuchando en esa URL (Zapier y Make tienen modos de prueba). Finalmente, revisa los logs de actividad del agente: los webhooks fallidos aparecen con código de error y razón del rechazo. Si todo falla, consulta nuestra [guía de solución de problemas de webhooks](/recursos/solucion-problemas-webhooks).
+  </Expandable>
+
+  <Expandable title="¿Los webhooks funcionan durante la llamada o solo al finalizar?">
+    Ambas opciones son posibles. Por defecto, los webhooks se disparan **inmediatamente** cuando ocurre una acción significativa durante la llamada. Sin embargo, puedes configurarlos para que se acumulen y se envíen en lote al finalizar la llamada. Esta configuración está disponible en el panel de ajustes del agente, en la sección "Eventos y Webhooks".
+  </Expandable>
+
+  <Expandable title="¿Los datos enviados por webhook están cifrados?">
+    Todos los webhooks se envían exclusivamente a través de **HTTPS (TLS 1.2+)**, por lo que los datos viajan cifrados en tránsito. Además, puedes configurar un header secreto de verificación en el webhook para asegurarte de que solo E-SMART360 pueda enviar datos a tu endpoint. Consulta nuestra guía de [seguridad en webhooks](/recursos/seguridad-webhooks) para implementar esta verificación.
+  </Expandable>
+
+  <Expandable title="¿Necesitas ayuda para configurar tu primera automatización?">
+    <Callout kind="info" emoji="💬">
+      Si tienes dudas sobre qué plantilla usar o cómo configurar tu integración, nuestro equipo de soporte técnico está disponible para ayudarte. Escríbenos a **soporte@esmart360.com** o agenda una llamada con nuestro equipo de integraciones. También puedes unirte a nuestra comunidad en Discord para compartir experiencias con otros usuarios.
+    </Callout>
+  </Expandable>
+</ExpandableGroup>

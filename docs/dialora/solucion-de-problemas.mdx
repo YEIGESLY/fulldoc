@@ -1,0 +1,135 @@
+---
+title: "El agente se queda en silencio después del saludo"
+description: "Solución al problema del agente de voz que responde al saludo inicial pero luego deja de responder. Causas comunes como GPT Nano, clave API agotada y base de conocimientos muy grande."
+---
+
+<Callout kind="danger">
+**Problema crítico**: tu agente responde al saludo inicial pero luego deja de responder a las entradas del llamante. Este es uno de los problemas más reportados y suele tener una solución directa.
+</Callout>
+
+## Síntomas
+
+- El agente contesta la llamada y entrega el mensaje de saludo inicial
+- Después de que el llamante responde, el agente se vuelve no receptivo
+- No aparecen mensajes de error en el panel de control
+- La llamada no se desconecta, pero el agente no habla ni actúa más
+- Esto ocurre consistentemente en múltiples llamadas de prueba
+
+## Causas comunes
+
+### 1. Uso del modelo GPT Nano
+
+**No uses GPT Nano.** Este modelo tiene fallos persistentes en producción y frecuentemente deja de responder después del prompt inicial.
+
+<Callout kind="warning">
+**Crítico**: No uses GPT Nano en producción. Cambia a **GPT 4.1-mini** o **GPT 4.1** de inmediato — esto resuelve la mayoría de los casos de "agente silencioso".
+</Callout>
+
+### 2. Clave API de OpenAI agotada
+
+Si estás usando una clave API propia ("Bring Your Own") de OpenAI, puede haber alcanzado su límite de tasa o de crédito.
+
+### 3. Mala estructura del prompt
+
+Los prompts excesivamente complejos, contradictorios o mal formateados pueden hacer que el modelo se "congele".
+
+### 4. Base de conocimientos demasiado grande
+
+Las bases de conocimientos masivas (>50MB) pueden causar problemas de tiempo de espera y retrasos en el procesamiento.
+
+## Cómo solucionarlo
+
+### Paso 1: Verificar la selección del modelo LLM
+
+1. Ve a **Configuración del agente** → **Configuración del modelo**
+2. Revisa qué modelo estás usando actualmente
+3. **Si estás usando GPT Nano:** cambia inmediatamente a **GPT 4.1-mini** (recomendado para la mayoría de casos) o **GPT 4.1** (si necesitas mayor capacidad de razonamiento)
+4. Guarda los cambios y realiza una llamada de prueba
+
+<Callout kind="success">
+El cambio de GPT Nano a GPT 4.1-mini resuelve este problema en aproximadamente el 90% de los casos.
+</Callout>
+
+### Paso 2: Verificar la clave API de OpenAI (si usas BYO)
+
+1. Navega a **Integraciones** → **OpenAI**
+2. Verifica si tienes una clave API personalizada configurada
+3. Inicia sesión en tu [cuenta de OpenAI](https://platform.openai.com/) y verifica:
+   - Que tu cuenta tenga créditos disponibles
+   - Que la clave API no haya expirado
+   - Que tu uso no haya excedido los límites de tasa
+4. **Si la clave está agotada:** elimina la clave personalizada para volver a la integración predeterminada de E-SMART360
+5. Haz clic en **Guardar** y prueba de nuevo
+
+### Paso 3: Simplificar el prompt del agente
+
+1. Ve a **Configuración del agente** → **Prompt del sistema**
+2. Revisa tu prompt en busca de:
+   - Instrucciones contradictorias (ej. "sé servicial pero nunca respondas preguntas")
+   - Condiciones anidadas excesivas o lógica compleja
+   - Instrucciones que entren en conflicto con las funciones principales del agente
+3. Simplifica a un máximo de 3 a 5 instrucciones principales
+4. Prueba con una versión más limpia de tu prompt
+
+<Callout kind="tip">
+Una buena regla general: si tu prompt tiene más de 10 instrucciones, es probable que sea demasiado complejo. Prioriza las instrucciones más importantes y elimina el resto.
+</Callout>
+
+### Paso 4: Reducir el tamaño de la base de conocimientos
+
+1. Ve a **Base de conocimientos** → **Gestionar archivos**
+2. Verifica el tamaño total de tus archivos subidos
+3. Si supera los 50MB:
+   - Elimina documentos desactualizados o redundantes
+   - Divide PDFs grandes en partes más pequeñas
+   - Archiva contenido de uso poco frecuente
+4. Vuelve a subir tu base de conocimientos optimizada
+5. Prueba el agente nuevamente
+
+## Comparativa de modelos recomendados
+
+| Modelo | Uso recomendado | Latencia | Estabilidad |
+|---|---|---|---|
+| GPT Nano | ❌ No usar en producción | Baja | ❌ Mala |
+| GPT 4.1-mini | ✅ Mayoría de casos | Media | ✅ Excelente |
+| GPT 4.1 | ✅ Razonamiento avanzado | Alta | ✅ Excelente |
+
+## Consejos de prevención
+
+1. **Usa siempre GPT 4.1-mini o GPT 4.1** para agentes en producción
+2. **Prueba tus prompts de forma incremental** — comienza simple y agrega complejidad gradualmente
+3. **Monitorea tu uso de OpenAI** si usas una clave propia; configura alertas de facturación
+4. **Mantén las bases de conocimientos bajo 50MB** y revísalas trimestralmente
+5. **Prueba cada cambio de configuración** con una llamada de prueba corta antes de implementar
+
+<Callout kind="info">
+Llevar un registro de los cambios que haces te ayudará a identificar rápidamente qué modificación causó un problema. Te recomendamos mantener un changelog simple de configuración.
+</Callout>
+
+## Preguntas frecuentes
+
+<ExpandableGroup>
+
+<Expandable title="¿Por qué GPT Nano causa este problema específicamente?" default-open="true">
+GPT Nano es un modelo optimizado para velocidad, no para estabilidad en producción. Su arquitectura reducida tiene dificultades para mantener el contexto conversacional después de las primeras interacciones, lo que provoca que el agente "se congele" después del saludo. No está diseñado para aplicaciones de voz en tiempo real.
+</Expandable>
+
+<Expandable title="¿Puedo usar otros modelos además de GPT?">
+Sí, E-SMART360 es compatible con múltiples proveedores de LLM. Puedes configurar integraciones con Groq, Anthropic Claude y otros modelos a través de la sección de Integraciones. Cada proveedor tiene sus propias características de latencia y calidad.
+</Expandable>
+
+<Expandable title="¿El tamaño del prompt afecta el tiempo de respuesta?">
+Sí, directamente. Cuanto más largo sea el prompt, mayor será la latencia. Por cada 1000 caracteres adicionales en el prompt, puedes esperar un aumento de 200-500ms en el tiempo de procesamiento. Por eso recomendamos prompts concisos de 3-5 instrucciones principales.
+</Expandable>
+
+<Expandable title="¿Qué hago si después de todos estos pasos el agente sigue en silencio?">
+Si has verificado el modelo, la clave API, simplificado el prompt y reducido la base de conocimientos sin éxito, contacta a nuestro equipo de soporte. Puede tratarse de un problema de configuración más profundo o una incidencia en la infraestructura que requiere revisión técnica.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda para resolver este problema?">
+<Callout kind="alert">
+Si después de seguir todos los pasos el agente sigue sin responder después del saludo, contacta a nuestro equipo de soporte. Incluye en tu mensaje: el modelo que usas, el tamaño de tu base de conocimientos y si usas clave API propia o la predeterminada. Esto nos ayudará a diagnosticar más rápido.
+</Callout>
+</Expandable>
+
+</ExpandableGroup>

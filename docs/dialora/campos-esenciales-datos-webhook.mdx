@@ -1,0 +1,184 @@
+---
+title: "Campos Esenciales de Datos para el Payload del Webhook"
+description: "Documentación completa de los campos requeridos y opcionales para el payload del webhook de E-SMART360. Aprende qué datos incluir para garantizar llamadas salientes exitosas y cómo personalizar la información de cada contacto."
+---
+
+<Callout kind="info" title="¿Por qué son importantes estos campos?">
+Los campos de datos que incluyas en el payload del webhook determinan la calidad de la interacción entre tu sistema y el agente de voz de E-SMART360. Cuanta más información relevante proporciones, más personalizada y efectiva será cada llamada.
+</Callout>
+
+## Campos Requeridos
+
+Para que una llamada saliente se ejecute correctamente, tu webhook debe enviar obligatoriamente los siguientes campos. Sin ellos, el sistema no podrá iniciar la comunicación.
+
+<ResponseField name="name" type="string" required="true">
+Nombre completo del contacto. Este valor se utiliza para que el agente de voz se dirija a la persona de forma natural durante la conversación.
+  - **Formato**: Texto libre
+  - **Ejemplo**: `"Ana García López"`
+  - **Máximo**: 255 caracteres
+  - **Recomendación**: Incluye nombre y apellido para una experiencia más personalizada
+</ResponseField>
+
+<ResponseField name="phone" type="string" required="true">
+Número telefónico del contacto, incluyendo el código de país. Es el identificador principal para establecer la llamada.
+  - **Formato**: `+[código de país][código de área][número]`
+  - **Ejemplo**: `+525512345678` (México), `+34911234567` (España)
+  - **Validación**: Debe incluir el signo `+` seguido del código de país
+  - **Importante**: Sin espacios, guiones ni paréntesis
+</ResponseField>
+
+<Callout kind="warning" title="Errores comunes con el campo phone">
+El error más frecuente al integrar webhooks es enviar el número en formato local (ej: `(555) 123-4567`). El sistema requiere el formato E.164 internacional. Usa siempre `+[código de país][número completo]` sin separadores.
+</Callout>
+
+## Campos Opcionales
+
+Estos campos enriquecen la experiencia de la llamada y permiten que el agente de voz adapte su discurso al contexto específico de cada contacto.
+
+<ResponseField name="email" type="string">
+Dirección de correo electrónico del contacto. El agente puede utilizar este dato para confirmar envíos, verificar identidad o personalizar la oferta.
+  - **Formato**: Estándar de email (`usuario@dominio.com`)
+  - **Ejemplo**: `"ana.garcia@ejemplo.com"`
+  - **Uso típico**: Confirmación de citas, envío de información adicional
+</ResponseField>
+
+<ResponseField name="company" type="string">
+Nombre de la empresa u organización a la que pertenece el contacto. Muy útil en contextos B2B donde el agente necesita referirse a la compañía durante la conversación.
+  - **Formato**: Texto libre
+  - **Ejemplo**: `"TechSolutions México"`
+  - **Uso típico**: Ventas corporativas, soporte empresarial, seguimiento de cuentas
+</ResponseField>
+
+<ResponseField name="notes" type="text">
+Contexto adicional o notas previas sobre la llamada. El agente de voz leerá esta información antes de iniciar la conversación, lo que permite retomar el hilo de interacciones anteriores.
+  - **Formato**: Texto libre, máximo 500 caracteres
+  - **Ejemplo**: `"Llamada de seguimiento. El cliente mostró interés en el plan premium la semana pasada. Preguntó específicamente por integración con Salesforce."`
+  - **Uso típico**: Seguimiento de ventas, recordatorios, notas de servicio
+</ResponseField>
+
+<ResponseField name="custom_field_1" type="any">
+Campo personalizado para datos adicionales que tu agente de voz necesite durante la ejecución. Puede contener información específica de tu integración o lógica de negocio.
+  - **Formato**: Cualquier tipo de dato JSON válido (string, number, object, array)
+  - **Ejemplo**: `{"id_cliente": 4582, "plan": "premium", "fecha_ultimo_contacto": "2025-01-15"}`
+  - **Uso típico**: IDs internos, categorías de cliente, datos de segmentación, preferencias
+  - **Límite**: 1024 caracteres serializados
+</ResponseField>
+
+<Callout kind="tip" title="Aprovecha los campos personalizados">
+Si necesitas más de un campo personalizado, puedes enviar un objeto JSON complejo en `custom_field_1` con toda la estructura que tu agente requiera. El sistema interpreta cualquier formato JSON válido.
+</Callout>
+
+## Ejemplo Completo del Payload
+
+A continuación, un ejemplo que integra todos los campos descritos:
+
+<CodeGroup>
+```json Payload
+{
+  "name": "Carlos Mendoza Rivera",
+  "phone": "+525512345678",
+  "email": "carlos.mendoza@techcorp.com.mx",
+  "company": "TechCorp México",
+  "notes": "Interesado en demostración del producto. Llamó al departamento de ventas preguntando por precios corporativos. Se le prometió una llamada de seguimiento con oferta personalizada.",
+  "custom_field_1": {
+    "id_cliente": 7841,
+    "segmento": "empresa",
+    "tamano_empleados": 50,
+    "producto_interes": "suite_completa",
+    "etapa_venta": "calificacion"
+  }
+}
+```
+</CodeGroup>
+
+## Validación de Datos
+
+El sistema de E-SMART360 realiza las siguientes validaciones antes de iniciar la llamada:
+
+<Steps>
+<Step title="Validación de formato phone">
+El sistema verifica que el campo `phone` cumpla con el formato E.164. Si el formato es inválido, la llamada no se iniciará y recibirás un error en la respuesta del webhook.
+</Step>
+<Step title="Verificación de campos requeridos">
+Se confirma que `name` y `phone` estén presentes y no estén vacíos. Si falta alguno, la API devuelve un código de error HTTP 400 con una descripción del campo faltante.
+</Step>
+<Step title="Sanitización y normalización">
+Los campos opcionales se sanitizan para eliminar caracteres no permitidos. Los textos se normalizan a UTF-8 para garantizar compatibilidad con todos los sistemas de telefonía.
+</Step>
+</Steps>
+
+## Mejores Prácticas
+
+<Tabs>
+<Tab title="Completitud de datos">
+Envía siempre la mayor cantidad de información posible. Un campo `notes` bien redactado permite que el agente de voz inicie la conversación con contexto, lo que mejora significativamente la tasa de conversión. Los estudios internos muestran que las llamadas con `notes` rellenas tienen un 40% más de probabilidad de alcanzar el objetivo deseado.
+</Tab>
+<Tab title="Actualización periódica">
+Mantén los datos de contacto actualizados. Un número de teléfono incorrecto o un nombre desactualizado no solo desperdician créditos, sino que también dañan la percepción de tu marca. Implementa procesos de verificación periódica de tus listas de contactos.
+</Tab>
+<Tab title="Estructura consistente">
+Define una estructura JSON consistente para tus payloads. Si utilizas `custom_field_1` con un objeto complejo, asegúrate de que todos los registros sigan la misma estructura. Esto facilita el debugging y la evolución de tu integración.
+</Tab>
+</Tabs>
+
+## Códigos de Error
+
+<ResponseField name="400" type="HTTP Error" field-type="status">
+**Bad Request**: Falta un campo requerido o el formato del payload es inválido. Revisa que `name` y `phone` estén presentes y que `phone` cumpla con el formato E.164.
+  - Causa común: `phone` sin código de país o con formato local
+  - Solución: Usa `+[país][número]` sin separadores
+</ResponseField>
+
+<ResponseField name="422" type="HTTP Error" field-type="status">
+**Unprocessable Entity**: El payload es válido estructuralmente pero algún campo supera el límite de caracteres permitido. Revisa especialmente `notes` (500 caracteres) y `custom_field_1` (1024 caracteres serializados).
+  - Causa común: `notes` demasiado extenso
+  - Solución: Resume el contexto a lo esencial
+</ResponseField>
+
+## Integración con tu Sistema
+
+Para integrar estos campos en tu sistema actual, sigue este flujo de trabajo:
+
+<Steps>
+<Step title="Mapea tus datos existentes" icon="database">
+Identifica qué campos de tu CRM, base de datos o formulario web se corresponden con `name`, `phone`, `email`, `company` y `notes`. Crea un mapeo directo para tu integración.
+</Step>
+<Step title="Define campos personalizados" icon="settings">
+Analiza qué información adicional necesita tu agente de voz para personalizar cada llamada. Define un esquema JSON para `custom_field_1` que cubra todas tus necesidades actuales y futuras.
+</Step>
+<Step title="Prueba con datos reales" icon="test-tube">
+Antes de lanzar tu campaña, envía payloads de prueba con datos reales de tus contactos. Verifica que el agente interprete correctamente la información y que la llamada se inicie sin errores.
+</Step>
+</Steps>
+
+<Callout kind="success" title="¿Listo para implementar?">
+Una vez que hayas estructurado tus campos de datos, el siguiente paso es probar tu webhook con llamadas de prueba. Visita nuestra guía de pruebas para validar tu integración antes de lanzar tu campaña.
+</Callout>
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+
+<Expandable title="¿Puedo omitir el campo name?" default-open="true">
+No se recomienda omitir el campo `name`. Aunque técnicamente la llamada se iniciará si el campo está vacío, el agente de voz no podrá dirigirse al contacto por su nombre, lo que resulta en una experiencia fría y poco profesional. Siempre incluye al menos el nombre de pila.
+</Expandable>
+
+<Expandable title="¿Cuántos campos personalizados puedo agregar?">
+El payload del webhook acepta un único campo `custom_field_1`, pero este puede contener un objeto JSON con tantas propiedades como necesites. El límite práctico es de 1024 caracteres para el valor serializado de este campo. Si necesitas más espacio, puedes distribuir la información entre `notes` y `custom_field_1`.
+</Expandable>
+
+<Expandable title="¿Qué pasa si envío un número sin código de país?">
+Si el campo `phone` no incluye el código de país en formato E.164, el sistema devolverá un error HTTP 400 y la llamada no se iniciará. El formato requerido es estrictamente `+[código de país][número]`, por ejemplo `+525512345678` para México o `+34911234567` para España.
+</Expandable>
+
+<Expandable title="¿Puedo usar caracteres especiales en el campo notes?">
+Sí, el campo `notes` acepta caracteres UTF-8, incluyendo acentos, eñes y símbolos como guiones, paréntesis y puntos. Sin embargo, el límite es de 500 caracteres, por lo que te recomendamos ser conciso y priorizar la información más relevante para el agente.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda con la estructura de datos de tu webhook?">
+<Callout kind="info" title="Soporte técnico">
+Si tienes dudas sobre cómo estructurar tus campos de datos o necesitas asistencia para mapear tu CRM con los campos del webhook, nuestro equipo de soporte está disponible para ayudarte. Contáctanos a través del panel de control de E-SMART360 o envía un ticket con una descripción detallada de tu integración.
+</Callout>
+</Expandable>
+
+</ExpandableGroup>

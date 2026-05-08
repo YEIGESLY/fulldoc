@@ -1,0 +1,171 @@
+---
+title: "El dominio personalizado no carga"
+description: "Solución al problema del dominio personalizado que no carga, muestra error de DNS o contenido incorrecto en agentes de voz IA de E-SMART360."
+---
+
+<Callout kind="danger">
+**Problema**: tu dominio personalizado para E-SMART360 no carga, muestra un error o presenta contenido incorrecto. Esta guía cubre las causas más comunes de DNS y sus soluciones.
+</Callout>
+
+## Síntomas
+
+- El dominio personalizado devuelve un error de "resolución DNS fallida" o "No se puede resolver"
+- Muestra una página de error genérica en lugar de tu agente de E-SMART360
+- El dominio funciona por un tiempo y luego deja de funcionar repentinamente
+- Cloudflare muestra un error de DNS aunque hayas configurado el registro
+- El registro CNAME parece configurado pero el dominio aún no resuelve
+- Confusión entre registros SMTP y registros CNAME del dominio
+
+## Causas comunes
+
+### 1. Proxy de Cloudflare activado (nube naranja)
+
+E-SMART360 requiere **modo solo DNS**. El proxy a través de Cloudflare causa problemas de conectividad.
+
+### 2. Tipo de registro DNS incorrecto
+
+Usar un registro A en lugar de CNAME, o viceversa.
+
+### 3. CNAME no propagado completamente
+
+Los cambios de DNS pueden tardar de 24 a 48 horas en propagarse globalmente.
+
+### 4. Confusión entre configuraciones SMTP y CNAME del dominio
+
+Mezclar registros de servidor de correo con el enrutamiento del dominio de E-SMART360.
+
+<Callout kind="warning">
+**Solución más común**: E-SMART360 requiere **modo solo DNS** en Cloudflare. Si tu CNAME tiene una nube naranja (proxy), cámbiala a gris (solo DNS) — esto soluciona la mayoría de los problemas de carga del dominio.
+</Callout>
+
+## Cómo solucionarlo
+
+### Paso 1: Desactivar el proxy de Cloudflare (modo solo DNS)
+
+1. Inicia sesión en tu **cuenta de Cloudflare**
+2. Navega a la **configuración de DNS** de tu dominio
+3. Encuentra el registro CNAME que apunta a E-SMART360 (ej. `app.tudominio.com`)
+4. **Revisa el icono de nube junto a ese registro:**
+   - **Nube naranja = Proxy** (incorrecto — causa problemas con E-SMART360)
+   - **Nube gris = Solo DNS** (correcto)
+5. Haz clic en el icono de nube naranja para cambiarlo a **gris (Solo DNS)**
+6. Guarda los cambios
+7. Espera 1-2 minutos e intenta acceder a tu dominio nuevamente
+
+### Paso 2: Verificar que el registro CNAME apunte al endpoint correcto
+
+1. En tu **proveedor de DNS** (Cloudflare, Route53, GoDaddy, etc.):
+2. Encuentra tu registro CNAME para el subdominio de E-SMART360
+3. Confirma que apunte al **endpoint correcto** (proporcionado en tu panel de E-SMART360):
+   - Verifica en **Integraciones** → **Dominio personalizado** en E-SMART360
+   - Copia la URL del endpoint exacta proporcionada
+4. **Ejemplo de configuración CNAME:**
+
+<CodeGroup>
+```dns
+Type:  CNAME
+Name:  app
+Value: cname.e-smart360.com  (o tu endpoint asignado)
+TTL:   3600 (o Auto)
+```
+
+</CodeGroup>
+
+5. Asegúrate de que **no haya caracteres extra, espacios o errores tipográficos** en el endpoint
+6. Si el endpoint es diferente, **elimina el registro CNAME antiguo y crea uno nuevo** con el valor correcto
+
+<Callout kind="tip">
+El endpoint exacto que debes usar aparece en tu panel de E-SMART360 en Integraciones → Dominio personalizado. No asumas que es el mismo para todas las cuentas.
+</Callout>
+
+### Paso 3: Verificar el estado de propagación DNS
+
+1. Los cambios de DNS no toman efecto inmediatamente — pueden tardar **24-48 horas** en propagarse globalmente
+2. Para verificar el estado de propagación:
+   - Visita [DNSChecker.org](https://dnschecker.org/)
+   - Ingresa tu nombre de dominio (ej. `app.tudominio.com`)
+   - Selecciona **CNAME** como tipo de registro
+   - Revisa los resultados desde múltiples ubicaciones alrededor del mundo
+3. **Si la mayoría de las ubicaciones muestran tu endpoint de E-SMART360:** la propagación está funcionando; espera si es necesario
+4. **Si las ubicaciones muestran "NXDOMAIN" o valores antiguos:** tu cambio de DNS puede no haberse guardado correctamente; vuelve al Paso 2
+
+### Paso 4: Separar registros SMTP del CNAME del dominio
+
+**Error común:**
+
+No confundas los registros de correo electrónico (SMTP) con el enrutamiento de tu dominio de E-SMART360.
+
+**NO uses estos registros para E-SMART360:**
+
+- `Type: MX` (para enrutamiento de correo)
+- `Type: TXT` para SPF, DKIM (para autenticación de correo)
+- Endpoints de servidores SMTP
+
+**Para la configuración del dominio de E-SMART360, usa SOLO:**
+
+- `Type: CNAME` apuntando a tu endpoint de E-SMART360
+- O `Type: A` si usas una dirección IP (raro; consulta la documentación)
+
+<Callout kind="warning">
+Si ves registros MX o TXT donde debería estar tu CNAME, **elimínalos y crea el registro CNAME correcto**.
+</Callout>
+
+### Paso 5: Probar tu dominio
+
+1. Después de hacer cambios de DNS, espera **5-10 minutos** (o más si la propagación es lenta)
+2. Intenta acceder a tu dominio en una **ventana de incógnito/privada** para evitar la caché
+3. Si aún no carga:
+   - Limpia la caché del navegador (Ctrl+Shift+Delete o Cmd+Shift+Delete)
+   - Prueba desde una red o dispositivo diferente
+   - Verifica si el DNS de tu ISP está almacenando en caché registros antiguos (prueba usando 8.8.8.8 o 1.1.1.1)
+4. Una vez que cargue, verifica que la interfaz del agente de E-SMART360 aparezca correctamente
+
+## Guía rápida de registros DNS
+
+| Tipo de registro | Propósito | ¿Usar para E-SMART360? |
+|---|---|---|
+| CNAME | Apunta un subdominio a otro dominio | ✅ Sí |
+| A | Apunta un dominio a una dirección IP | ⚠️ Solo si se indica |
+| MX | Enrutamiento de correo electrónico | ❌ No |
+| TXT | Verificación y autenticación | ❌ No (solo para correo) |
+
+## Consejos de prevención
+
+1. **Usa siempre modo solo DNS** en Cloudflare (nube gris, no naranja)
+2. **Verifica el endpoint CNAME** en tu panel de E-SMART360 antes de crear registros DNS
+3. **Separa la gestión de DNS:** registros SMTP/correo en una sección, dominio de E-SMART360 en otra
+4. **Documenta tu configuración DNS** — mantén una hoja de cálculo con todos los registros DNS y sus propósitos
+5. **Prueba la configuración del dominio inmediatamente después de crearla** — no esperes días
+6. **Configura alertas de monitoreo DNS** para recibir notificaciones si los registros cambian repentinamente
+
+## Preguntas frecuentes
+
+<ExpandableGroup>
+
+<Expandable title="¿Por qué Cloudflare proxy (nube naranja) causa problemas?" default-open="true">
+Cloudflare proxy (modo naranja) actúa como intermediario que inspecciona y filtra el tráfico. E-SMART360 requiere una conexión directa entre el dominio personalizado y sus servidores, sin intermediarios. El proxy de Cloudflare interfiere con esta conexión directa, causando errores de resolución y contenido incorrecto. La solución es usar siempre modo solo DNS (nube gris).
+</Expandable>
+
+<Expandable title="¿Cuánto tiempo tarda la propagación DNS?">
+La propagación DNS puede tomar desde 5 minutos hasta 48 horas, dependiendo de tu proveedor de DNS y los TTL configurados. Si configuraste un TTL de 3600 (1 hora), la propagación debería completarse en un par de horas en la mayoría de los casos. Para verificarla, usa herramientas como DNSChecker.org.
+</Expandable>
+
+<Expandable title="¿Puedo usar un subdominio en lugar del dominio principal?">
+Sí, de hecho es la práctica recomendada. Configurar un subdominio como `agente.tudominio.com` es más simple y evita conflictos con los registros DNS existentes de tu dominio principal (como MX para correo o A para tu sitio web).
+</Expandable>
+
+<Expandable title="¿Qué hago si mi proveedor de DNS no es Cloudflare?">
+El proceso es similar en la mayoría de los proveedores (GoDaddy, Namecheap, Route53, etc.). Debes crear un registro CNAME que apunte tu subdominio al endpoint proporcionado en tu panel de E-SMART360. La diferencia principal es que solo Cloudflare tiene el modo proxy (nube naranja); otros proveedores manejan CNAME de forma estándar.
+</Expandable>
+
+<Expandable title="El dominio cargaba antes y dejó de funcionar, ¿qué pasó?">
+Esto puede ocurrir si: (1) el endpoint de E-SMART360 cambió, (2) tu proveedor de DNS modificó o eliminó el registro CNAME, (3) tu suscripción a E-SMART360 venció o el dominio personalizado se desactivó, o (4) activaste el proxy de Cloudflare sin darte cuenta. Verifica cada uno de estos puntos en orden.
+</Expandable>
+
+<Expandable title="¿Necesitas ayuda con la configuración de tu dominio personalizado?">
+<Callout kind="alert">
+Si después de seguir todos los pasos tu dominio personalizado sigue sin cargar, contacta a nuestro equipo de soporte. Incluye en tu mensaje: tu proveedor de DNS, el tipo de registro que configuraste, el valor del CNAME y una captura de pantalla de la configuración DNS. Esto nos ayudará a diagnosticar el problema más rápido.
+</Callout>
+</Expandable>
+
+</ExpandableGroup>

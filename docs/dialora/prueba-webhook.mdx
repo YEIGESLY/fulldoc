@@ -1,0 +1,279 @@
+---
+title: "Prueba de tu Webhook — Guía Completa para Verificar tu Integración"
+description: "Aprende a probar tu webhook de E-SMART360 antes de ponerlo en producción. Incluye comandos cURL, checklist de verificación y guía de solución de problemas comunes."
+---
+
+import { Callout } from 'nextra/components'
+import { Steps, Step } from 'nextra/components'
+import { Tabs, Tab } from 'nextra/components'
+import { Columns, Card } from 'nextra/components'
+import { Expandable, ExpandableGroup } from 'nextra/components'
+import { CodeGroup } from 'nextra/components'
+
+<Callout kind="warning" emoji="⚠️">
+Antes de poner tu webhook en producción, es **fundamental** probarlo a fondo. Una integración mal configurada puede resultar en llamadas fallidas o datos incorrectos. Sigue esta guía para asegurarte de que todo funcione correctamente.
+</Callout>
+
+## Prueba Manual Usando cURL
+
+La forma más rápida y directa de probar tu webhook es usando el comando `curl` desde tu terminal. Esto te permite verificar que la URL del webhook es correcta, que el payload JSON está bien formateado y que el agente procesa la solicitud correctamente.
+
+### Comando Básico de Prueba
+
+<CodeGroup>
+```bash title="Terminal"
+curl -X POST https://api.e-smart360.com/webhooks/agents/webh_7ejvxjh9lq6bdgwo/trigger \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Test Contact",
+    "phone": "+1555000001",
+    "notes": "Webhook test call"
+  }'
+```
+
+```python title="Python"
+import requests
+
+url = "https://api.e-smart360.com/webhooks/agents/webh_7ejvxjh9lq6bdgwo/trigger"
+headers = {"Content-Type": "application/json"}
+data = {
+    "name": "Test Contact",
+    "phone": "+1555000001",
+    "notes": "Webhook test call"
+}
+
+response = requests.post(url, json=data, headers=headers)
+print(f"Status: {response.status_code}")
+print(f"Response: {response.json()}")
+```
+
+```javascript title="JavaScript (Node.js)"
+const url = 'https://api.e-smart360.com/webhooks/agents/webh_7ejvxjh9lq6bdgwo/trigger';
+const data = {
+  name: 'Test Contact',
+  phone: '+1555000001',
+  notes: 'Webhook test call'
+};
+
+const response = await fetch(url, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(data)
+});
+
+console.log('Status:', response.status);
+console.log('Response:', await response.json());
+```
+</CodeGroup>
+
+<Callout kind="tip" emoji="💡">
+Reemplaza la URL del ejemplo con la URL real de tu webhook. Puedes encontrar tu URL única en la configuración de tu agente en el panel de E-SMART360.
+</Callout>
+
+### Interpretación de la Respuesta
+
+Una prueba exitosa devolverá una respuesta similar a esta:
+
+```json title="Respuesta Exitosa"
+{
+  "success": true,
+  "message": "Webhook trigger received successfully",
+  "call_id": "call_abc123def456",
+  "status": "queued"
+}
+```
+
+| Campo | Descripción |
+|-------|-------------|
+| `success` | Indica si la solicitud fue procesada correctamente |
+| `message` | Mensaje descriptivo del resultado |
+| `call_id` | Identificador único de la llamada (para seguimiento) |
+| `status` | Estado actual de la llamada (queued, processing, completed) |
+
+## Checklist de Pruebas
+
+Utiliza esta lista de verificación antes de considerar tu integración como lista para producción:
+
+<Steps>
+<Step title="✅ URL del Webhook Correcta" icon="🔗">
+Verifica que la URL del webhook en tu sistema coincida exactamente con la URL proporcionada en el panel de E-SMART360. Un error tipográfico en la URL hará que la solicitud falle.
+</Step>
+
+<Step title="✅ Número de Teléfono con Código de País" icon="📞">
+Asegúrate de que todos los números de teléfono incluyan el código de país completo (ej: +1555000001). Los números sin código de país o con formato incorrecto serán rechazados.
+</Step>
+
+<Step title="✅ Nombre del Contacto Proporcionado" icon="👤">
+Siempre incluye un nombre para el contacto. Aunque el campo "name" es opcional, proporcionarlo mejora la experiencia del agente durante la llamada.
+</Step>
+
+<Step title="✅ Formato JSON Correcto" icon="📝">
+Verifica que el payload JSON esté correctamente formateado. Un JSON mal formado (comillas faltantes, comas extra, etc.) causará un error de parseo. Usa un validador JSON si es necesario.
+</Step>
+
+<Step title="✅ Headers Correctos" icon="📋">
+Los headers de la solicitud deben incluir `Content-Type: application/json`. Sin este header, el servidor no interpretará correctamente el cuerpo de la solicitud.
+</Step>
+
+<Step title="✅ El Agente Procesa la Llamada" icon="🤖">
+Después de enviar la solicitud, verifica en el panel de E-SMART360 que el agente haya recibido y procesado la solicitud de llamada correctamente. Revisa el log de actividad para confirmar.
+</Step>
+</Steps>
+
+## Pruebas Avanzadas
+
+### Prueba con Campos Adicionales
+
+Puedes incluir campos adicionales en el payload para probar funcionalidades más avanzadas:
+
+<Tabs>
+<Tab title="Con Datos de Cliente">
+```json
+{
+  "name": "María García",
+  "phone": "+525512345678",
+  "email": "maria@ejemplo.com",
+  "notes": "Cliente interesada en seguro de hogar",
+  "custom_fields": {
+    "source": "Web",
+    "campaign": "Seguros_2025",
+    "priority": "alta"
+  }
+}
+```
+</Tab>
+<Tab title="Con Programación de Cita">
+```json
+{
+  "name": "Carlos López",
+  "phone": "+34911234567",
+  "notes": "Solicita cita para revisión general",
+  "appointment": {
+    "date": "2025-06-15",
+    "time": "10:30",
+    "service": "Revisión general"
+  }
+}
+```
+</Tab>
+<Tab title="Con ID de Referencia">
+```json
+{
+  "name": "Ana Martínez",
+  "phone": "+15551234567",
+  "notes": "Seguimiento de lead #12345",
+  "external_id": "lead_12345",
+  "reference": "CRM-2025-001"
+}
+```
+</Tab>
+</Tabs>
+
+### Prueba de Carga
+
+Si planeas enviar múltiples solicitudes simultáneas, realiza una prueba de carga:
+
+```bash title="Prueba de 10 solicitudes concurrentes"
+for i in {1..10}; do
+  curl -s -X POST "https://api.e-smart360.com/webhooks/agents/webh_ID/trigger" \
+    -H "Content-Type: application/json" \
+    -d "{\"name\":\"Test $i\",\"phone\":\"+1555000$(printf '%04d' $i)\",\"notes\":\"Load test $i\"}" &
+done
+wait
+echo "All requests completed"
+```
+
+## Solución de Problemas Comunes en las Pruebas
+
+| Síntoma | Causa Posible | Solución |
+|---------|---------------|----------|
+| Error 400 Bad Request | Payload JSON mal formateado | Valida el JSON con un validador |
+| Error 401 Unauthorized | URL de webhook incorrecta o expirada | Verifica la URL en el panel |
+| Error 404 Not Found | URL del endpoint incorrecta | Revisa la ruta completa de la URL |
+| Error 429 Too Many Requests | Demasiadas solicitudes en poco tiempo | Reduce la frecuencia o usa colas |
+| Sin respuesta del agente | Webhook no conectado al agente | Verifica la configuración del webhook |
+| Llamada no se realiza | Número inválido o sin créditos | Verifica el formato del número y el saldo |
+
+## Buenas Prácticas para Pruebas
+
+### 1. Usa un Entorno de Pruebas
+
+<Columns cols="2">
+<Card title="🧪 Datos de Prueba" icon="📊">
+Usa números de teléfono ficticios o dedicados para pruebas. Ejemplo: +1555000001 al +1555000099 están reservados para pruebas internas.
+</Card>
+<Card title="🔄 Prueba Iterativa" icon="🔄">
+Prueba un cambio a la vez. Si algo falla, sabrás exactamente qué lo causó. Haz cambios incrementales, no múltiples cambios simultáneos.
+</Card>
+<Card title="📝 Documenta tus Pruebas" icon="📋">
+Lleva un registro de las pruebas realizadas, los resultados obtenidos y los ajustes realizados. Esto te ayudará a identificar patrones y evitar errores repetidos.
+</Card>
+<Card title="🔍 Monitorea los Logs" icon="📈">
+Después de cada prueba, revisa los logs en el panel de E-SMART360 para confirmar que el webhook fue recibido y procesado correctamente.
+</Card>
+</Columns>
+
+### 2. Prueba Escenarios Reales
+
+No te limites a probar el caso ideal. Prueba también:
+
+- **Datos incompletos:** ¿Qué pasa si falta el nombre?
+- **Números inválidos:** ¿Cómo maneja el sistema un número incorrecto?
+- **Caracteres especiales:** ¿El sistema maneja correctamente acentos y caracteres no ASCII?
+- **Payloads vacíos:** ¿Qué respuesta obtienes si envías `{}`?
+
+### 3. Automatiza tus Pruebas
+
+Para integraciones en producción, considera automatizar las pruebas periódicas:
+
+```python title="Script de prueba automatizada (Python)"
+import requests
+import json
+
+def test_webhook(webhook_url, test_data):
+    """Prueba un webhook y devuelve el resultado"""
+    try:
+        response = requests.post(
+            webhook_url,
+            json=test_data,
+            headers={"Content-Type": "application/json"},
+            timeout=10
+        )
+        return {
+            "status": response.status_code,
+            "success": response.status_code == 200,
+            "data": response.json() if response.ok else response.text
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "success": False,
+            "error": str(e)
+        }
+
+# Prueba básica
+result = test_webhook(
+    "https://api.e-smart360.com/webhooks/agents/webh_ID/trigger",
+    {"name": "Test Automated", "phone": "+1555000001", "notes": "Automated test"}
+)
+print(json.dumps(result, indent=2))
+```
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+<Expandable title="¿Puedo probar el webhook sin hacer una llamada real?" default-open="true">
+Sí, el webhook de E-SMART360 procesa la solicitud y la encola. Puedes verificar en el panel de administración que la solicitud fue recibida sin necesidad de que la llamada se complete. Si tu plan tiene créditos de prueba, las llamadas de prueba sí se realizarán y consumirán créditos.
+</Expandable>
+<Expandable title="¿Con qué frecuencia debo probar mi webhook?">
+Recomendamos probar el webhook cada vez que realices cambios en la configuración (nuevo agente, cambios en el prompt, etc.). Para integraciones en producción, programa una prueba automática semanal para asegurarte de que todo sigue funcionando correctamente.
+</Expandable>
+<Expandable title="¿Qué hago si la prueba falla pero el payload parece correcto?">
+Revisa estos puntos: 1) La URL del webhook puede haber cambiado si recreaste el agente. 2) Verifica que tu IP no esté bloqueada. 3) Revisa los logs del sistema en el panel de E-SMART360 para ver el error exacto. 4) Confirma que tu cuenta tiene créditos disponibles.
+</Expandable>
+<Expandable title="¿Necesitas ayuda para probar tu webhook?">
+<Callout kind="info" emoji="🆘">
+Si encuentras problemas al probar tu webhook o necesitas asistencia para depurar tu integración, nuestro equipo de soporte está disponible. Escríbenos a **team@e-smart360.com** con los detalles de tu prueba (URL, payload y respuesta obtenida) y te ayudaremos a resolverlo.
+</Callout>
+</Expandable>
+</ExpandableGroup>

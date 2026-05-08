@@ -1,0 +1,127 @@
+---
+title: "Cómo Configurar la Transferencia de Llamadas en E-SMART360"
+description: "Guía paso a paso para habilitar la transferencia de llamadas de tu agente de voz IA a un agente humano. Aprende a configurar el desvío, seleccionar país y número, y personalizar el mensaje previo a la transferencia."
+---
+
+<Callout kind="info" title="Propósito de la transferencia de llamadas">
+A veces tu agente de voz IA necesita pasar la llamada a un humano, especialmente durante escalaciones o consultas complejas. Esta guía te muestra exactamente cómo configurarlo en E-SMART360.
+</Callout>
+
+## Configuración Paso a Paso
+
+Sigue estos pasos para habilitar la transferencia de llamadas en tu agente de voz.
+
+### Paso 1: Selecciona el Agente Correcto
+
+Ve a la sección **Agentes** de tu panel de control y elige el agente de voz al que deseas habilitarle las transferencias de llamadas.
+
+<Callout kind="tip" title="Tip">
+Si tienes varios agentes, selecciona únicamente aquellos que manejen consultas complejas o escalaciones. Los agentes más simples pueden resolver la mayoría de llamadas sin intervención humana.
+</Callout>
+
+### Paso 2: Abre la Configuración Avanzada
+
+Una vez dentro del panel del agente, haz clic en la pestaña **Configuración Avanzada** (*Advanced Settings*). Aquí encontrarás todas las opciones de personalización profunda de tu agente.
+
+### Paso 3: Encuentra la Sección de Integración de Datos y Herramientas
+
+- Busca la sección **Integración de Datos y Herramientas** (*Data Integration & Tools Section*) y haz clic en ella.
+- Haz clic en el botón **"Seleccionar Herramientas de la Biblioteca"** (*Select Tools From Library*).
+
+<Callout kind="warning">
+Si no ves esta sección, verifica que tu agente tenga los permisos adecuados para acceder a herramientas avanzadas. Contacta a tu administrador de agencia si es necesario.
+</Callout>
+
+### Paso 4: Agrega la Herramienta de Transferencia de Llamada
+
+Dentro de la biblioteca de herramientas, busca y selecciona la opción **Transferir Llamada** (*Transfer Call Tool*). Esta herramienta permite que el agente de IA transfiera llamadas activas a un número externo.
+
+### Paso 5: Configura la Herramienta
+
+Una vez agregada la herramienta, haz clic en **Configuración** (*Configuration*) para ajustar los siguientes parámetros:
+
+| Parámetro | Descripción |
+|-----------|-------------|
+| **Código de país** | Selecciona el código de país correcto del número de destino |
+| **Número telefónico** | Ingresa el número completo del equipo de soporte humano o contacto de escalación |
+| **Descripción de la herramienta** | Describe cuándo debe usarse esta herramienta (esto ayuda al agente IA a decidir cuándo transferir) |
+| **Mensaje previo a la llamada** | Mensaje que el agente IA dirá al cliente antes de transferir la llamada |
+
+<Callout kind="success" title="Ejemplo de configuración">
+```
+Código de país: +1 (EE.UU.)
+Número telefónico: +14155551234
+Descripción: Transferir al agente humano cuando el cliente solicite hablar con un supervisor
+Mensaje previo: "Un momento, por favor. Le transferiré con un agente humano que podrá ayudarle mejor con su consulta."
+```
+</Callout>
+
+#### Descripción de la Herramienta
+
+La descripción es crucial porque el agente IA la usará para determinar cuándo activar la transferencia. Sé específico. Ejemplos de buenas descripciones:
+
+<ExpandableGroup>
+  <Expandable title="Atención al cliente general" default-open="true">
+  "Usa esta herramienta cuando el cliente solicite hablar con un representante humano, cuando no puedas resolver su problema después de 2 intentos, o cuando el cliente muestre frustración."
+  </Expandable>
+  <Expandable title="Soporte técnico especializado">
+  "Transfiere la llamada al equipo técnico cuando el problema requiera acceso a sistemas internos, credenciales de usuario, o configuración de red que no esté disponible en tu base de conocimiento."
+  </Expandable>
+  <Expandable title="Ventas y calificación de leads">
+  "Usa para transferir leads calificados directamente a un vendedor cuando el cliente exprese intención de compra, solicite un presupuesto personalizado, o pida hablar con el departamento de ventas."
+  </Expandable>
+</ExpandableGroup>
+
+#### Mensaje Previo a la Transferencia
+
+El mensaje previo es lo que el agente IA le dice al cliente justo antes de transferir la llamada. Debe sonar natural y tranquilizador. Ejemplos:
+
+<Columns cols="2">
+  <Card title="Español">
+  "Un momento, por favor. Le conecto con un agente humano que podrá ayudarle de manera más personalizada."
+  </Card>
+  <Card title="Inglés">
+  "One moment please. I'm connecting you with a human agent who can assist you further."
+  </Card>
+</Columns>
+
+### Paso 6: Guarda los Cambios
+
+Haz clic en **Guardar** (*Save*) para aplicar la configuración. Tu agente ahora puede transferir llamadas de forma fluida cuando sea necesario.
+
+<Callout kind="success" title="¡Listo!">
+Tu agente de voz ya puede transferir llamadas a un humano. La próxima vez que un cliente necesite asistencia especializada, el agente IA manejará la transición de forma automática y profesional.
+</Callout>
+
+## Buenas Prácticas para Transferencias Exitosas
+
+- **Prueba la transferencia** — Realiza una llamada de prueba para verificar que el número de destino sea correcto y que el mensaje previo se reproduzca adecuadamente.
+- **Define criterios claros** — Asegúrate de que tu agente IA tenga instrucciones precisas sobre cuándo transferir. Revisa el prompt del sistema si es necesario.
+- **Monitorea las transferencias** — Revisa periódicamente las estadísticas de transferencia en el panel para identificar patrones y optimizar la tasa de resolución automatizada.
+- **Actualiza el mensaje previo** — Personaliza el mensaje según el contexto de la llamada. Un mensaje genérico puede sonar robótico.
+- **Capacita al equipo humano** — Asegúrate de que tu equipo de soporte esté preparado para recibir llamadas transferidas con el contexto de la conversación previa.
+
+## Preguntas Frecuentes
+
+<ExpandableGroup>
+  <Expandable title="¿Puedo transferir a múltiples números?" default-open="true">
+  Actualmente, cada herramienta de transferencia está configurada para un solo número de destino. Si necesitas transferir a diferentes equipos (soporte, ventas, técnico), puedes agregar múltiples instancias de la herramienta "Transferir Llamada" con diferentes configuraciones y descripciones para cada caso.
+  </Expandable>
+  <Expandable title="¿El cliente escucha el mensaje previo antes de la transferencia?">
+  Sí. El mensaje previo se reproduce automáticamente antes de iniciar la transferencia. Esto asegura que el cliente esté preparado y sepa qué esperar. Recomendamos que este mensaje sea claro, tranquilizador y en el mismo idioma de la conversación.
+  </Expandable>
+  <Expandable title="¿Qué sucede si el número de destino no contesta?">
+  Si el número de destino está ocupado o no contesta, el agente IA puede manejar la situación de forma inteligente. El agente le informará al cliente que no fue posible completar la transferencia y ofrecerá alternativas, como dejar un mensaje, programar una devolución de llamada, o intentar nuevamente más tarde.
+  </Expandable>
+  <Expandable title="¿Se puede transferir conservando el contexto de la conversación?">
+  La transferencia se realiza a nivel de llamada telefónica. Cuando el agente humano recibe la llamada, el sistema muestra un resumen de la conversación previa para que el humano retome desde donde quedó. Configura las integraciones necesarias para maximizar el contexto compartido.
+  </Expandable>
+  <Expandable title="¿La transferencia consume créditos adicionales?">
+  Solo se consumen créditos por el tiempo que el agente IA está activo durante la llamada. La transferencia en sí no tiene costo adicional. Una vez que el agente transfiere la llamada, deja de consumir créditos, y a partir de ese momento la llamada continúa con el agente humano.
+  </Expandable>
+  <Expandable title="¿Necesitas ayuda con la transferencia de llamadas?">
+  <Callout kind="info" title="Soporte">
+  Si tienes dudas sobre la configuración de transferencia de llamadas o necesitas ayuda con un caso particular, contacta a nuestro equipo de soporte. Estamos disponibles para ayudarte a optimizar tu flujo de atención al cliente.
+  </Callout>
+  </Expandable>
+</ExpandableGroup>
